@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 const page = ({ params }: { params: { category: string } }) => {
@@ -9,9 +10,11 @@ const page = ({ params }: { params: { category: string } }) => {
       <ul>
         {recipes.map((recipe) => (
           <li key={recipe}>
-            <Link href={`/categories/${params.category}/${recipe}`}>
-              {recipe}
-            </Link>
+            <Button>
+              <Link href={`/categories/${params.category}/${recipe}`}>
+                {recipe}
+              </Link>
+            </Button>
           </li>
         ))}
       </ul>
