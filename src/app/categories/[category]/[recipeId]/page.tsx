@@ -1,8 +1,4 @@
-const RecipePage = ({
-  params,
-}: {
-  params: { category: string; recipe: string };
-}) => {
+const page = ({ params }: { params: { category: string; recipe: string } }) => {
   return (
     <div>
       <h1>Recipe: {params.recipe}</h1>
@@ -12,4 +8,4 @@ const RecipePage = ({
   );
 };
 
-export default RecipePage;
+export default page;
