@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const page = () => {
+const categories = () => {
   const categories = ["desserts", "main-dishes", "appetizers"];
 
   return (
@@ -17,4 +17,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default categories;

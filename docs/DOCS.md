@@ -3,12 +3,27 @@
 ## Table of Contents
 
 1. [Project Overview](#project-overview)
-2. [Code Structure](#code-structure)
-3. [Branch Naming](#branch-naming)
-4. [Pull Request Process](#pull-request-process)
-5. [Task Creation Guidelines](#task-creation-guidelines)
-6. [Project Assumptions](#project-assumptions)
-7. [Task Reviews and Sprint Discussions](#task-reviews-and-sprint-discussions)
+2. [Tech Stack](#tech-stack)
+3. [Code Structure](#code-structure)
+4. [Branch Naming](#branch-naming)
+5. [Pull Request Process](#pull-request-process)
+6. [Task Creation Guidelines](#task-creation-guidelines)
+7. [Project Assumptions](#project-assumptions)
+8. [Task Reviews and Sprint Discussions](#task-reviews-and-sprint-discussions)
+
+---
+
+## Tech Stack
+
+#### Next.js (https://nextjs.org/)
+
+#### TypeScript (https://www.typescriptlang.org/)
+
+#### Shadcn (https://ui.shadcn.com/)
+
+#### Tailwind (https://tailwindcss.com/)
+
+#### Cypress (https://www.cypress.io/)
 
 ---
 
@@ -93,6 +108,7 @@ Each task should have a singular, focused goal.
 ### 2. Provide descriptions for tasks:
 
 - **Example**:
+
   ```markdown
   **Task:** Implement user profile editing.
   **Description:**
