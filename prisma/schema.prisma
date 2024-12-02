@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
+  FRIENDS
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String?  @unique
+  password  String
+  firstName String?
+  isActive  Boolean  @default(true)
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  shoppingList   ShoppingList?
+  createdRecipes Recipe[]
+}
+
+model Recipe {
+  id               String     @id @default(cuid())
+  name             String
+  content          String
+  visibility       Visibility @default(PRIVATE)
+  images           String[]
+  recipeCategoryId String
+  authorId         String
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  category RecipeCategory? @relation(fields: [recipeCategoryId], references: [id])
+  author   User            @relation(fields: [authorId], references: [id])
+  tag      Tag[]
+  product  Product[]
+}
+
+model RecipeCategory {
+  id     String   @id @default(cuid())
+  name   String
+  Recipe Recipe[]
+}
+
+model Tag {
+  id      String   @id @default(cuid())
+  name    String   @unique
+  recipes Recipe[]
+}
+
+model Product {
+  id                String  @id @default(cuid())
+  name              String  @unique
+  price             Float?
+  productCategoryId String?
+  shoppingListId    String?
+
+  category     ProductCategory[]
+  shoppingList ShoppingList?     @relation(fields: [shoppingListId], references: [id])
+  recipe       Recipe[]
+}
+
+model ProductCategory {
+  id      String    @id @default(cuid())
+  name    String
+  Product Product[]
+}
+
+model ShoppingList {
+  id     String @id @default(cuid())
+  userId String @unique
+
+  user     User      @relation(fields: [userId], references: [id])
+  products Product[]
+}
