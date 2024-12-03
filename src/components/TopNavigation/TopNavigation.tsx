@@ -1,8 +1,10 @@
 import Image from "next/image";
-import ExampleImage from "@/public/images/example-image.png";
-import AlertIcon from "@/public/icons/alert.svg";
-import ShoppingListIcon from "@/public/icons/shopping-list.svg";
 import Link from "next/link";
+
+import ExampleImage from "@/public/images/example-image.png";
+import ShoppingBagIcon from "@/public/icons/shopping-bag.svg";
+
+import { NotificationBox } from "@/components/notification-box/NotificationBox";
 
 const TopNavigation = () => {
   const userName: string = "John Doe";
@@ -13,19 +15,15 @@ const TopNavigation = () => {
           <Image src={ExampleImage} alt="Example description" width={100} />
         </div>
         <div className="flex absolute top-3 right-3 space-x-2">
-          <div>
-            <Link href="/shopping-list">
-              <Image
-                src={ShoppingListIcon}
-                alt="Shopping List"
-                className="w-10 h-10"
-              />
-            </Link>
-          </div>
-          <div>
-            {/* TO DO - open modal, small icon of how many alerts we have. */}
-            <Image src={AlertIcon} alt="Alert Icon" className="w-10 h-10" />
-          </div>
+          <Link href="/shopping-list">
+            <Image
+              src={ShoppingBagIcon}
+              alt="Shopping List"
+              className="w-10 h-10"
+            />
+          </Link>
+          {/* TO DO - open modal, small icon of how many alerts we have. */}
+          <NotificationBox />
         </div>
       </div>
       <div className="absolute top-[60px] left-3">
