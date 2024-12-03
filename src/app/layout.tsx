@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Roboto } from "next/font/google";
 import TopNavigation from "@/components/TopNavigation/TopNavigation";
+import BottomNavigation from "@/components/BottomNavigation/BottomNavigation";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function RootLayout({
         {/* To think - do we need top navigation on every page? */}
         <TopNavigation />
         {children}
+        <BottomNavigation />
       </body>
     </html>
   );

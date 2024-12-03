@@ -8,11 +8,11 @@ const TopNavigation = () => {
   const userName: string = "John Doe";
   return (
     <>
-      <div className="relative">
-        <div className="absolute top-3 left-3">
+      <div className="flex">
+        <div className="fixed top-3 left-3">
           <Image src={ExampleImage} alt="Example description" width={100} />
         </div>
-        <div className="flex absolute top-3 right-3 space-x-2">
+        <div className="flex fixed top-3 right-3 space-x-2">
           <div>
             <Link href="/shopping-list">
               <Image
@@ -28,7 +28,7 @@ const TopNavigation = () => {
           </div>
         </div>
       </div>
-      <div className="absolute top-[60px] left-3">
+      <div className="fixed top-[60px] left-3">
         <h3>Hello, {userName}</h3>
       </div>
     </>
