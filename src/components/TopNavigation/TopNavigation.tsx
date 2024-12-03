@@ -23,7 +23,7 @@ const TopNavigation = () => {
             </Link>
           </div>
           <div>
-            {/* TO DO - open modal, small icon of how many alerts we have */}
+            {/* TO DO - open modal, small icon of how many alerts we have. */}
             <Image src={AlertIcon} alt="Alert Icon" className="w-10 h-10" />
           </div>
         </div>
