@@ -40,12 +40,12 @@ export const NotificationBox = () => {
       <PopoverTrigger className="relative">
         <Image src={BellIcon} alt="Notifications Bell Icon" className="w-10" />
         {notifications.length > 0 && (
-          <div className="absolute bottom-0 right-0 rounded-full bg-indigo-600 size-4 text-xs text-slate-50">
+          <div className="absolute bottom-0 right-0 size-4 rounded-full bg-indigo-600 text-xs text-slate-50">
             {notifications.length}
           </div>
         )}
       </PopoverTrigger>
-      <PopoverContent className="mx-2 py-2 px-2">
+      <PopoverContent className="mx-2 px-2 py-2">
         {notifications.map((notification, index) => (
           <>
             <Notification key={index} {...notification} />
