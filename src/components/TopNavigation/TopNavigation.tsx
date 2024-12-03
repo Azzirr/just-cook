@@ -22,7 +22,6 @@ const TopNavigation = () => {
               className="h-10 w-10"
             />
           </Link>
-          {/* TO DO - open modal, small icon of how many alerts we have. */}
           <NotificationBox />
         </div>
       </div>
