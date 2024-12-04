@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import MoreIcon from "@/public/icons/more.svg";
 import HomeIcon from "@/public/icons/home.svg";
