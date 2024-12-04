@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import Image from "next/image";
 
 import WarningIcon from "@/public/icons/warning.svg";
@@ -11,10 +10,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Notification } from "@/components/notification-box/Notification";
-import { Separator } from "@/components/ui/separator";
+import { Notifications } from "./Notifications";
 
-const notifications = [
+import type { Notification } from "./types";
+
+const notifications: Notification[] = [
   {
     title: "New Recipe",
     body: "Check out our new recipe for a delicious meal!",
@@ -36,23 +36,24 @@ const notifications = [
 ];
 
 export const NotificationBox = () => {
+  const hasNotifications = notifications.length > 0;
+
   return (
     <Popover>
       <PopoverTrigger className="relative">
         <Image src={BellIcon} alt="Notifications Bell Icon" className="w-10" />
-        {notifications.length > 0 && (
+        {hasNotifications && (
           <div className="absolute bottom-0 right-0 size-4 rounded-full bg-indigo-600 text-xs text-slate-50">
             {notifications.length}
           </div>
         )}
       </PopoverTrigger>
       <PopoverContent className="mx-2 px-2 py-2">
-        {notifications.map((notification, index) => (
-          <Fragment key={index}>
-            <Notification {...notification} />
-            {index < notifications.length - 1 && <Separator className="my-1" />}
-          </Fragment>
-        ))}
+        {hasNotifications ? (
+          <Notifications notifications={notifications} />
+        ) : (
+          <div className="py-3 text-center">You have no new notifications</div>
+        )}
       </PopoverContent>
     </Popover>
   );

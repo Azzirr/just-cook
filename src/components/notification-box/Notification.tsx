@@ -1,12 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-type Props = {
-  title: string;
-  body: string;
-  redirectTo: string;
-  Icon: string;
-};
+import type { Notification as NotificationType } from "./types";
+
+type Props = NotificationType;
 
 export const Notification = ({ title, body, redirectTo, Icon }: Props) => {
   return (
