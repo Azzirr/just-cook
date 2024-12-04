@@ -22,7 +22,8 @@ enum Visibility {
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id        Int      @id @default(autoincrement())
+  avatar    String
   email     String   @unique
   username  String?  @unique
   password  String
@@ -37,56 +38,56 @@ model User {
 }
 
 model Recipe {
-  id               String     @id @default(cuid())
+  id               Int        @id @default(autoincrement())
   name             String
   content          String
   visibility       Visibility @default(PRIVATE)
   images           String[]
-  recipeCategoryId String
-  authorId         String
+  recipeCategoryId Int
+  authorId         Int
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
 
-  category RecipeCategory? @relation(fields: [recipeCategoryId], references: [id])
-  author   User            @relation(fields: [authorId], references: [id])
-  tag      Tag[]
-  product  Product[]
+  category    RecipeCategory? @relation(fields: [recipeCategoryId], references: [id])
+  author      User            @relation(fields: [authorId], references: [id])
+  tag         Tag[]
+  ingredients Ingredients[]
 }
 
 model RecipeCategory {
-  id     String   @id @default(cuid())
-  name   String
-  Recipe Recipe[]
+  id      Int      @id @default(autoincrement())
+  name    String
+  recipes Recipe[]
 }
 
 model Tag {
-  id      String   @id @default(cuid())
+  id      Int      @id @default(autoincrement())
   name    String   @unique
   recipes Recipe[]
 }
 
-model Product {
-  id                String  @id @default(cuid())
-  name              String  @unique
-  price             Float?
-  productCategoryId String?
-  shoppingListId    String?
+model Ingredients {
+  id                    Int     @id @default(autoincrement())
+  name                  String  @unique
+  price                 Float?
+  ingredientsCategoryId String?
+  shoppingListId        Int?
 
-  category     ProductCategory[]
-  shoppingList ShoppingList?     @relation(fields: [shoppingListId], references: [id])
+  category     IngredientsCategory[]
+  shoppingList ShoppingList?         @relation(fields: [shoppingListId], references: [id])
   recipe       Recipe[]
 }
 
-model ProductCategory {
-  id      String    @id @default(cuid())
-  name    String
-  Product Product[]
+model IngredientsCategory {
+  id          Int           @id @default(autoincrement())
+  name        String
+  ingredients Ingredients[]
 }
 
 model ShoppingList {
-  id     String @id @default(cuid())
-  userId String @unique
+  id     Int @id @default(autoincrement())
+  userId Int @unique
 
-  user     User      @relation(fields: [userId], references: [id])
-  products Product[]
+  user         User          @relation(fields: [userId], references: [id])
+  ingredientss Ingredients[]
 }
