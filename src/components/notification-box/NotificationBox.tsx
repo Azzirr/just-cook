@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Image from "next/image";
 
 import WarningIcon from "@/public/icons/warning.svg";
@@ -47,10 +48,10 @@ export const NotificationBox = () => {
       </PopoverTrigger>
       <PopoverContent className="mx-2 px-2 py-2">
         {notifications.map((notification, index) => (
-          <>
-            <Notification key={index} {...notification} />
+          <Fragment key={index}>
+            <Notification {...notification} />
             {index < notifications.length - 1 && <Separator className="my-1" />}
-          </>
+          </Fragment>
         ))}
       </PopoverContent>
     </Popover>
