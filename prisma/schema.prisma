@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
+  FRIENDS
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  avatar    String
+  email     String   @unique
+  username  String?  @unique
+  password  String
+  firstName String?
+  isActive  Boolean  @default(true)
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  shoppingList   ShoppingList?
+  createdRecipes Recipe[]
+}
+
+model Recipe {
+  id               Int        @id @default(autoincrement())
+  name             String
+  content          String
+  visibility       Visibility @default(PRIVATE)
+  images           String[]
+  recipeCategoryId Int
+  authorId         Int
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  category    RecipeCategory? @relation(fields: [recipeCategoryId], references: [id])
+  author      User            @relation(fields: [authorId], references: [id])
+  tag         Tag[]
+  ingredients Ingredients[]
+}
+
+model RecipeCategory {
+  id      Int      @id @default(autoincrement())
+  name    String
+  recipes Recipe[]
+}
+
+model Tag {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  recipes Recipe[]
+}
+
+model Ingredients {
+  id                    Int     @id @default(autoincrement())
+  name                  String  @unique
+  price                 Float?
+  ingredientsCategoryId String?
+  shoppingListId        Int?
+
+  category     IngredientsCategory[]
+  shoppingList ShoppingList?         @relation(fields: [shoppingListId], references: [id])
+  recipe       Recipe[]
+}
+
+model IngredientsCategory {
+  id          Int           @id @default(autoincrement())
+  name        String
+  ingredients Ingredients[]
+}
+
+model ShoppingList {
+  id     Int @id @default(autoincrement())
+  userId Int @unique
+
+  user         User          @relation(fields: [userId], references: [id])
+  ingredientss Ingredients[]
+}
