@@ -1,8 +1,8 @@
-const recipeId = () => {
+const recipe = () => {
   return (
     <>
       <div>Recipe</div>
     </>
   );
 };
-export default recipeId;
+export default recipe;
