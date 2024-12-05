@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` antialiased ${roboto.className}`}>
+      <body className={`antialiased ${roboto.className}`}>
         {/* To think - do we need top navigation on every page? */}
         <TopNavigation />
         {children}

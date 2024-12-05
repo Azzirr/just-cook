@@ -1,37 +1,23 @@
 import Image from "next/image";
-import ExampleImage from "@/public/images/example-image.png";
-import AlertIcon from "@/public/icons/alert.svg";
-import ShoppingListIcon from "@/public/icons/shopping-list.svg";
 import Link from "next/link";
+
+import ExampleImage from "@/public/images/example-image.png";
+import ShoppingBagIcon from "@/public/icons/shopping-bag.svg";
+
+import { NotificationBox } from "@/components/notification-box/NotificationBox";
 
 const TopNavigation = () => {
   const userName: string = "John Doe";
   return (
-    <>
-      <div className="flex">
-        <div className="fixed top-3 left-3">
-          <Image src={ExampleImage} alt="Example description" width={100} />
-        </div>
-        <div className="flex fixed top-3 right-3 space-x-2">
-          <div>
-            <Link href="/shopping-list">
-              <Image
-                src={ShoppingListIcon}
-                alt="Shopping List"
-                className="w-10 h-10"
-              />
-            </Link>
-          </div>
-          <div>
-            {/* TO DO - open modal, small icon of how many alerts we have. */}
-            <Image src={AlertIcon} alt="Alert Icon" className="w-10 h-10" />
-          </div>
-        </div>
+    <div className="sticky top-0 flex w-full items-center justify-between p-3">
+      <Image src={ExampleImage} alt="Example description" width={100} />
+      <div className="flex items-center gap-3">
+        <Link href="/shopping-list">
+          <Image src={ShoppingBagIcon} alt="Shopping List" className="w-10" />
+        </Link>
+        <NotificationBox />
       </div>
-      <div className="fixed top-[60px] left-3">
-        <h3>Hello, {userName}</h3>
-      </div>
-    </>
+    </div>
   );
 };
 export default TopNavigation;
