@@ -10,6 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Notifications } from "./Notifications";
 
 import type { Notification } from "./types";
@@ -33,6 +34,36 @@ const notifications: Notification[] = [
     redirectTo: "/recipes",
     Icon: BookIcon,
   },
+  {
+    title: "New Recipe",
+    body: "Check out our new recipe for a delicious meal!",
+    redirectTo: "/recipes",
+    Icon: ShoppingBagIcon,
+  },
+  {
+    title: "Verify your account",
+    body: "Please verify your account to continue using our services.",
+    redirectTo: "/account",
+    Icon: WarningIcon,
+  },
+  {
+    title: "Rate recipe",
+    body: "Rate the recipe you tried last week and help us improve.",
+    redirectTo: "/recipes",
+    Icon: BookIcon,
+  },
+  {
+    title: "New Recipe",
+    body: "Check out our new recipe for a delicious meal!",
+    redirectTo: "/recipes",
+    Icon: ShoppingBagIcon,
+  },
+  {
+    title: "Verify your account",
+    body: "Please verify your account to continue using our services.",
+    redirectTo: "/account",
+    Icon: WarningIcon,
+  },
 ];
 
 export const NotificationBox = () => {
@@ -48,9 +79,11 @@ export const NotificationBox = () => {
           </div>
         )}
       </PopoverTrigger>
-      <PopoverContent className="mx-2 px-2 py-2">
+      <PopoverContent className="mx-2 p-1">
         {hasNotifications ? (
-          <Notifications notifications={notifications} />
+          <ScrollArea className="flex max-h-[40vh] flex-col">
+            <Notifications notifications={notifications} />
+          </ScrollArea>
         ) : (
           <div className="py-3 text-center">You have no new notifications</div>
         )}

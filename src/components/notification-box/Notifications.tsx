@@ -9,14 +9,18 @@ type Props = {
 };
 
 export const Notifications = ({ notifications }: Props) => {
-  return notifications.map((notification, index) => {
-    const isLastNotification = index === notifications.length - 1;
+  return (
+    <div className="p-1">
+      {notifications.map((notification, index) => {
+        const isLastNotification = index === notifications.length - 1;
 
-    return (
-      <Fragment key={index}>
-        <Notification {...notification} />
-        {!isLastNotification && <Separator className="my-1" />}
-      </Fragment>
-    );
-  });
+        return (
+          <Fragment key={index}>
+            <Notification {...notification} />
+            {!isLastNotification && <Separator className="my-2" />}
+          </Fragment>
+        );
+      })}
+    </div>
+  );
 };
