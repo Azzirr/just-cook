@@ -10,11 +10,11 @@ const TopNavigation = () => {
   const userName: string = "John Doe";
   return (
     <>
-      <div className="relative">
-        <div className="absolute left-3 top-3">
+      <div className="flex">
+        <div className="fixed left-3 top-3">
           <Image src={ExampleImage} alt="Example description" width={100} />
         </div>
-        <div className="absolute right-3 top-3 flex space-x-2">
+        <div className="fixed right-3 top-3 flex space-x-2">
           <Link href="/shopping-list">
             <Image
               src={ShoppingBagIcon}
@@ -25,7 +25,7 @@ const TopNavigation = () => {
           <NotificationBox />
         </div>
       </div>
-      <div className="absolute left-3 top-[60px]">
+      <div className="fixed left-3 top-[60px]">
         <h3>Hello, {userName}</h3>
       </div>
     </>
