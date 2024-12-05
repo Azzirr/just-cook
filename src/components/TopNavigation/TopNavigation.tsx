@@ -9,26 +9,15 @@ import { NotificationBox } from "@/components/notification-box/NotificationBox";
 const TopNavigation = () => {
   const userName: string = "John Doe";
   return (
-    <>
-      <div className="flex">
-        <div className="fixed left-3 top-3">
-          <Image src={ExampleImage} alt="Example description" width={100} />
-        </div>
-        <div className="fixed right-3 top-3 flex space-x-2">
-          <Link href="/shopping-list">
-            <Image
-              src={ShoppingBagIcon}
-              alt="Shopping List"
-              className="h-10 w-10"
-            />
-          </Link>
-          <NotificationBox />
-        </div>
+    <div className="sticky top-0 flex w-full items-center justify-between p-3">
+      <Image src={ExampleImage} alt="Example description" width={100} />
+      <div className="flex items-center gap-3">
+        <Link href="/shopping-list">
+          <Image src={ShoppingBagIcon} alt="Shopping List" className="w-10" />
+        </Link>
+        <NotificationBox />
       </div>
-      <div className="fixed left-3 top-[60px]">
-        <h3>Hello, {userName}</h3>
-      </div>
-    </>
+    </div>
   );
 };
 export default TopNavigation;
