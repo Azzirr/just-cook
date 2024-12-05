@@ -28,6 +28,7 @@ const TopNavigation = () => {
           </div>
         </div>
       </div>
+      {/* TO DO - get this away from global layout. It should be visable only on first view */}
       <div className="fixed top-[60px] left-3">
         <h3>Hello, {userName}</h3>
       </div>
