@@ -1,11 +1,7 @@
 import Category from "@/components/Category/Category";
 
 const Home = () => {
-  return (
-    <div>
-      <Category />
-    </div>
-  );
+  return <Category />;
 };
 
 export default Home;

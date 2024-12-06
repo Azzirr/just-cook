@@ -72,7 +72,11 @@ export const NotificationBox = () => {
   return (
     <Popover>
       <PopoverTrigger className="relative">
-        <Image src={BellIcon} alt="Notifications Bell Icon" className="w-10" />
+        <Image
+          src={BellIcon}
+          alt="Notifications Bell Icon"
+          className="size-10"
+        />
         {hasNotifications && (
           <div className="absolute bottom-0 right-0 size-4 rounded-full bg-indigo-600 text-xs text-slate-50">
             {notifications.length}
