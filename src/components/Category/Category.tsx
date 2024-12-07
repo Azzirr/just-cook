@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { useTranslations } from "next-intl";
 
 const Category = () => {
   // TO DO - get categories from database, think about categories we want
@@ -21,16 +22,18 @@ const Category = () => {
     { name: "KIDS-MENU 🍔", href: "/kids-menu" },
   ];
 
+  const t = useTranslations("HomePage");
+
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="flex flex-col items-center  max-h-[75vh] w-[100vw] bg-gray-100 p-4 overflow-y-auto">
-          <h1 className="mb-4 text-2xl font-bold">Categories</h1>
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="flex max-h-[75vh] w-[100vw] flex-col items-center overflow-y-auto bg-gray-100 p-4">
+          <h1 className="mb-4 text-2xl font-bold">{t("heading")}</h1>
           <div className="space-y-2">
             {categories.map((category) => (
               <div key={category.name} className="flex justify-center">
                 <Link href={`/category/${category.href}`}>
-                  <Button className="w-[70vw] bg-gray-900 rounded-3xl">
+                  <Button className="w-[70vw] rounded-3xl bg-gray-900">
                     {category.name}
                   </Button>
                 </Link>
