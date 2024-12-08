@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
+
+import { Button } from "@/components/ui/button";
 
 const Category = () => {
   // TO DO - get categories from database, think about categories we want
@@ -22,7 +23,7 @@ const Category = () => {
     { name: "KIDS-MENU 🍔", href: "/kids-menu" },
   ];
 
-  const t = useTranslations("HomePage");
+  const t = useTranslations("Categories");
 
   return (
     <>

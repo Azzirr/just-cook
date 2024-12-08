@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Roboto } from "next/font/google";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { ReactNode } from "react";
 
 import "./globals.css";
 import TopNavigation from "@/components/TopNavigation/TopNavigation";
 import BottomNavigation from "@/components/BottomNavigation/BottomNavigation";
 
-import { routing } from "@/i18n/routing";
+import { isExistingLocale, routing } from "@/i18n/routing";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -24,27 +23,28 @@ export default async function LocaleLayout({
   children,
   params,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
 
-  if (!routing.locales.includes(locale as any)) {
+  if (!isExistingLocale(locale)) {
     notFound();
   }
-
-  const messages = await getMessages();
 
   return (
     <html lang={locale}>
       <body className={`antialiased ${roboto.className}`}>
         {/* To think - do we need top navigation on every page? */}
-        <NextIntlClientProvider messages={messages}>
-          <TopNavigation />
-          {children}
-          <BottomNavigation />
-        </NextIntlClientProvider>
+        <TopNavigation />
+        {children}
+        <BottomNavigation />
       </body>
     </html>
   );
+}
+
+// Enable static rendering
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
 }
