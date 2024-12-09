@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 
 const Category = () => {
-  // TO DO - get categories from database, think about categories we want
+  // TODO - get categories from database, think about categories we want
   const categories = [
     { name: "DESSERTS 🍰", href: "/desserts" },
     { name: "MAIN-DISHES 🍽️", href: "/main-dishes" },
