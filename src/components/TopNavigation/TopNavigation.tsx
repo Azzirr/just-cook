@@ -1,10 +1,11 @@
 import Image from "next/image";
-import Link from "next/link";
 
 import ExampleImage from "@/public/images/example-image.png";
 import ShoppingBagIcon from "@/public/icons/shopping-bag.svg";
 
 import { NotificationBox } from "@/components/notification-box/NotificationBox";
+
+import { Link } from "@/i18n/routing";
 
 const TopNavigation = () => {
   const userName: string = "John Doe";

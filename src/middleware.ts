@@ -4,6 +4,7 @@ import { routing } from "@/i18n/routing";
 export default createMiddleware(routing);
 
 export const config = {
-  // Cant use variables here
+  // Match only internationalized pathnames
+  // Cannot be dynamic
   matcher: ["/", "/(en|pl)/:path*"],
 };

@@ -1,7 +1,8 @@
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
+
+import { Link } from "@/i18n/routing";
 
 const Category = () => {
   // TO DO - get categories from database, think about categories we want
@@ -29,7 +30,7 @@ const Category = () => {
     <>
       <div className="flex min-h-screen items-center justify-center">
         <div className="flex max-h-[75vh] w-[100vw] flex-col items-center overflow-y-auto bg-gray-100 p-4">
-          <h1 className="mb-4 text-2xl font-bold">{t("heading")}</h1>
+          <h1 className="mb-4 text-2xl font-bold">{t("title")}</h1>
           <div className="space-y-2">
             {categories.map((category) => (
               <div key={category.name} className="flex justify-center">
