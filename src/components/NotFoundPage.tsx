@@ -8,10 +8,10 @@ export const NotFoundPage = () => {
   const t = useTranslations("NotFoundPage");
 
   return (
-    <div className="mx-auto max-w-[60ch] p-4 text-center">
+    <div className="mx-auto max-w-prose p-4 text-center">
       <h1 className="text-2xl font-bold">{t("title")}</h1>
-      <p className="my-2 text-balance text-xl">{t("description")}</p>
-      <Button asChild className="my-3 self-center">
+      <p className="mt-3 text-balance text-lg">{t("description")}</p>
+      <Button asChild className="mt-5">
         <Link href="/">{t("back")}</Link>
       </Button>
     </div>
