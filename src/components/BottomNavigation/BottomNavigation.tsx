@@ -1,9 +1,12 @@
 import Image from "next/image";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Link from "next/link";
+
 import MoreIcon from "@/public/icons/more.svg";
 import HomeIcon from "@/public/icons/home.svg";
 import FavouriteRecipesIcon from "@/public/icons/favourite-recipes.svg";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+import { Link } from "@/i18n/routing";
 
 const BottomNavigation = () => {
   return (
@@ -21,12 +24,8 @@ const BottomNavigation = () => {
         </Link>
         <Link href="/user">
           <Avatar>
-            <AvatarImage
-              src="https://i.pinimg.com/736x/7b/8c/d8/7b8cd8b068e4b9f80b4bcf0928d7d499.jpg"
-              alt="User avatar"
-              className="size-10"
-            />
-            <AvatarFallback>USER</AvatarFallback>
+            <AvatarImage className="size-10" />
+            <AvatarFallback>User</AvatarFallback>
           </Avatar>
         </Link>
         <Link href="/more">
