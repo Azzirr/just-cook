@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { loginSchema } from "./schemas";
-import { LoginFormProps } from "@/app/types";
+import { LoginFormProps } from "./types";
 
 const LoginForm: React.FC<LoginFormProps> = ({ setIsLogin }) => {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -34,7 +34,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setIsLogin }) => {
   return (
     <>
       <div className="mb-4">
-        <h2 className="text-left ">Login</h2>
+        <h2 className="text-left">Login</h2>
         <p className="text-left">to get all features</p>
       </div>
       <div className="w-full">
@@ -73,7 +73,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setIsLogin }) => {
             <div className="flex justify-center">
               <Button
                 type="submit"
-                className="rounded-3xl bg-gray-900 w-[50vw] "
+                className="w-[50vw] rounded-3xl bg-gray-900"
               >
                 Login
               </Button>
@@ -82,10 +82,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ setIsLogin }) => {
         </Form>
       </div>
       <div className="mt-4">
-        <p className="text-left ">
+        <p className="text-left">
           Or click{" "}
           <span
-            className="[text-decoration:underline] text-blue-600"
+            className="text-blue-600 [text-decoration:underline]"
             onClick={handleSwitchToRegister}
           >
             here

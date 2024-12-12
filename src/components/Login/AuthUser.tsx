@@ -4,13 +4,12 @@ import { useState } from "react";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 
-// TODO: maybe some better name than LoginOrRegisterUser?
-const LoginOrRegisterUser = () => {
+const AuthUser = () => {
   const [isLogin, setIsLogin] = useState<boolean>(true);
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="flex flex-col items-start w-[85vw]">
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="flex w-[85vw] flex-col items-start">
           {/* TODO: I want to add some kind of animation library for animate things on the app. We will reach discuss about it */}
           {isLogin ? (
             <LoginForm setIsLogin={setIsLogin} />
@@ -22,4 +21,4 @@ const LoginOrRegisterUser = () => {
     </>
   );
 };
-export default LoginOrRegisterUser;
+export default AuthUser;

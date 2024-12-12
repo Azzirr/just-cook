@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { registerSchema } from "./schemas";
-import { LoginFormProps } from "@/app/types";
+import { LoginFormProps } from "./types";
 
 const RegisterForm: React.FC<LoginFormProps> = ({ setIsLogin }) => {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -36,9 +36,9 @@ const RegisterForm: React.FC<LoginFormProps> = ({ setIsLogin }) => {
 
   return (
     <>
-      <div className="max-h-[75vh] overflow-y-auto w-full">
+      <div className="max-h-[75vh] w-full overflow-y-auto">
         <div className="mb-4">
-          <h2 className="text-left ">Register</h2>
+          <h2 className="text-left">Register</h2>
           <p className="text-left">
             and <span className="text-green-500">enjoy</span> all features
           </p>
@@ -113,7 +113,7 @@ const RegisterForm: React.FC<LoginFormProps> = ({ setIsLogin }) => {
               <div className="flex justify-center">
                 <Button
                   type="submit"
-                  className="rounded-3xl bg-gray-900 w-[50vw] "
+                  className="w-[50vw] rounded-3xl bg-gray-900"
                 >
                   Register
                 </Button>
@@ -122,10 +122,10 @@ const RegisterForm: React.FC<LoginFormProps> = ({ setIsLogin }) => {
           </Form>
         </div>
         <div className="mt-4">
-          <p className="text-left ">
+          <p className="text-left">
             Or click{" "}
             <span
-              className="[text-decoration:underline] text-blue-600"
+              className="text-blue-600 [text-decoration:underline]"
               onClick={handleSwitchToLogin}
             >
               here
