@@ -1,4 +1,4 @@
-export type CartItem = {
+export type ShoppingListItem = {
   name: string;
   quantity: number;
   goTo: string;
