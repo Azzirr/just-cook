@@ -19,9 +19,11 @@ const roboto = Roboto({
 export const BaseLayout = ({ children, locale }: Props) => {
   return (
     <html lang={locale}>
-      <body className={`antialiased ${roboto.className}`}>
+      <body
+        className={`antialiased ${roboto.className} flex min-h-screen flex-col`}
+      >
         <TopNavigation />
-        {children}
+        <div className="flex-grow">{children}</div>
         <BottomNavigation />
       </body>
     </html>
