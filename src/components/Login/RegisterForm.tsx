@@ -14,7 +14,7 @@ import { z } from "zod";
 import { registerSchema } from "./schemas";
 import { LoginFormProps } from "./types";
 
-const RegisterForm: React.FC<LoginFormProps> = ({ setIsLogin }) => {
+const RegisterForm = ({ setIsLogin }: LoginFormProps) => {
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {

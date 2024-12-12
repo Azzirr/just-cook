@@ -14,7 +14,7 @@ import { z } from "zod";
 import { loginSchema } from "./schemas";
 import { LoginFormProps } from "./types";
 
-const LoginForm: React.FC<LoginFormProps> = ({ setIsLogin }) => {
+const LoginForm = ({ setIsLogin }: LoginFormProps) => {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
