@@ -21,10 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased ${roboto.className}`}>
-        {/* To think - do we need top navigation on every page? */}
+      <body
+        className={`antialiased ${roboto.className} flex min-h-screen flex-col`}
+      >
         <TopNavigation />
-        {children}
+        <div className="flex-grow">{children}</div>
         <BottomNavigation />
       </body>
     </html>
