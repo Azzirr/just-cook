@@ -34,10 +34,12 @@ const shoppingList = () => {
       ) : (
         <>
           <h2 className="px-4 py-2 font-bold">Shopping cart</h2>
-          <ScrollArea className="flex flex-col gap-2 px-2 py-1">
-            {itemsList.map((item, index) => (
-              <CartItem key={index} {...item} />
-            ))}
+          <ScrollArea className="px-2 py-1">
+            <div className="flex flex-col gap-2">
+              {itemsList.map((item, index) => (
+                <CartItem key={index} {...item} />
+              ))}
+            </div>
           </ScrollArea>
         </>
       )}
