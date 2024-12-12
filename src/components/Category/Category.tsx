@@ -1,5 +1,8 @@
-import Link from "next/link";
-import { Button } from "../ui/button";
+import { useTranslations } from "next-intl";
+
+import { Button } from "@/components/ui/button";
+
+import { Link } from "@/i18n/routing";
 
 // TODO - get categories from database, think about categories we want
 const categories = [
@@ -21,9 +24,11 @@ const categories = [
 ];
 
 const Category = () => {
+  const t = useTranslations("Categories");
+
   return (
     <div className="mx-auto max-w-96 py-5">
-      <h1 className="mb-4 text-2xl font-bold">Categories</h1>
+      <h1 className="mb-4 text-2xl font-bold">{t("title")}</h1>
       <div className="flex flex-col gap-4">
         {categories.map((category) => (
           <Button
