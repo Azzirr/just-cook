@@ -8,6 +8,7 @@
     "back": "Powrót do strony głównej"
   },
   "ShoppingBag": {
-    "title": "Koszyk"
+    "title": "Koszyk",
+    "isEmpty": "Koszyk jest pusty"
   }
 }

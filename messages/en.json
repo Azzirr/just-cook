@@ -8,6 +8,7 @@
     "back": "Back to home"
   },
   "ShoppingBag": {
-    "title": "Shopping Bag"
+    "title": "Shopping Bag",
+    "isEmpty": "Shopping bag is empty"
   }
 }
