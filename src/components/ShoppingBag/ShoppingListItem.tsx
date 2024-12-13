@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
 import TrashIcon from "@/public/icons/trash.svg";
@@ -11,12 +11,20 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
-export const CartItem = ({ name, quantity, goTo, done }: ListItem) => {
+export const ShoppingListItem = ({
+  name,
+  quantity,
+  image,
+  goTo,
+  done,
+}: ListItem) => {
   return (
     <div className="flex items-center justify-between gap-2 rounded-lg border px-2 py-1">
       <div className="flex items-center gap-2">
         <Checkbox checked={done} className="h-5 w-5" />
-        <Link href={goTo}>
+
+        <Link href={goTo} className="flex flex-row items-center gap-2">
+          <Image src={image} alt={name} width={28} height={28} />
           <h4
             className={cn(
               "text-lg font-bold",
