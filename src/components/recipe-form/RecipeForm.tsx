@@ -1,7 +1,6 @@
 "use client";
 
 import { useFieldArray, useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, Trash2 } from "lucide-react";
 
@@ -24,36 +23,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-const recipeSchema = z.object({
-  name: z.string().min(2, { message: "Recipe name is required" }),
-  category: z.string().min(1, { message: "Category is required" }),
-  description: z.string(),
-  ingredients: z
-    .array(
-      z.object({
-        name: z.string().min(1, {
-          message: "Ingredient name is required",
-        }),
-        quantity: z.string().min(1, {
-          message: "Quantity is required",
-        }),
-      }),
-    )
-    .min(1, { message: "At least one ingredient is required" }),
-  steps: z
-    .array(
-      z.object({
-        step: z.string().min(1, {
-          message: "Step description is required",
-        }),
-      }),
-    )
-    .min(1, { message: "At least one step is required" }),
-  tags: z.array(z.string()).optional(),
-});
+import { recipeSchema, type Recipe } from "./schemas";
 
 export function RecipeForm() {
-  const form = useForm<z.infer<typeof recipeSchema>>({
+  const form = useForm<Recipe>({
     resolver: zodResolver(recipeSchema),
     defaultValues: {
       name: "",
@@ -61,7 +34,6 @@ export function RecipeForm() {
       description: "",
       ingredients: [{ name: "", quantity: "" }],
       steps: [{ step: "" }],
-      tags: [],
     },
   });
 
@@ -69,7 +41,7 @@ export function RecipeForm() {
     fields: steps,
     append: addStep,
     remove: removeStep,
-  } = useFieldArray<z.infer<typeof recipeSchema>>({
+  } = useFieldArray({
     control: form.control,
     name: "steps",
   });
@@ -78,12 +50,12 @@ export function RecipeForm() {
     fields: ingredients,
     append: addIngredient,
     remove: removeIngredient,
-  } = useFieldArray<z.infer<typeof recipeSchema>>({
+  } = useFieldArray({
     control: form.control,
     name: "ingredients",
   });
 
-  function onSubmit(values: z.infer<typeof recipeSchema>) {
+  function onSubmit(values: Recipe) {
     console.log(values);
   }
 
