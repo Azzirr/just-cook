@@ -14,12 +14,8 @@ const TopNavigation = () => {
     <div className="sticky top-0 flex w-full items-center justify-between bg-slate-100 px-3 py-1">
       <Image src={ExampleImage} alt="Example description" className="w-32" />
       <div className="flex items-center gap-3">
-        <Link href="/shopping-list">
-          <Image
-            src={ShoppingBagIcon}
-            alt="Shopping List"
-            className="size-10"
-          />
+        <Link href="/shopping-bag">
+          <Image src={ShoppingBagIcon} alt="Shopping Bag" className="size-10" />
         </Link>
         <NotificationBox />
       </div>
