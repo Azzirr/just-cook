@@ -21,11 +21,28 @@ enum Visibility {
   FRIENDS
 }
 
+model Account {
+  id                 String    @id @default(cuid())
+  userId             String
+  providerType       String
+  providerId         String
+  providerAccountId  String
+  refreshToken       String?
+  accessToken        String?
+  accessTokenExpires DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([providerId, providerAccountId])
+}
+
 model User {
-  id        Int      @id @default(autoincrement())
-  avatar    String
+  id        String   @id @default(cuid())
+  avatar    String?
   email     String   @unique
-  username  String?  @unique
+  username  String   @unique
   password  String
   firstName String?
   isActive  Boolean  @default(true)
@@ -35,6 +52,7 @@ model User {
 
   shoppingList   ShoppingList?
   createdRecipes Recipe[]
+  accounts       Account[]
 }
 
 model Recipe {
@@ -44,7 +62,7 @@ model Recipe {
   visibility       Visibility @default(PRIVATE)
   images           String[]
   recipeCategoryId Int
-  authorId         Int
+  authorId         String
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
 
@@ -85,8 +103,8 @@ model IngredientsCategory {
 }
 
 model ShoppingList {
-  id     Int @id @default(autoincrement())
-  userId Int @unique
+  id     Int    @id @default(autoincrement())
+  userId String @unique
 
   user         User          @relation(fields: [userId], references: [id])
   ingredientss Ingredients[]
