@@ -2,7 +2,7 @@
 import bcrypt from "bcryptjs";
 import { db } from "@/db";
 import { Role } from "@prisma/client";
-import { registerSchema } from "@/components/Login/schemas";
+import { registerSchema } from "@/schemas/authSchemas";
 
 export async function register(prevState: unknown, formData: FormData) {
   const validationResult = registerSchema.safeParse({

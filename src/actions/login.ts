@@ -1,6 +1,6 @@
 "use server";
 import { signIn } from "@/auth";
-import { loginSchema } from "@/components/Login/schemas";
+import { loginSchema } from "@/schemas/authSchemas";
 import { AuthError } from "next-auth";
 
 export async function login(prevState: unknown, formData: FormData) {

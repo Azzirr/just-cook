@@ -11,7 +11,7 @@ import { Input } from "../ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { registerSchema } from "./schemas";
+import { registerSchema } from "../../schemas/authSchemas";
 import { LoginFormProps } from "./types";
 
 const RegisterForm = ({ setIsLogin }: LoginFormProps) => {
