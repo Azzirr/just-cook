@@ -5,6 +5,6 @@ export default createMiddleware(routing);
 
 export const config = {
   // Match only internationalized pathnames
-  // Cannot be dynamic
+  // Cannot be dynamic test
   matcher: ["/", "/(en|pl)/:path*"],
 };
