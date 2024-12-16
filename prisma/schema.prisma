@@ -37,18 +37,26 @@ model User {
   createdRecipes Recipe[]
 }
 
+model Ingredient {
+  id       Int     @id @default(autoincrement())
+  name     String
+  quantity String
+  Recipe   Recipe? @relation(fields: [recipeId], references: [id])
+  recipeId Int?
+}
+
 model Recipe {
-  id               Int        @id @default(autoincrement())
+  id               Int          @id @default(autoincrement())
   name             String
   description      String
   steps            String[]
-  ingredients      String[]
-  visibility       Visibility @default(PRIVATE)
+  ingredients      Ingredient[]
+  visibility       Visibility   @default(PRIVATE)
   images           String[]
   recipeCategoryId Int
   authorId         Int
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
 
   category RecipeCategory? @relation(fields: [recipeCategoryId], references: [id])
   author   User            @relation(fields: [authorId], references: [id])
