@@ -2,9 +2,16 @@
   "Categories": {
     "title": "Categories"
   },
+  "Recipes": {
+    "title": "Recipes"
+  },
   "NotFoundPage": {
     "title": "Page not found",
     "description": "Please double-check the browser address bar or use the navigation to go to a known page.",
     "back": "Back to home"
+  },
+  "ShoppingBag": {
+    "title": "Shopping Bag",
+    "isEmpty": "Shopping bag is empty"
   }
 }

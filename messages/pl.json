@@ -2,9 +2,16 @@
   "Categories": {
     "title": "Kategorie"
   },
+  "Recipes": {
+    "title": "Przepisy"
+  },
   "NotFoundPage": {
     "title": "Strona nie znaleziona",
     "description": "Sprawdź pasek adresu przeglądarki lub użyj nawigacji, aby przejść do znanej strony.",
     "back": "Powrót do strony głównej"
+  },
+  "ShoppingBag": {
+    "title": "Koszyk",
+    "isEmpty": "Koszyk jest pusty"
   }
 }

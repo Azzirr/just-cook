@@ -28,18 +28,20 @@ const Category = () => {
 
   return (
     <div className="mx-auto max-w-96 py-5">
-      <h1 className="mb-4 text-2xl font-bold">{t("title")}</h1>
-      <div className="flex flex-col gap-4">
-        {categories.map((category) => (
-          <Button
-            key={category.name}
-            asChild
-            variant="secondary"
-            className="rounded-3xl text-lg"
-          >
-            <Link href={`/category/${category.href}`}>{category.name}</Link>
-          </Button>
-        ))}
+      <div className="mx-5">
+        <h1 className="mb-4 text-2xl font-bold">{t("title")}</h1>
+        <div className="flex flex-col gap-4">
+          {categories.map((category) => (
+            <Button
+              key={category.name}
+              asChild
+              variant="secondary"
+              className="rounded-3xl text-lg"
+            >
+              <Link href={`/category/${category.href}`}>{category.name}</Link>
+            </Button>
+          ))}
+        </div>
       </div>
     </div>
   );
