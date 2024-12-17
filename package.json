@@ -22,7 +22,6 @@
     "@radix-ui/react-slot": "^1.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "cmdk": "^1.0.0",
     "lucide-react": "^0.462.0",
     "next": "15.0.3",
     "next-intl": "^3.26.0",
