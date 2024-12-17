@@ -1,7 +1,11 @@
-const category = () => {
+import { fetchRecipes } from "@/app/actions/actions";
+import Recipes from "@/components/Recipe/Recipe";
+
+const category = async () => {
+  const recipes = await fetchRecipes();
   return (
     <>
-      <div> Recipe list from category</div>
+      <Recipes recipes={recipes} />
     </>
   );
 };
