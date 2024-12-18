@@ -55,21 +55,30 @@ model User {
   accounts       Account[]
 }
 
+model Ingredient {
+  id       Int     @id @default(autoincrement())
+  name     String
+  quantity String
+  Recipe   Recipe? @relation(fields: [recipeId], references: [id])
+  recipeId Int?
+}
+
 model Recipe {
-  id               Int        @id @default(autoincrement())
+  id               Int          @id @default(autoincrement())
   name             String
-  content          String
-  visibility       Visibility @default(PRIVATE)
+  description      String
+  steps            String[]
+  ingredients      Ingredient[]
+  visibility       Visibility   @default(PRIVATE)
   images           String[]
   recipeCategoryId Int
   authorId         String
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
 
-  category    RecipeCategory? @relation(fields: [recipeCategoryId], references: [id])
-  author      User            @relation(fields: [authorId], references: [id])
-  tag         Tag[]
-  ingredients Ingredients[]
+  category RecipeCategory? @relation(fields: [recipeCategoryId], references: [id])
+  author   User            @relation(fields: [authorId], references: [id])
+  tag      Tag[]
 }
 
 model RecipeCategory {
@@ -84,28 +93,10 @@ model Tag {
   recipes Recipe[]
 }
 
-model Ingredients {
-  id                    Int     @id @default(autoincrement())
-  name                  String  @unique
-  price                 Float?
-  ingredientsCategoryId String?
-  shoppingListId        Int?
-
-  category     IngredientsCategory[]
-  shoppingList ShoppingList?         @relation(fields: [shoppingListId], references: [id])
-  recipe       Recipe[]
-}
-
-model IngredientsCategory {
-  id          Int           @id @default(autoincrement())
-  name        String
-  ingredients Ingredients[]
-}
-
 model ShoppingList {
   id     Int    @id @default(autoincrement())
   userId String @unique
 
-  user         User          @relation(fields: [userId], references: [id])
-  ingredientss Ingredients[]
+  user        User     @relation(fields: [userId], references: [id])
+  ingredients String[]
 }
