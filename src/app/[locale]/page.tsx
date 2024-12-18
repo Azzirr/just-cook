@@ -1,6 +1,8 @@
 import { setRequestLocale } from "next-intl/server";
-import { Locale } from "@/i18n/routing";
+
 import Category from "@/components/Category/Category";
+
+import { Locale } from "@/i18n/routing";
 
 interface HomeProps {
   params: {
@@ -17,7 +19,7 @@ const Home = async ({ params, searchParams }: HomeProps) => {
   // Enable static rendering
   setRequestLocale(locale);
 
-  return <Category searchParams={{ query }} />;
+  return <Category query={query} />;
 };
 
 export default Home;

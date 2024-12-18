@@ -6,7 +6,5 @@ export const fetchRecipes = async () => {
     return db.recipe.findMany();
   } catch (error) {
     console.log(error);
-  } finally {
-    db.$disconnect;
   }
 };

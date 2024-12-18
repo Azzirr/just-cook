@@ -2,15 +2,8 @@ import { useTranslations } from "next-intl";
 import SearchBar from "../ui-custom/SearchBar";
 import CategoryList from "./CategoryList";
 
-const Category = ({
-  searchParams,
-}: {
-  searchParams?: {
-    query?: string;
-  };
-}) => {
+const Category = ({ query = "" }: { query?: string }) => {
   const t = useTranslations("Categories");
-  const query: string = searchParams?.query || "";
 
   return (
     <div className="mx-auto max-w-96 py-5">
