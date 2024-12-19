@@ -1,9 +1,4 @@
-import Image from "next/image";
-
-import MoreIcon from "@/public/icons/more.svg";
-import HomeIcon from "@/public/icons/home.svg";
-import FavouriteRecipesIcon from "@/public/icons/favourite-recipes.svg";
-
+import { Ellipsis, House, Heart } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { Link } from "@/i18n/routing";
@@ -12,15 +7,11 @@ const BottomNavigation = () => {
   return (
     <div className="sticky bottom-0 flex justify-between bg-slate-100 p-3">
       <Link href="/">
-        <Image src={HomeIcon} alt="Home Icon" className="size-10" />
+        <House className="size-10" strokeWidth={1.5} />
       </Link>
       <div className="flex gap-3">
         <Link href="/favourite-recipes">
-          <Image
-            src={FavouriteRecipesIcon}
-            alt="Recipes Icon"
-            className="size-10"
-          />
+          <Heart className="size-10" strokeWidth={1.5} />
         </Link>
         <Link href="/user">
           <Avatar>
@@ -29,7 +20,7 @@ const BottomNavigation = () => {
           </Avatar>
         </Link>
         <Link href="/more">
-          <Image src={MoreIcon} alt="Alert Icon" className="size-10" />
+          <Ellipsis className="size-10" strokeWidth={1.5} />
         </Link>
       </div>
     </div>
