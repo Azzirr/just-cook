@@ -5,16 +5,16 @@ import Category from "@/components/Category/Category";
 import { Locale } from "@/i18n/routing";
 
 interface HomeProps {
-  params: {
+  params: Promise<{
     locale: Locale;
-  };
-  searchParams: Record<string, string | undefined>;
+  }>;
+  searchParams: Promise<Record<string, string | undefined>>;
 }
 
 const Home = async ({ params, searchParams }: HomeProps) => {
-  const { locale } = params;
+  const { locale } = await params;
 
-  const query = searchParams.query || "";
+  const query = (await searchParams).query || "";
 
   // Enable static rendering
   setRequestLocale(locale);
