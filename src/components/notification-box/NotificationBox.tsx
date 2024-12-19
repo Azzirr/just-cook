@@ -1,9 +1,4 @@
-import Image from "next/image";
-
-import WarningIcon from "@/public/icons/warning.svg";
-import BookIcon from "@/public/icons/book.svg";
-import BellIcon from "@/public/icons/bell.svg";
-import ShoppingBagIcon from "@/public/icons/shopping-bag.svg";
+import { ShoppingBag, TriangleAlert, BookOpen, Bell } from "lucide-react";
 
 import {
   Popover,
@@ -20,49 +15,49 @@ const notifications: Notification[] = [
     title: "New Recipe",
     body: "Check out our new recipe for a delicious meal!",
     redirectTo: "/recipes",
-    Icon: ShoppingBagIcon,
+    Icon: ShoppingBag,
   },
   {
     title: "Verify your account",
     body: "Please verify your account to continue using our services.",
     redirectTo: "/account",
-    Icon: WarningIcon,
+    Icon: TriangleAlert,
   },
   {
     title: "Rate recipe",
     body: "Rate the recipe you tried last week and help us improve.",
     redirectTo: "/recipes",
-    Icon: BookIcon,
+    Icon: BookOpen,
   },
   {
     title: "New Recipe",
     body: "Check out our new recipe for a delicious meal!",
     redirectTo: "/recipes",
-    Icon: ShoppingBagIcon,
+    Icon: ShoppingBag,
   },
   {
     title: "Verify your account",
     body: "Please verify your account to continue using our services.",
     redirectTo: "/account",
-    Icon: WarningIcon,
+    Icon: TriangleAlert,
   },
   {
     title: "Rate recipe",
     body: "Rate the recipe you tried last week and help us improve.",
     redirectTo: "/recipes",
-    Icon: BookIcon,
+    Icon: BookOpen,
   },
   {
     title: "New Recipe",
     body: "Check out our new recipe for a delicious meal!",
     redirectTo: "/recipes",
-    Icon: ShoppingBagIcon,
+    Icon: ShoppingBag,
   },
   {
     title: "Verify your account",
     body: "Please verify your account to continue using our services.",
     redirectTo: "/account",
-    Icon: WarningIcon,
+    Icon: TriangleAlert,
   },
 ];
 
@@ -72,11 +67,7 @@ export const NotificationBox = () => {
   return (
     <Popover>
       <PopoverTrigger className="relative">
-        <Image
-          src={BellIcon}
-          alt="Notifications Bell Icon"
-          className="size-10"
-        />
+        <Bell className="size-10" strokeWidth={1.5} />
         {hasNotifications && (
           <div className="absolute bottom-0 right-0 size-4 rounded-full bg-indigo-600 text-xs text-slate-50">
             {notifications.length}
