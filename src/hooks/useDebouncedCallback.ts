@@ -1,4 +1,4 @@
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useEffect } from "react";
 
 export const useDebouncedCallback = <T extends (...args: any[]) => void>(
   func: T,
@@ -24,6 +24,14 @@ export const useDebouncedCallback = <T extends (...args: any[]) => void>(
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, []);
 
   return [debouncedCallback, cancel] as const;
