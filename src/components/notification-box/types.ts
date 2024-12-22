@@ -2,5 +2,5 @@ export type Notification = {
   title: string;
   body: string;
   redirectTo: string;
-  Icon: any;
+  Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 };
