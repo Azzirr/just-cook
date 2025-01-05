@@ -16,7 +16,7 @@ export async function register(prevState: FormState, data: FormData) {
       errors: parsed.error?.errors.map((error) => error.message),
       fields: extractFieldsFromFormData(data),
       message: "Invalid form data",
-      success: false,
+      isSuccess: false,
     };
   }
 
@@ -33,7 +33,7 @@ export async function register(prevState: FormState, data: FormData) {
     return {
       fields: extractFieldsFromFormData(data),
       message: "Email is already in use",
-      success: false,
+      isSuccess: false,
     };
   }
 
@@ -48,6 +48,6 @@ export async function register(prevState: FormState, data: FormData) {
   });
 
   return {
-    success: true,
+    isSuccess: true,
   };
 }

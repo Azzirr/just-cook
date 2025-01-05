@@ -20,7 +20,9 @@ import { onSubmitUtil } from "@/utils/onSubmitUtil";
 import { redirect } from "next/navigation";
 
 const LoginForm = ({ setShowLoginForm }: AuthFormProps) => {
-  const [state, action, isPending] = useActionState(login, { success: false });
+  const [state, action, isPending] = useActionState(login, {
+    isSuccess: false,
+  });
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -32,10 +34,10 @@ const LoginForm = ({ setShowLoginForm }: AuthFormProps) => {
   });
 
   useEffect(() => {
-    if (state.success) {
+    if (state.isSuccess) {
       redirect("/");
     }
-  }, [state.success]);
+  }, [state.isSuccess]);
 
   return (
     <>

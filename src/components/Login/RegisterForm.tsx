@@ -20,7 +20,7 @@ import { registerSchema } from "@/schemas/authSchemas";
 
 const RegisterForm = ({ setShowLoginForm }: AuthFormProps) => {
   const [state, action, isPending] = useActionState(register, {
-    success: false,
+    isSuccess: false,
   });
   const formRef = useRef(null);
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -34,10 +34,10 @@ const RegisterForm = ({ setShowLoginForm }: AuthFormProps) => {
   });
 
   useEffect(() => {
-    if (state.success) {
+    if (state.isSuccess) {
       setShowLoginForm(true);
     }
-  }, [state.success]);
+  }, [state.isSuccess]);
 
   return (
     <>
