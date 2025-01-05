@@ -1,3 +1,3 @@
-export type LoginFormProps = {
-  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
+export type AuthFormProps = {
+  setShowLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
 };

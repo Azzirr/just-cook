@@ -12,14 +12,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { loginSchema } from "@/schemas/authSchemas";
-import { LoginFormProps } from "./types";
+import { AuthFormProps } from "./types";
 import { useActionState, useEffect, useRef } from "react";
 import { login } from "@/actions/login";
 import { FormAlert } from "@/components/FormAlert";
 import { onSubmitUtil } from "@/utils/onSubmitUtil";
 import { redirect } from "next/navigation";
 
-const LoginForm = ({ setIsLogin }: LoginFormProps) => {
+const LoginForm = ({ setShowLoginForm }: AuthFormProps) => {
   const [state, action, isPending] = useActionState(login, { success: false });
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -37,10 +37,6 @@ const LoginForm = ({ setIsLogin }: LoginFormProps) => {
       redirect("/");
     }
   }, [state.success]);
-
-  const handleSwitchToRegister = () => {
-    setIsLogin(false);
-  };
 
   return (
     <>
@@ -105,7 +101,7 @@ const LoginForm = ({ setIsLogin }: LoginFormProps) => {
           Or click{" "}
           <span
             className="text-blue-600 [text-decoration:underline]"
-            onClick={handleSwitchToRegister}
+            onClick={() => setShowLoginForm(false)}
           >
             here
           </span>{" "}

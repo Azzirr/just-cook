@@ -11,15 +11,14 @@ import { Input } from "../ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { registerSchema } from "../../schemas/authSchemas";
-import { LoginFormProps } from "./types";
+import { AuthFormProps } from "./types";
 import { useActionState, useEffect, useRef } from "react";
 import { register } from "@/actions/register";
 import { onSubmitUtil } from "@/utils/onSubmitUtil";
 import { FormAlert } from "@/components/FormAlert";
-import { redirect } from "next/navigation";
+import { registerSchema } from "@/schemas/authSchemas";
 
-const RegisterForm = ({ setIsLogin }: LoginFormProps) => {
+const RegisterForm = ({ setShowLoginForm }: AuthFormProps) => {
   const [state, action, isPending] = useActionState(register, {
     success: false,
   });
@@ -36,13 +35,9 @@ const RegisterForm = ({ setIsLogin }: LoginFormProps) => {
 
   useEffect(() => {
     if (state.success) {
-      handleSwitchToLogin();
+      setShowLoginForm(true);
     }
   }, [state.success]);
-
-  const handleSwitchToLogin = () => {
-    setIsLogin(true);
-  };
 
   return (
     <>
@@ -146,7 +141,7 @@ const RegisterForm = ({ setIsLogin }: LoginFormProps) => {
             Or click{" "}
             <span
               className="text-blue-600 [text-decoration:underline]"
-              onClick={handleSwitchToLogin}
+              onClick={() => setShowLoginForm(true)}
             >
               here
             </span>{" "}
