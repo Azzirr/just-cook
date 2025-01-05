@@ -9,6 +9,7 @@ import {
 
 import { CreatedRecipesSection } from "@/components/UserProfile/CreatedRecipesSection";
 import { SavedRecipesSection } from "@/components/UserProfile/SavedRecipesSection";
+import { RecentActivity } from "@/components/UserProfile/RecentActivity";
 
 const page = () => {
   const data = {
@@ -33,6 +34,8 @@ const page = () => {
       <CreatedRecipesSection />
       <Separator />
       <SavedRecipesSection />
+      <Separator />
+      <RecentActivity />
     </div>
   );
 };

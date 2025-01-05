@@ -12,7 +12,7 @@ const SectionTitle = ({ className, children }: any) => {
 
 const SectionDescription = ({ className, children }: any) => {
   return (
-    <h3 className={cn("mb-2 mt-1 text-sm text-gray-500", className)}>
+    <h3 className={cn("mb-2 mt-1 text-sm text-muted-foreground", className)}>
       {children}
     </h3>
   );

@@ -32,7 +32,9 @@ export const RecipeCard = (props: RecipeCardProps) => {
           ))}
         </div>
       </CardContent>
-      <CardFooter className="text-slate-600">{props.description}</CardFooter>
+      <CardFooter className="text-muted-foreground">
+        {props.description}
+      </CardFooter>
     </Card>
   );
 };
