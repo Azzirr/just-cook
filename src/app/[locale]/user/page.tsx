@@ -7,7 +7,7 @@ import {
   SectionContent,
 } from "@/components/ui-custom/Section";
 
-import { CreatedRecipesSection } from "@/components/UserProfile/CreatedRecipes";
+import { CreatedRecipesSection } from "@/components/UserProfile/CreatedRecipesSection";
 import { SavedRecipesSection } from "@/components/UserProfile/SavedRecipesSection";
 
 const page = () => {
