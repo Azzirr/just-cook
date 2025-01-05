@@ -58,7 +58,7 @@ const RegisterForm = ({ setShowLoginForm }: AuthFormProps) => {
             >
               <FormAlert
                 message={state.message}
-                issues={state.issues}
+                errors={state.errors}
               ></FormAlert>
               <FormField
                 control={form.control}

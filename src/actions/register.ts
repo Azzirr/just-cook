@@ -13,7 +13,7 @@ export async function register(prevState: FormState, data: FormData) {
 
   if (!parsed.success) {
     return {
-      issues: parsed.error.issues.map((issue) => issue.message),
+      errors: parsed.error?.errors.map((error) => error.message),
       fields: extractFieldsFromFormData(data),
       message: "Invalid form data",
       success: false,

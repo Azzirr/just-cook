@@ -25,7 +25,6 @@ const LoginForm = ({ setShowLoginForm }: AuthFormProps) => {
   const formRef = useRef<HTMLFormElement>(null);
 
   const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
     defaultValues: {
       username: state?.fields?.username || "",
       password: "",
@@ -46,7 +45,7 @@ const LoginForm = ({ setShowLoginForm }: AuthFormProps) => {
       </div>
 
       <div className="w-full">
-        <FormAlert message={state?.message} issues={state?.issues}></FormAlert>
+        <FormAlert message={state?.message} errors={state?.errors}></FormAlert>
         <Form {...form}>
           <form
             ref={formRef}

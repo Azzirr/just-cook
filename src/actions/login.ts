@@ -14,9 +14,9 @@ export async function login(
 
   if (!parsed.success) {
     return {
-      issues: parsed.error.issues.map((issue) => issue.message),
-      fields: { username: formData["username"].toString() },
+      errors: parsed.error?.errors.map((error) => error.message),
       message: "Invalid form data",
+      fields: { username: formData["username"].toString() },
       success: false,
     };
   }
