@@ -13,8 +13,17 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { registerSchema } from "../../schemas/authSchemas";
 import { LoginFormProps } from "./types";
+import { useActionState, useEffect, useRef } from "react";
+import { register } from "@/actions/register";
+import { onSubmitUtil } from "@/utils/onSubmitUtil";
+import { FormAlert } from "@/components/FormAlert";
+import { redirect } from "next/navigation";
 
 const RegisterForm = ({ setIsLogin }: LoginFormProps) => {
+  const [state, action, isPending] = useActionState(register, {
+    success: false,
+  });
+  const formRef = useRef(null);
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -25,10 +34,11 @@ const RegisterForm = ({ setIsLogin }: LoginFormProps) => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof registerSchema>) => {
-    // TODO: whole logic
-    console.log(values);
-  };
+  useEffect(() => {
+    if (state.success) {
+      handleSwitchToLogin();
+    }
+  }, [state.success]);
 
   const handleSwitchToLogin = () => {
     setIsLogin(true);
@@ -45,7 +55,16 @@ const RegisterForm = ({ setIsLogin }: LoginFormProps) => {
         </div>
         <div className="w-full">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+            <form
+              ref={formRef}
+              action={action}
+              onSubmit={onSubmitUtil({ action, formRef, form })}
+              className="space-y-5"
+            >
+              <FormAlert
+                message={state.message}
+                issues={state.issues}
+              ></FormAlert>
               <FormField
                 control={form.control}
                 name="username"
@@ -113,6 +132,7 @@ const RegisterForm = ({ setIsLogin }: LoginFormProps) => {
               <div className="flex justify-center">
                 <Button
                   type="submit"
+                  isPending={isPending}
                   className="w-[50vw] rounded-3xl bg-gray-900"
                 >
                   Register

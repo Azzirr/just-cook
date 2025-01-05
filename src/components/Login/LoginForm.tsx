@@ -7,39 +7,57 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "../ui/input";
+import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { loginSchema } from "../../schemas/authSchemas";
+import { loginSchema } from "@/schemas/authSchemas";
 import { LoginFormProps } from "./types";
+import { useActionState, useEffect, useRef } from "react";
+import { login } from "@/actions/login";
+import { FormAlert } from "@/components/FormAlert";
+import { onSubmitUtil } from "@/utils/onSubmitUtil";
+import { redirect } from "next/navigation";
 
 const LoginForm = ({ setIsLogin }: LoginFormProps) => {
+  const [state, action, isPending] = useActionState(login, { success: false });
+
+  const formRef = useRef<HTMLFormElement>(null);
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: "",
+      username: state?.fields?.username || "",
       password: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    // TODO - whole logic
-    console.log(values);
-  };
+  useEffect(() => {
+    if (state.success) {
+      redirect("/");
+    }
+  }, [state.success]);
 
   const handleSwitchToRegister = () => {
     setIsLogin(false);
   };
+
   return (
     <>
       <div className="mb-4">
         <h2 className="text-left">Login</h2>
         <p className="text-left">to get all features</p>
       </div>
+
       <div className="w-full">
+        <FormAlert message={state?.message} issues={state?.issues}></FormAlert>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+          <form
+            ref={formRef}
+            action={action}
+            onSubmit={onSubmitUtil({ action, formRef, form })}
+            className="space-y-5"
+          >
             <FormField
               control={form.control}
               name="username"
@@ -74,6 +92,7 @@ const LoginForm = ({ setIsLogin }: LoginFormProps) => {
               <Button
                 type="submit"
                 className="w-[50vw] rounded-3xl bg-gray-900"
+                isPending={isPending}
               >
                 Login
               </Button>
