@@ -8,6 +8,7 @@ import {
 } from "@/components/ui-custom/Section";
 
 import { CreatedRecipesSection } from "@/components/UserProfile/CreatedRecipes";
+import { SavedRecipesSection } from "@/components/UserProfile/SavedRecipesSection";
 
 const page = () => {
   const data = {
@@ -30,6 +31,8 @@ const page = () => {
       </Section>
       <Separator />
       <CreatedRecipesSection />
+      <Separator />
+      <SavedRecipesSection />
     </div>
   );
 };
