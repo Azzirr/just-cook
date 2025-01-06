@@ -22,7 +22,8 @@ const RegisterForm = ({ setShowLoginForm }: AuthFormProps) => {
   const [state, action, isPending] = useActionState(register, {
     isSuccess: false,
   });
-  const formRef = useRef(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
