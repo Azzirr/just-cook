@@ -1,8 +1,7 @@
+import { RecipePage } from "@/components/RecipePage/RecipePage";
+
 const recipe = () => {
-  return (
-    <>
-      <div>Recipe</div>
-    </>
-  );
+  return <RecipePage />;
 };
+
 export default recipe;
