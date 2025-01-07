@@ -53,7 +53,7 @@ const pizzaRecipe = {
 
 export const RecipePage = () => {
   return (
-    <div className="mx-auto flex max-w-prose flex-col gap-6 p-6">
+    <div className="mx-auto flex max-w-[80ch] flex-col gap-6 p-6">
       <section className="flex justify-between gap-3">
         <div>
           <h1>{pizzaRecipe.name}</h1>
