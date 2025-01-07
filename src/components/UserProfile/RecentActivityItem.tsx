@@ -1,6 +1,3 @@
-import { Card } from "@/components/ui/card";
-import { projectEntrypointsSubscribe } from "next/dist/build/swc/generated-native";
-
 export const RecentActivityItem = (props: {
   type: string;
   recipe: string;

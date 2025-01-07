@@ -1,11 +1,13 @@
+import { Separator } from "@/components/ui/separator";
+
 import {
   Section,
   SectionContent,
   SectionDescription,
   SectionTitle,
 } from "@/components/ui-custom/Section";
+
 import { RecentActivityItem } from "./RecentActivityItem";
-import { Separator } from "@/components/ui/separator";
 
 export const RecentActivity = () => {
   const activities = [

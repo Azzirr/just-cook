@@ -1,14 +1,15 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
+
+import {
+  RecipeCard,
+  type RecipeCardProps,
+} from "@/components/ui-custom/RecipeCard";
 import {
   Section,
   SectionContent,
   SectionDescription,
   SectionTitle,
 } from "@/components/ui-custom/Section";
-import {
-  RecipeCard,
-  type RecipeCardProps,
-} from "@/components/ui-custom/RecipeCard";
 
 export const CreatedRecipesSection = () => {
   const data: RecipeCardProps[] = [
