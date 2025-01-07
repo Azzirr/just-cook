@@ -17,12 +17,14 @@ import { useActionState, useEffect, useRef } from "react";
 import { login } from "@/actions/login";
 import { FormAlert } from "@/components/FormAlert";
 import { onSubmitUtil } from "@/utils/onSubmitUtil";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/routing";
+import { useLocale } from "next-intl";
 
 const LoginForm = ({ setShowLoginForm }: AuthFormProps) => {
   const [state, action, isPending] = useActionState(login, {
     isSuccess: false,
   });
+  const locale = useLocale();
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -36,7 +38,7 @@ const LoginForm = ({ setShowLoginForm }: AuthFormProps) => {
 
   useEffect(() => {
     if (state.isSuccess) {
-      redirect("/");
+      redirect({ href: "/", locale });
     }
   }, [state.isSuccess]);
 

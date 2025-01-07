@@ -1,11 +1,13 @@
 import { auth } from "@/auth";
 import AuthUser from "@/components/Login/AuthUser";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/routing";
+import { getLocale } from "next-intl/server";
 
 const authUser = async () => {
   const session = await auth();
+  const locale = await getLocale();
 
-  if (session) redirect("/");
+  if (session) redirect({ href: "/", locale });
 
   return (
     <>
