@@ -1,4 +1,9 @@
-export const RecentActivityItem = (props: {
+export const RecentActivityItem = ({
+  type: activityType,
+  recipe: recipeTitle,
+  rating,
+  time: timeOfActivity,
+}: {
   type: string;
   recipe: string;
   rating?: number;
@@ -7,15 +12,15 @@ export const RecentActivityItem = (props: {
   return (
     <li className="text-sm">
       <div>
-        {props.type === "comment" && "Commented on"}
-        {props.type === "rating" && "Rated"}
-        {props.type === "view" && "Viewed"}
-        {props.type === "save" && "Saved"}
+        {activityType === "comment" && "Commented on"}
+        {activityType === "rating" && "Rated"}
+        {activityType === "view" && "Viewed"}
+        {activityType === "save" && "Saved"}
         {/* */ " "}
-        {props.recipe} {props.type === "rating" && props.rating + " stars"}
+        {recipeTitle} {activityType === "rating" && rating + " stars"}
       </div>
       <div>
-        <span className="text-muted-foreground">{props.time}</span>
+        <span className="text-muted-foreground">{timeOfActivity}</span>
       </div>
     </li>
   );
