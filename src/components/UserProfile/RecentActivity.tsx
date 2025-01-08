@@ -1,5 +1,7 @@
-import { Separator } from "@/components/ui/separator";
+import { Fragment } from "react";
 
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 import {
   Section,
   SectionContent,
@@ -36,6 +38,18 @@ export const RecentActivity = () => {
       time: "1 week ago",
       id: 4,
     },
+    {
+      type: "save",
+      recipe: "Chicken Alfredo",
+      time: "2 weeks ago",
+      id: 5,
+    },
+    {
+      type: "comment",
+      recipe: "Spaghetti Carbonara",
+      time: "3 weeks ago",
+      id: 6,
+    },
   ];
 
   return (
@@ -43,14 +57,16 @@ export const RecentActivity = () => {
       <SectionTitle>Recent Activity</SectionTitle>
       <SectionDescription>See what you've been up to lately</SectionDescription>
       <SectionContent className="flex w-max gap-2">
-        <ul className="flex flex-col gap-2">
-          {activities.map((activityData, index) => (
-            <>
-              {index !== 0 && <Separator />}
-              <RecentActivityItem key={activityData.id} {...activityData} />
-            </>
-          ))}
-        </ul>
+        <ScrollArea className="max-h-72">
+          <ul className="flex flex-col gap-2 py-2 pe-4">
+            {activities.map((activityData, index) => (
+              <Fragment key={activityData.id}>
+                {index !== 0 && <Separator />}
+                <RecentActivityItem {...activityData} />
+              </Fragment>
+            ))}
+          </ul>
+        </ScrollArea>
       </SectionContent>
     </Section>
   );
