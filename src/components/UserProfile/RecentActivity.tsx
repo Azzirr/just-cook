@@ -57,7 +57,7 @@ export const RecentActivity = () => {
       <SectionTitle>Recent Activity</SectionTitle>
       <SectionDescription>See what you've been up to lately</SectionDescription>
       <SectionContent className="flex w-max gap-2">
-        <ScrollArea className="max-h-72">
+        <ScrollArea className="max-h-64">
           <ul className="flex flex-col gap-2 py-2 pe-4">
             {activities.map((activityData, index) => (
               <Fragment key={activityData.id}>
