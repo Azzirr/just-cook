@@ -1,4 +1,4 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 import {
   RecipeCard,
@@ -45,13 +45,16 @@ export const CreatedRecipesSection = () => {
       <SectionDescription>
         Recipes you've created for yourself or shared with the community
       </SectionDescription>
-      <ScrollArea className="w-full">
-        <SectionContent className="flex w-max gap-2">
-          {data.map((recipeData) => (
-            <RecipeCard key={recipeData.id} {...recipeData} />
-          ))}
-        </SectionContent>
-      </ScrollArea>
+      <SectionContent>
+        <ScrollArea>
+          <div className="flex gap-2 pb-3">
+            {data.map((recipeData) => (
+              <RecipeCard key={recipeData.id} {...recipeData} />
+            ))}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
+      </SectionContent>
     </Section>
   );
 };
