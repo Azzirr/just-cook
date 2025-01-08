@@ -18,7 +18,7 @@ export const RecipeCard = (props: RecipeCardProps) => {
   return (
     <Card className="h-64 w-60">
       <CardHeader>
-        <CardTitle>{props.name}</CardTitle>
+        <CardTitle className="text-2xl">{props.name}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex gap-1">
