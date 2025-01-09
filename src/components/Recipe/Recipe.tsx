@@ -2,9 +2,19 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 import SearchBar from "../ui-custom/SearchBar";
+import { Recipe } from "@prisma/client";
 
-const Recipes = ({ recipes }: any) => {
+interface RecipesProps {
+  recipes: Recipe[];
+  query: "" | string;
+}
+
+const Recipes = ({ recipes, query }: RecipesProps) => {
   const t = useTranslations("Recipes");
+
+  const filteredRecipes = recipes.filter((recipe: Recipe) => {
+    return recipe.name.toLowerCase().includes(query.toLocaleLowerCase());
+  });
 
   return (
     <div className="mx-auto max-w-96 py-5">
@@ -12,13 +22,17 @@ const Recipes = ({ recipes }: any) => {
         <h1 className="mb-4 text-2xl font-bold">{t("title")}</h1>
         <SearchBar className="my-5" />
         <div className="flex flex-col gap-4">
-          {recipes?.map((recipe: any) => (
+          {filteredRecipes.length === 0 && (
+            <p className="mx-auto text-lg text-red-700">No recipes found...</p>
+          )}
+          {filteredRecipes?.map((recipe: Recipe) => (
             <Button
               key={recipe.name}
               asChild
               variant="secondary"
               className="rounded-3xl text-lg"
             >
+              {/* TODO - change href to normal one */}
               <Link href={`/1`}>{recipe.name}</Link>
             </Button>
           ))}

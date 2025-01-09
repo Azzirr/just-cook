@@ -1,4 +1,4 @@
-import { Ellipsis, House, Heart } from "lucide-react";
+import { Ellipsis, House, Heart, ClipboardPlus } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { Link } from "@/i18n/routing";
@@ -10,6 +10,10 @@ const BottomNavigation = () => {
         <House className="size-10" strokeWidth={1.5} />
       </Link>
       <div className="flex gap-3">
+        {/* TODO - there is a space for one more item */}
+        <Link href="/new-recipe">
+          <ClipboardPlus className="size-10" strokeWidth={1.5} />
+        </Link>
         <Link href="/favourite-recipes">
           <Heart className="size-10" strokeWidth={1.5} />
         </Link>
