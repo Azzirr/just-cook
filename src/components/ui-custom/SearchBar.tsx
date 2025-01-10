@@ -1,6 +1,6 @@
 "use client";
 import clsx from "clsx";
-import { Input } from "../ui/input";
+import { Input } from "@/components/ui/input";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useDebouncedCallback } from "@/hooks/useDebouncedCallback";
 
