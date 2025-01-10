@@ -3,22 +3,24 @@ import bcrypt from "bcryptjs";
 import { db } from "@/db";
 import { Role } from "@prisma/client";
 import { registerSchema } from "@/schemas/authSchemas";
+import { FormState } from "@/types/formState";
+import { extractFieldsFromFormData } from "@/utils/extractFieldsFromFormData";
 
-export async function register(prevState: unknown, formData: FormData) {
-  const validationResult = registerSchema.safeParse({
-    username: formData.get("username"),
-    email: formData.get("email"),
-    password: formData.get("password"),
-    repeatPassword: formData.get("repeatPassword"),
-  });
+export async function register(prevState: FormState, data: FormData) {
+  const formData = Object.fromEntries(data);
 
-  if (!validationResult.success) {
+  const parsed = registerSchema.safeParse(formData);
+
+  if (!parsed.success) {
     return {
-      errors: validationResult.error.flatten().fieldErrors,
+      errors: parsed.error?.errors.map((error) => error.message),
+      fields: extractFieldsFromFormData(data),
+      message: "Invalid form data",
+      isSuccess: false,
     };
   }
 
-  const { username, email, password } = validationResult.data;
+  const { username, email, password } = parsed.data;
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const existingUser = await db.user.findUnique({
@@ -29,7 +31,9 @@ export async function register(prevState: unknown, formData: FormData) {
 
   if (existingUser) {
     return {
-      error: "Email is already in use",
+      fields: extractFieldsFromFormData(data),
+      message: "Email is already in use",
+      isSuccess: false,
     };
   }
 
@@ -44,6 +48,6 @@ export async function register(prevState: unknown, formData: FormData) {
   });
 
   return {
-    success: "User registered",
+    isSuccess: true,
   };
 }

@@ -2,20 +2,26 @@
 import { signIn } from "@/auth";
 import { loginSchema } from "@/schemas/authSchemas";
 import { AuthError } from "next-auth";
+import { FormState } from "@/types/formState";
 
-export async function login(prevState: unknown, formData: FormData) {
-  const validationResult = loginSchema.safeParse({
-    username: formData.get("username"),
-    password: formData.get("password"),
-  });
+export async function login(
+  prevState: FormState,
+  data: FormData,
+): Promise<FormState> {
+  const formData = Object.fromEntries(data);
 
-  if (!validationResult.success) {
+  const parsed = loginSchema.safeParse(formData);
+
+  if (!parsed.success) {
     return {
-      errors: validationResult.error.flatten().fieldErrors,
+      errors: parsed.error?.errors.map((error) => error.message),
+      message: "Invalid form data",
+      fields: { username: formData["username"].toString() },
+      isSuccess: false,
     };
   }
 
-  const { username, password } = validationResult.data;
+  const { username, password } = parsed.data;
 
   try {
     await signIn("credentials", {
@@ -26,9 +32,17 @@ export async function login(prevState: unknown, formData: FormData) {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { error: "Invalid credentials!" };
+          return {
+            message: "Invalid credentials!",
+            fields: { username: parsed.data.username },
+            isSuccess: false,
+          };
         default:
-          return { error: "Something went wrong!" };
+          return {
+            message: "Something went wrong!",
+            fields: { username: parsed.data.username },
+            isSuccess: false,
+          };
       }
     }
 
@@ -36,6 +50,6 @@ export async function login(prevState: unknown, formData: FormData) {
   }
 
   return {
-    success: "User logged in",
+    isSuccess: true,
   };
 }

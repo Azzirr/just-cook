@@ -11,10 +11,19 @@ import { Input } from "../ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { registerSchema } from "../../schemas/authSchemas";
-import { LoginFormProps } from "./types";
+import { AuthFormProps } from "./types";
+import { useActionState, useEffect, useRef } from "react";
+import { register } from "@/actions/register";
+import { onSubmitUtil } from "@/utils/onSubmitUtil";
+import { FormAlert } from "@/components/FormAlert";
+import { registerSchema } from "@/schemas/authSchemas";
 
-const RegisterForm = ({ setIsLogin }: LoginFormProps) => {
+const RegisterForm = ({ setShowLoginForm }: AuthFormProps) => {
+  const [state, action, isPending] = useActionState(register, {
+    isSuccess: false,
+  });
+  const formRef = useRef<HTMLFormElement>(null);
+
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -25,14 +34,11 @@ const RegisterForm = ({ setIsLogin }: LoginFormProps) => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof registerSchema>) => {
-    // TODO: whole logic
-    console.log(values);
-  };
-
-  const handleSwitchToLogin = () => {
-    setIsLogin(true);
-  };
+  useEffect(() => {
+    if (state.isSuccess) {
+      setShowLoginForm(true);
+    }
+  }, [state.isSuccess]);
 
   return (
     <>
@@ -45,7 +51,16 @@ const RegisterForm = ({ setIsLogin }: LoginFormProps) => {
         </div>
         <div className="w-full">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+            <form
+              ref={formRef}
+              action={action}
+              onSubmit={onSubmitUtil({ action, formRef, form })}
+              className="space-y-5"
+            >
+              <FormAlert
+                message={state.message}
+                errors={state.errors}
+              ></FormAlert>
               <FormField
                 control={form.control}
                 name="username"
@@ -113,6 +128,7 @@ const RegisterForm = ({ setIsLogin }: LoginFormProps) => {
               <div className="flex justify-center">
                 <Button
                   type="submit"
+                  isPending={isPending}
                   className="w-[50vw] rounded-3xl bg-gray-900"
                 >
                   Register
@@ -126,7 +142,7 @@ const RegisterForm = ({ setIsLogin }: LoginFormProps) => {
             Or click{" "}
             <span
               className="text-blue-600 [text-decoration:underline]"
-              onClick={handleSwitchToLogin}
+              onClick={() => setShowLoginForm(true)}
             >
               here
             </span>{" "}
