@@ -1,8 +1,10 @@
+import { fetchCategories } from "@/app/actions/actions";
 import { Button } from "@/components/ui/button";
 
 import { Link } from "@/i18n/routing";
 import { RecipeCategory } from "@prisma/client";
 
+// TODO - delete this and uncomment code from 28 line
 const categories = [
   { id: 1, name: "DESSERTS 🍰", href: "/desserts" },
   { id: 2, name: "MAIN-DISHES 🍽️", href: "/main-dishes" },
@@ -20,9 +22,12 @@ const categories = [
   { id: 14, name: "HOLIDAY-SPECIALS 🎄", href: "/holiday-specials" },
   { id: 15, name: "KIDS-MENU 🍔", href: "/kids-menu" },
 ];
-//TODO: Async, get from DB
-const CategoryList = ({ query }: { query: string }) => {
-  const filteredCategories = categories.filter((category) => {
+
+const CategoryList = async ({ query }: { query: string }) => {
+  // TODO - uncomment this, it's a default code
+  // const categories = await fetchCategories();
+
+  const filteredCategories = (categories || []).filter((category) => {
     return category.name.toLowerCase().includes(query.toLocaleLowerCase());
   });
 
@@ -33,7 +38,7 @@ const CategoryList = ({ query }: { query: string }) => {
       )}
       {filteredCategories.map((category: RecipeCategory) => (
         <Button
-          key={category.name}
+          key={category.id}
           asChild
           variant="secondary"
           className="rounded-3xl text-lg"
