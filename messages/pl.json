@@ -1,4 +1,11 @@
 {
+  "TopNavigation": {
+    "home": "Główna",
+    "sendRecipe": "Wyślij",
+    "favourites": "Ulubione",
+    "user": "Profil",
+    "more": "Więcej"
+  },
   "Categories": {
     "title": "Kategorie"
   },
