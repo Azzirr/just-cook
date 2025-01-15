@@ -1,9 +1,13 @@
 import { z } from "zod";
 
 export const recipeSchema = z.object({
-  name: z.string().min(2, { message: "Recipe name is required" }),
+  name: z.string().min(2, { message: "Recipe name is required" }).max(100, {
+    message: "Recipe name must be less than 100 characters long",
+  }),
   category: z.string().min(1, { message: "Category is required" }),
-  description: z.string(),
+  description: z.string().max(500, {
+    message: "Description must be less than 500 characters long",
+  }),
   ingredients: z
     .array(
       z.object({
@@ -19,9 +23,14 @@ export const recipeSchema = z.object({
   steps: z
     .array(
       z.object({
-        step: z.string().min(1, {
-          message: "Step description is required",
-        }),
+        step: z
+          .string()
+          .min(1, {
+            message: "Step description is required",
+          })
+          .max(250, {
+            message: "Step description must be less than 250 characters long",
+          }),
       }),
     )
     .min(1, { message: "At least one step is required" }),
