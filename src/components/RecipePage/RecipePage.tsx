@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ListCheck, ListRestart, Plus } from "lucide-react";
+import { Heart, ListCheck, ListRestart, Plus } from "lucide-react";
 import type { CheckedState } from "@radix-ui/react-checkbox";
 
 import { Checkbox } from "@/components/ui/checkbox";
@@ -124,22 +124,35 @@ export const RecipePage = () => {
   }
 
   return (
-    <div className="mx-auto flex max-w-[80ch] flex-col gap-6 p-6">
-      <section className="flex justify-between gap-3">
+    <div className="mx-auto flex max-w-[80ch] flex-col gap-3 p-6">
+      <section className="flex flex-col justify-between gap-3 sm:flex-row">
         <div>
           <h1>{pizzaRecipe.name}</h1>
           <p>by {pizzaRecipe.author}</p>
         </div>
-        <div className="mt-2">
-          <p className="mb-1 text-sm">Created {pizzaRecipe.createdAt}</p>
-          <p className="text-sm">Updated {pizzaRecipe.updatedAt}</p>
+        <div className="mb-2 sm:mt-2">
+          <p className="mb-1 text-sm text-muted-foreground">
+            Created {pizzaRecipe.createdAt}
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Updated {pizzaRecipe.updatedAt}
+          </p>
         </div>
+      </section>
+      <section>
+        <Button
+          variant="ghost"
+          className="size-10 rounded-full transition-all duration-150 hover:bg-red-100 hover:text-red-500 focus-visible:bg-red-100 focus-visible:text-red-500 active:scale-110"
+        >
+          <Heart className="size-6" />
+          <span className="sr-only">Add recipe to favorites</span>
+        </Button>
       </section>
       <section>
         <p>{pizzaRecipe.description}</p>
       </section>
-      <section>
-        <h2 className="mb-2">Ingredients</h2>
+      <section className="mt-4">
+        <h2 className="mb-3">Ingredients</h2>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <ul>
@@ -174,7 +187,7 @@ export const RecipePage = () => {
                 </li>
               ))}
             </ul>
-            <div className="mt-4 flex gap-2">
+            <div className="mt-5 flex flex-wrap gap-2">
               <Button
                 type="submit"
                 className=""
@@ -197,8 +210,8 @@ export const RecipePage = () => {
           </form>
         </Form>
       </section>
-      <section>
-        <h2 className="mb-2">Steps</h2>
+      <section className="mt-4">
+        <h2 className="mb-3">Steps</h2>
         <ol className="list-inside list-decimal marker:text-lg marker:font-bold">
           {pizzaRecipe.steps.map((step, index) => (
             <li key={index} className="mb-2 pl-5 -indent-5">
