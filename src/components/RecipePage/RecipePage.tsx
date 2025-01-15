@@ -4,7 +4,8 @@ import { useId } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Heart, ListCheck, ListX, Plus } from "lucide-react";
+import { Check, Heart, ListCheck, ListX, Plus, X } from "lucide-react";
+import { toast } from "sonner";
 import type { CheckedState } from "@radix-ui/react-checkbox";
 
 import { Checkbox } from "@/components/ui/checkbox";
@@ -109,13 +110,24 @@ export const RecipePage = () => {
       ingredients.includes(id),
     );
 
-    localStorage.setItem(
-      "just-cook-shopping-bag",
-      JSON.stringify(shoppingBagItems),
-    );
+    try {
+      localStorage.setItem(
+        "just-cook-shopping-bag",
+        JSON.stringify(shoppingBagItems),
+      );
 
-    // TODO: Show a toast message
-    console.log("Added to shopping bag", shoppingBagItems);
+      toast("Successfully added items to shopping bag!", {
+        description: "View your shopping bag by clicking on the bag icon",
+        icon: <Check className="text-green-500" />,
+      });
+    } catch (error) {
+      console.error("Failed to add items to shopping bag", error);
+
+      toast("Failed to add items to shopping bag!", {
+        description: "Please try again later",
+        icon: <X className="text-red-500" />,
+      });
+    }
   }
 
   function handleSelectAll() {
