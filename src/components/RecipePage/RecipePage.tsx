@@ -1,9 +1,10 @@
 "use client";
 
+import { useId } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Heart, ListCheck, ListRestart, Plus } from "lucide-react";
+import { Heart, ListCheck, ListX, Plus } from "lucide-react";
 import type { CheckedState } from "@radix-ui/react-checkbox";
 
 import { Checkbox } from "@/components/ui/checkbox";
@@ -15,6 +16,16 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 import type { Ingredient } from "@/components/ShoppingBag/types";
 
@@ -80,6 +91,8 @@ const FormSchema = z.object({
 });
 
 export const RecipePage = () => {
+  const formId = useId();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -154,7 +167,7 @@ export const RecipePage = () => {
       <section className="mt-4">
         <h2 className="mb-3">Ingredients</h2>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
             <ul>
               {pizzaRecipe.ingredients.map((ingredient, index) => (
                 <li key={index}>
@@ -188,17 +201,34 @@ export const RecipePage = () => {
               ))}
             </ul>
             <div className="mt-5 flex flex-wrap gap-2">
-              <Button
-                type="submit"
-                className=""
-                disabled={form.getValues("ingredients").length === 0}
-              >
-                <Plus /> Add to shopping bag
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button disabled={selectedIngredients.length === 0}>
+                    <Plus /> Add to shopping bag
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Add ingredients to shopping bag</DialogTitle>
+                    <DialogDescription>
+                      Are you sure you want to add the selected ingredients to
+                      the shopping bag?
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter>
+                    <DialogClose asChild>
+                      <Button type="submit" form={formId}>
+                        Add items
+                      </Button>
+                    </DialogClose>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+
               <Button type="button" onClick={handleSelectAll}>
                 {areAllIngredientsSelected ? (
                   <>
-                    <ListRestart /> Deselect all
+                    <ListX /> Deselect all
                   </>
                 ) : (
                   <>
