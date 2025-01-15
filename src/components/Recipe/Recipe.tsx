@@ -27,13 +27,16 @@ const Recipes = ({ recipes, query }: RecipesProps) => {
           )}
           {filteredRecipes?.map((recipe: Recipe) => (
             <Button
-              key={recipe.name}
+              key={recipe.id}
               asChild
               variant="secondary"
               className="rounded-3xl text-lg"
             >
-              {/* TODO - change href to normal one */}
-              <Link href={`/1`}>{recipe.name}</Link>
+              <Link
+                href={`/category/${recipe.recipeCategoryId}/${recipe.name}`}
+              >
+                {recipe.name}
+              </Link>
             </Button>
           ))}
         </div>
