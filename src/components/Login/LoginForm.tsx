@@ -43,13 +43,13 @@ const LoginForm = ({ setShowLoginForm }: AuthFormProps) => {
   }, [state.isSuccess]);
 
   return (
-    <>
+    <div className="">
       <div className="mb-4">
         <h2 className="text-left">Login</h2>
         <p className="text-left">to get all features</p>
       </div>
 
-      <div className="w-full">
+      <div>
         <Form {...form}>
           <FormAlert
             message={state?.message}
@@ -115,7 +115,7 @@ const LoginForm = ({ setShowLoginForm }: AuthFormProps) => {
           to register
         </p>
       </div>
-    </>
+    </div>
   );
 };
 
