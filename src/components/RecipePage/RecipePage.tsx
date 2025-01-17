@@ -1,36 +1,6 @@
-"use client";
-
-import { useId } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Heart, ListCheck, ListX, Plus } from "lucide-react";
-import { toast } from "sonner";
-import { useLocale } from "next-intl";
-import { useRouter } from "@/i18n/routing";
-import type { CheckedState } from "@radix-ui/react-checkbox";
-
-import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-
-import type { Ingredient } from "@/components/ShoppingBag/types";
+import { RecipeSteps } from "./RecipeSteps";
+import { RecipeIngredients } from "./RecipeIngredients";
+import { RecipeActions } from "./RecipeActions";
 
 const pizzaRecipe = {
   name: "Easy Homemade Pizza",
@@ -89,69 +59,7 @@ const pizzaRecipe = {
   ],
 };
 
-const FormSchema = z.object({
-  ingredients: z.array(z.number()),
-});
-
 export const RecipePage = () => {
-  const formId = useId();
-  const router = useRouter();
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      ingredients: [],
-    },
-  });
-
-  const selectedIngredients = form.watch("ingredients");
-  const areAllIngredientsSelected =
-    selectedIngredients.length === pizzaRecipe.ingredients.length;
-
-  function onSubmit({ ingredients }: z.infer<typeof FormSchema>) {
-    const shoppingBagItems = pizzaRecipe.ingredients.filter(({ id }) =>
-      ingredients.includes(id),
-    );
-
-    try {
-      localStorage.setItem(
-        "just-cook-shopping-bag",
-        JSON.stringify(shoppingBagItems),
-      );
-
-      toast.success("Successfully added items!", {
-        description: "Selected ingredients have been added to the shopping bag",
-        action: {
-          label: "View bag",
-          onClick: () => router.push("/shopping-bag"),
-        },
-      });
-    } catch (error) {
-      console.error("Failed to add items to shopping bag", error);
-
-      toast.error("Failed to add items to shopping bag!", {
-        description: "Please try again later",
-      });
-    }
-  }
-
-  function handleSelectAll() {
-    form.setValue(
-      "ingredients",
-      areAllIngredientsSelected
-        ? []
-        : pizzaRecipe.ingredients.map((ingredient) => ingredient.id),
-    );
-  }
-
-  function handleOnCheckedChange(checked: CheckedState, id: Ingredient["id"]) {
-    form.setValue(
-      "ingredients",
-      checked
-        ? [...form.getValues("ingredients"), id]
-        : form.getValues("ingredients").filter((value) => value !== id),
-    );
-  }
-
   return (
     <div className="mx-auto flex max-w-[80ch] flex-col gap-3 p-6">
       <section className="flex flex-col justify-between gap-3 sm:flex-row">
@@ -168,102 +76,12 @@ export const RecipePage = () => {
           </p>
         </div>
       </section>
-      <section>
-        <Button
-          variant="ghost"
-          className="size-10 rounded-full transition-all duration-150 hover:bg-red-100 hover:text-red-500 focus-visible:bg-red-100 focus-visible:text-red-500 active:scale-110"
-        >
-          <Heart className="size-6" />
-          <span className="sr-only">Add recipe to favorites</span>
-        </Button>
-      </section>
+      <RecipeActions />
       <section>
         <p>{pizzaRecipe.description}</p>
       </section>
-      <section className="mt-4">
-        <h2 className="mb-3">Ingredients</h2>
-        <Form {...form}>
-          <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
-            <ul role="list">
-              {pizzaRecipe.ingredients.map((ingredient, index) => (
-                <li key={index}>
-                  <FormField
-                    control={form.control}
-                    name="ingredients"
-                    defaultValue={form.getValues("ingredients")}
-                    render={({ field }) => (
-                      <FormItem className="mt-2 flex gap-2 space-y-0">
-                        <FormControl className="mt-[3px]">
-                          <Checkbox
-                            checked={field.value.includes(ingredient.id)}
-                            onCheckedChange={(checked) =>
-                              handleOnCheckedChange(checked, ingredient.id)
-                            }
-                          />
-                        </FormControl>
-                        <FormLabel className="cursor-pointer text-base">
-                          <span className="font-semibold">
-                            {ingredient.name}
-                          </span>{" "}
-                          - {ingredient.quantity}{" "}
-                          {ingredient.notes && `(${ingredient.notes})`}
-                        </FormLabel>
-                      </FormItem>
-                    )}
-                  />
-                </li>
-              ))}
-            </ul>
-            <div className="mt-5 flex flex-wrap gap-2">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button disabled={selectedIngredients.length === 0}>
-                    <Plus /> Add to shopping bag
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle>Add ingredients to shopping bag</DialogTitle>
-                    <DialogDescription>
-                      Are you sure you want to add the selected ingredients to
-                      the shopping bag?
-                    </DialogDescription>
-                  </DialogHeader>
-                  <DialogFooter>
-                    <DialogClose asChild>
-                      <Button type="submit" form={formId}>
-                        Add items
-                      </Button>
-                    </DialogClose>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-
-              <Button type="button" onClick={handleSelectAll}>
-                {areAllIngredientsSelected ? (
-                  <>
-                    <ListX /> Deselect all
-                  </>
-                ) : (
-                  <>
-                    <ListCheck /> Select all
-                  </>
-                )}
-              </Button>
-            </div>
-          </form>
-        </Form>
-      </section>
-      <section className="mt-4">
-        <h2 className="mb-3">Steps</h2>
-        <ol className="list-inside list-decimal marker:text-lg marker:font-bold">
-          {pizzaRecipe.steps.map((step, index) => (
-            <li key={index} className="mb-2 pl-5 -indent-5">
-              {step}
-            </li>
-          ))}
-        </ol>
-      </section>
+      <RecipeIngredients ingredients={pizzaRecipe.ingredients} />
+      <RecipeSteps steps={pizzaRecipe.steps} />
     </div>
   );
 };
