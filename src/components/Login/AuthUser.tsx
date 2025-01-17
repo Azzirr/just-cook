@@ -3,6 +3,7 @@
 import { useState } from "react";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import { Link } from "@/i18n/routing";
 
 const AuthUser = () => {
   const [showLoginForm, setShowLoginForm] = useState<boolean>(true);
@@ -15,6 +16,12 @@ const AuthUser = () => {
         ) : (
           <RegisterForm setShowLoginForm={setShowLoginForm} />
         )}
+        <Link
+          href={"/"}
+          className="mx-auto mt-2 text-center [text-decoration:underline]"
+        >
+          Continue as guest
+        </Link>
       </div>
     </>
   );
