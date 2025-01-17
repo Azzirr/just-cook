@@ -1,5 +1,6 @@
 export type Ingredient = {
   id: number;
   name: string;
-  quantity: number;
+  quantity: number | string;
+  notes?: string;
 };
