@@ -4,8 +4,10 @@ import { useId } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, Heart, ListCheck, ListX, Plus, X } from "lucide-react";
+import { Heart, ListCheck, ListX, Plus } from "lucide-react";
 import { toast } from "sonner";
+import { useLocale } from "next-intl";
+import { useRouter } from "@/i18n/routing";
 import type { CheckedState } from "@radix-ui/react-checkbox";
 
 import { Checkbox } from "@/components/ui/checkbox";
@@ -93,7 +95,7 @@ const FormSchema = z.object({
 
 export const RecipePage = () => {
   const formId = useId();
-
+  const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -116,16 +118,18 @@ export const RecipePage = () => {
         JSON.stringify(shoppingBagItems),
       );
 
-      toast("Successfully added items to shopping bag!", {
-        description: "View your shopping bag by clicking on the bag icon",
-        icon: <Check className="text-green-500" />,
+      toast.success("Successfully added items!", {
+        description: "Selected ingredients have been added to the shopping bag",
+        action: {
+          label: "View bag",
+          onClick: () => router.push("/shopping-bag"),
+        },
       });
     } catch (error) {
       console.error("Failed to add items to shopping bag", error);
 
-      toast("Failed to add items to shopping bag!", {
+      toast.error("Failed to add items to shopping bag!", {
         description: "Please try again later",
-        icon: <X className="text-red-500" />,
       });
     }
   }
