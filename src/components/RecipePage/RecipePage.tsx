@@ -180,34 +180,32 @@ export const RecipePage = () => {
         <h2 className="mb-3">Ingredients</h2>
         <Form {...form}>
           <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
-            <ul>
+            <ul role="list">
               {pizzaRecipe.ingredients.map((ingredient, index) => (
                 <li key={index}>
                   <FormField
                     control={form.control}
                     name="ingredients"
                     defaultValue={form.getValues("ingredients")}
-                    render={({ field }) => {
-                      return (
-                        <FormItem className="flex items-baseline gap-2">
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value.includes(ingredient.id)}
-                              onCheckedChange={(checked) =>
-                                handleOnCheckedChange(checked, ingredient.id)
-                              }
-                            />
-                          </FormControl>
-                          <FormLabel className="cursor-pointer text-base">
-                            <span className="font-semibold">
-                              {ingredient.name}
-                            </span>{" "}
-                            - {ingredient.quantity}{" "}
-                            {ingredient.notes && `(${ingredient.notes})`}
-                          </FormLabel>
-                        </FormItem>
-                      );
-                    }}
+                    render={({ field }) => (
+                      <FormItem className="mt-2 flex gap-2 space-y-0">
+                        <FormControl className="mt-[3px]">
+                          <Checkbox
+                            checked={field.value.includes(ingredient.id)}
+                            onCheckedChange={(checked) =>
+                              handleOnCheckedChange(checked, ingredient.id)
+                            }
+                          />
+                        </FormControl>
+                        <FormLabel className="cursor-pointer text-base">
+                          <span className="font-semibold">
+                            {ingredient.name}
+                          </span>{" "}
+                          - {ingredient.quantity}{" "}
+                          {ingredient.notes && `(${ingredient.notes})`}
+                        </FormLabel>
+                      </FormItem>
+                    )}
                   />
                 </li>
               ))}
