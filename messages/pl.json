@@ -13,5 +13,9 @@
   "ShoppingBag": {
     "title": "Koszyk",
     "isEmpty": "Koszyk jest pusty"
+  },
+  "Favourites": {
+    "favourites": "Ulubione",
+    "myMenu": "Moje menu"
   }
 }
