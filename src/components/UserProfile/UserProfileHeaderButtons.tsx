@@ -6,12 +6,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { FilePenLine } from "lucide-react";
 
 export const UserProfileHeaderButtons = (props: { thisUser: boolean }) => {
   return props.thisUser ? (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Edit profile</Button>
+        <div className="flex w-14 flex-row items-center">
+          <span className="text-[12px]">Edit profile</span>
+          <FilePenLine strokeWidth={1.5} />
+        </div>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
