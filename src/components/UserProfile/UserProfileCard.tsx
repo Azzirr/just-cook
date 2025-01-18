@@ -32,4 +32,4 @@ const UserProfileCard = () => {
     </div>
   );
 };
-export default UserProfileCard;
+export { UserProfileCard };

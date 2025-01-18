@@ -1,9 +1,8 @@
 import { Separator } from "@/components/ui/separator";
 
 import { CreatedRecipesSection } from "@/components/UserProfile/CreatedRecipesSection";
-import { SavedRecipesSection } from "@/components/UserProfile/SavedRecipesSection";
 import { RecentActivity } from "@/components/UserProfile/RecentActivity";
-import UserProfileCard from "@/components/UserProfile/UserProfileCard";
+import { UserProfileCard } from "@/components/UserProfile/UserProfileCard";
 
 const user = () => {
   return (
