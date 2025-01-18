@@ -23,16 +23,14 @@ export async function register(prevState: FormState, data: FormData) {
   const { username, email, password } = parsed.data;
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const existingEmail = await db.user.findUnique({
+  const existingUser = await db.user.findFirst({
     where: {
-      email,
+      OR: [{ email }, { username }],
     },
   });
-  const existingUsername = await db.user.findUnique({
-    where: {
-      username,
-    },
-  });
+
+  const existingEmail = existingUser?.email === email;
+  const existingUsername = existingUser?.username === username;
 
   if (existingEmail) {
     return {
