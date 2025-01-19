@@ -24,11 +24,13 @@ import {
 } from "@/components/ui/form";
 
 import { recipeSchema, type Recipe } from "./schemas";
-import { useActionState, useRef } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { addNewRecipe } from "@/actions/addNewRecipe";
 import { onSubmitUtil } from "@/utils/onSubmitUtil";
 import { RecipeCategory } from "@prisma/client";
 import { FormAlert } from "../FormAlert";
+import { redirect } from "@/i18n/routing";
+import { useLocale } from "next-intl";
 
 type RecipeProps = { categories: RecipeCategory[] };
 
@@ -36,6 +38,7 @@ export function RecipeForm({ categories }: RecipeProps) {
   const [state, action, isPeding] = useActionState(addNewRecipe, {
     isSuccess: false,
   });
+  const locale = useLocale();
 
   const formRef = useRef<HTMLFormElement>(null);
   const form = useForm<Recipe>({
@@ -66,6 +69,12 @@ export function RecipeForm({ categories }: RecipeProps) {
     control: form.control,
     name: "ingredients",
   });
+
+  useEffect(() => {
+    if (state.isSuccess) {
+      redirect({ href: `category/${form.getFieldState("category")}/`, locale });
+    }
+  }, []);
 
   return (
     <Form {...form}>

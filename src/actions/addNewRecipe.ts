@@ -4,11 +4,14 @@ import { db } from "@/db";
 import { recipeSchema } from "@/components/recipe-form/schemas";
 import { currentUser } from "@/lib/currentUser";
 import { formDataToNestedObject } from "@/utils/formDataToNestedObject";
+import { redirect } from "@/i18n/routing";
+import { getLocale } from "next-intl/server";
 
 export async function addNewRecipe(
   prevState: FormState,
   data: FormData,
 ): Promise<FormState> {
+  const locale = await getLocale();
   const formData = formDataToNestedObject(data);
 
   const parsed = recipeSchema.safeParse(formData);
@@ -39,7 +42,7 @@ export async function addNewRecipe(
 
   const parsedSteps = steps.map(({ step }) => step);
 
-  await db.recipe.create({
+  const newRecipe = await db.recipe.create({
     data: {
       authorId: user.id,
       name,
@@ -53,6 +56,12 @@ export async function addNewRecipe(
       },
       recipeCategoryId: Number(categoryId),
     },
+  });
+
+  //TODO: change fixed base app url to variable with one for dev and on for prod and fix locale because rn it doesnt work
+  redirect({
+    href: `http://localhost:3000/pl/category/${categoryId}/${newRecipe.id}`,
+    locale,
   });
 
   return {
