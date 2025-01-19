@@ -9,16 +9,16 @@ const buildNestedObject = (entries: { name: string; value: any }[]) => {
   const result: Record<string, any> = {};
 
   entries.forEach(({ name, value }) => {
-    const keys = name.split("."); // Split keys by "."
+    const keys = name.split(".");
     let current = result;
 
     keys.forEach((key, index) => {
       if (!current[key]) {
-        current[key] = isNaN(Number(keys[index + 1])) ? {} : []; // Initialize as array if the next key is numeric
+        current[key] = isNaN(Number(keys[index + 1])) ? {} : [];
       }
 
       if (index === keys.length - 1) {
-        current[key] = value; // Assign value at the deepest level
+        current[key] = value;
       } else {
         current = current[key];
       }
