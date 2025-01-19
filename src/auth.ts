@@ -16,9 +16,6 @@ export const {
       }
       return session;
     },
-    async jwt({ token, user }) {
-      return token;
-    },
   },
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
