@@ -70,12 +70,6 @@ export function RecipeForm({ categories }: RecipeProps) {
     name: "ingredients",
   });
 
-  useEffect(() => {
-    if (state.isSuccess) {
-      redirect({ href: `category/${form.getFieldState("category")}/`, locale });
-    }
-  }, []);
-
   return (
     <Form {...form}>
       <form
