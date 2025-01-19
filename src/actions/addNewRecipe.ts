@@ -1,15 +1,17 @@
 "use server";
 import { FormState } from "@/types/formState";
-import { extractFieldsFromFormData } from "@/utils/extractFieldsFromFormData";
 import { db } from "@/db";
 import { recipeSchema } from "@/components/recipe-form/schemas";
 import { currentUser } from "@/lib/currentUser";
+import { formDataToNestedObject } from "@/utils/formDataToNestedObject";
 
 export async function addNewRecipe(
   prevState: FormState,
   data: FormData,
 ): Promise<FormState> {
-  const parsed = recipeSchema.safeParse(data);
+  const formData = formDataToNestedObject(data);
+
+  const parsed = recipeSchema.safeParse(formData);
   const user = await currentUser();
 
   if (!user?.id) {

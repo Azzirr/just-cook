@@ -49,8 +49,6 @@ export function RecipeForm({ categories }: RecipeProps) {
     },
   });
 
-  console.log(form.getValues());
-
   const {
     fields: steps,
     append: addStep,
@@ -87,6 +85,7 @@ export function RecipeForm({ categories }: RecipeProps) {
               <FormControl>
                 <Input placeholder="Recipe name" {...field} />
               </FormControl>
+
               <FormMessage />
             </FormItem>
           )}
@@ -117,6 +116,7 @@ export function RecipeForm({ categories }: RecipeProps) {
                   ))}
                 </SelectContent>
               </Select>
+              <input type="hidden" name={field.name} value={field.value} />
               <FormMessage />
             </FormItem>
           )}
