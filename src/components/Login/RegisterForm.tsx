@@ -139,12 +139,12 @@ const RegisterForm = ({ setShowLoginForm }: AuthFormProps) => {
       <div className="mt-4">
         <p>
           Click{" "}
-          <span
+          <button
             className="cursor-pointer text-blue-600 underline"
             onClick={() => setShowLoginForm(true)}
           >
             here
-          </span>{" "}
+          </button>{" "}
           to get back to login or...
         </p>
       </div>

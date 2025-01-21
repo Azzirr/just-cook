@@ -101,12 +101,12 @@ const LoginForm = ({ setShowLoginForm }: AuthFormProps) => {
       <div className="mt-4">
         <p>
           Click{" "}
-          <span
+          <button
             className="cursor-pointer text-blue-600 underline"
             onClick={() => setShowLoginForm(false)}
           >
             here
-          </span>{" "}
+          </button>{" "}
           to register or...
         </p>
       </div>
