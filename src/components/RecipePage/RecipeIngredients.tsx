@@ -51,14 +51,18 @@ export const RecipeIngredients = ({ ingredients }: Props) => {
     selectedIngredients.length === ingredients.length;
 
   function onSubmit({ ingredientIds }: z.infer<typeof FormSchema>) {
-    const shoppingBagItems = ingredients.filter(({ id }) =>
+    const newShoppingBagItems = ingredients.filter(({ id }) =>
       ingredientIds.includes(id),
     );
 
     try {
+      const currentShoppingBagItems = JSON.parse(
+        localStorage.getItem("just-cook-shopping-bag") ?? "[]",
+      );
+
       localStorage.setItem(
         "just-cook-shopping-bag",
-        JSON.stringify(shoppingBagItems),
+        JSON.stringify([...currentShoppingBagItems, ...newShoppingBagItems]),
       );
 
       toast.success("Successfully added items!", {
