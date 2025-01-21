@@ -43,8 +43,8 @@ const RegisterForm = ({ setShowLoginForm }: AuthFormProps) => {
   return (
     <>
       <div className="mb-4">
-        <h2 className="text-left">Register</h2>
-        <p className="text-left">
+        <h2>Register</h2>
+        <p>
           and <span className="text-green-500">enjoy</span> all features
         </p>
       </div>
@@ -137,10 +137,10 @@ const RegisterForm = ({ setShowLoginForm }: AuthFormProps) => {
         </Form>
       </div>
       <div className="mt-4">
-        <p className="text-left">
+        <p>
           Click{" "}
           <span
-            className="cursor-pointer text-blue-600 [text-decoration:underline]"
+            className="cursor-pointer text-blue-600 underline"
             onClick={() => setShowLoginForm(true)}
           >
             here

@@ -16,10 +16,7 @@ const AuthUser = () => {
         ) : (
           <RegisterForm setShowLoginForm={setShowLoginForm} />
         )}
-        <Link
-          href={"/"}
-          className="mx-auto mt-2 text-center [text-decoration:underline]"
-        >
+        <Link href={"/"} className="mx-auto mt-2 text-center underline">
           Continue as guest
         </Link>
       </div>
