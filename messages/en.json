@@ -20,5 +20,9 @@
   "ShoppingBag": {
     "title": "Shopping Bag",
     "isEmpty": "Shopping bag is empty"
+  },
+  "Favourites": {
+    "favourites": "Favourites",
+    "myMenu": "My menu"
   }
 }
