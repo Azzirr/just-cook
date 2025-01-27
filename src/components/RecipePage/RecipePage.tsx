@@ -1,4 +1,6 @@
-import { Checkbox } from "@/components/ui/checkbox";
+import { RecipeSteps } from "./RecipeSteps";
+import { RecipeIngredients } from "./RecipeIngredients";
+import { RecipeActions } from "./RecipeActions";
 
 const pizzaRecipe = {
   name: "Easy Homemade Pizza",
@@ -10,29 +12,35 @@ const pizzaRecipe = {
   Close to 2 pounds of dough total.`,
   ingredients: [
     {
+      id: 0,
       name: "Warm water",
       quantity: "320ml",
       notes: "between 38 and 46°C",
     },
     {
+      id: 1,
       name: "Instant yeast",
       quantity: "7g",
       notes: "1 standard packet",
     },
     {
+      id: 2,
       name: "Granulated sugar",
       quantity: "1 tablespoon",
     },
     {
+      id: 3,
       name: "Olive oil",
       quantity: "2 tablespoons",
       notes: "plus more for pan and brushing on dough",
     },
     {
+      id: 4,
       name: "Salt",
       quantity: "1 teaspoon",
     },
     {
+      id: 5,
       name: "Unbleached all-purpose flour",
       quantity: "450g",
     },
@@ -53,47 +61,27 @@ const pizzaRecipe = {
 
 export const RecipePage = () => {
   return (
-    <div className="mx-auto flex max-w-[80ch] flex-col gap-6 p-6">
-      <section className="flex justify-between gap-3">
+    <div className="mx-auto flex max-w-[80ch] flex-col gap-3 p-6">
+      <section className="flex flex-col justify-between gap-3 sm:flex-row">
         <div>
           <h1>{pizzaRecipe.name}</h1>
           <p>by {pizzaRecipe.author}</p>
         </div>
-        <div className="mt-2">
-          <p className="mb-1 text-sm">Created {pizzaRecipe.createdAt}</p>
-          <p className="text-sm">Updated {pizzaRecipe.updatedAt}</p>
+        <div className="mb-2 sm:mt-2">
+          <p className="mb-1 text-sm text-muted-foreground">
+            Created {pizzaRecipe.createdAt}
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Updated {pizzaRecipe.updatedAt}
+          </p>
         </div>
       </section>
+      <RecipeActions />
       <section>
         <p>{pizzaRecipe.description}</p>
       </section>
-      <section>
-        <h2 className="mb-2">Ingredients</h2>
-        <ul className="flex flex-col items-start gap-1">
-          {pizzaRecipe.ingredients.map((ingredient, index) => (
-            <li key={index}>
-              <label className="flex cursor-pointer gap-2">
-                <Checkbox className="peer mt-1" />
-                <span className="peer-aria-checked:line-through">
-                  <span className="text-semibold">{ingredient.name}</span> -{" "}
-                  {ingredient.quantity}{" "}
-                  {ingredient.notes && `(${ingredient.notes})`}
-                </span>
-              </label>
-            </li>
-          ))}
-        </ul>
-      </section>
-      <section>
-        <h2 className="mb-2">Steps</h2>
-        <ol className="list-inside list-decimal marker:text-lg marker:font-bold">
-          {pizzaRecipe.steps.map((step, index) => (
-            <li key={index} className="mb-2 pl-5 -indent-5">
-              {step}
-            </li>
-          ))}
-        </ol>
-      </section>
+      <RecipeIngredients ingredients={pizzaRecipe.ingredients} />
+      <RecipeSteps steps={pizzaRecipe.steps} />
     </div>
   );
 };

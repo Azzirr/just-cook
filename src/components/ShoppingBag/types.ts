@@ -1,7 +1,6 @@
-export type ShoppingListItem = {
+export type Ingredient = {
+  id: number;
   name: string;
-  quantity: number;
-  image: any;
-  goTo: string;
-  done: boolean;
+  quantity: number | string;
+  notes?: string;
 };

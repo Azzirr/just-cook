@@ -1,8 +1,10 @@
 import { ReactNode } from "react";
 import { Roboto } from "next/font/google";
 
-import BottomNavigation from "@/components/BottomNavigation/BottomNavigation";
+import { Toaster } from "@/components/ui/sonner";
+
 import TopNavigation from "@/components/TopNavigation/TopNavigation";
+import BottomNavigation from "@/components/BottomNavigation/BottomNavigation";
 
 import { Locale } from "@/i18n/routing";
 
@@ -25,6 +27,7 @@ export const BaseLayout = ({ children, locale }: Props) => {
         <TopNavigation />
         <div className="flex-grow">{children}</div>
         <BottomNavigation />
+        <Toaster />
       </body>
     </html>
   );
