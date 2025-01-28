@@ -5,7 +5,7 @@ import { useLocale } from "next-intl";
 
 export const metadata: Metadata = {
   title: "Just Cook",
-  description: "Make cook simple as breathing",
+  description: "Make cooking simple as breathing",
 };
 
 type Props = {
