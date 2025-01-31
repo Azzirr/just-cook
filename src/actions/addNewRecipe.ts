@@ -58,9 +58,8 @@ export async function addNewRecipe(
     },
   });
 
-  //TODO: change fixed base app url to variable with one for dev and on for prod and fix locale because rn it doesnt work
   redirect({
-    href: `http://localhost:3000/pl/category/${categoryId}/${newRecipe.id}`,
+    href: `/category/${categoryId}/${newRecipe.id}`,
     locale,
   });
 

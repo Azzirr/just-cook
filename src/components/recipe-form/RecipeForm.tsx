@@ -24,21 +24,18 @@ import {
 } from "@/components/ui/form";
 
 import { recipeSchema, type Recipe } from "./schemas";
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useRef } from "react";
 import { addNewRecipe } from "@/actions/addNewRecipe";
 import { onSubmitUtil } from "@/utils/onSubmitUtil";
 import { RecipeCategory } from "@prisma/client";
 import { FormAlert } from "../FormAlert";
-import { redirect } from "@/i18n/routing";
-import { useLocale } from "next-intl";
 
 type RecipeProps = { categories: RecipeCategory[] };
 
-export function RecipeForm({ categories }: RecipeProps) {
-  const [state, action, isPeding] = useActionState(addNewRecipe, {
+export const RecipeForm = ({ categories }: RecipeProps) => {
+  const [state, action, isPending] = useActionState(addNewRecipe, {
     isSuccess: false,
   });
-  const locale = useLocale();
 
   const formRef = useRef<HTMLFormElement>(null);
   const form = useForm<Recipe>({
@@ -170,7 +167,7 @@ export function RecipeForm({ categories }: RecipeProps) {
             />
             {index > 0 && (
               <Button
-                isPending={isPeding}
+                disabled={isPending}
                 type="button"
                 variant="destructive"
                 className="p-3"
@@ -182,7 +179,7 @@ export function RecipeForm({ categories }: RecipeProps) {
           </div>
         ))}
         <Button
-          isPending={isPeding}
+          disabled={isPending}
           type="button"
           className="self-end p-3"
           onClick={() => addIngredient({ name: "", quantity: "" })}
@@ -205,7 +202,7 @@ export function RecipeForm({ categories }: RecipeProps) {
                   </FormControl>
                   {index > 0 && (
                     <Button
-                      isPending={isPeding}
+                      disabled={isPending}
                       type="button"
                       variant="destructive"
                       className="p-3"
@@ -221,17 +218,17 @@ export function RecipeForm({ categories }: RecipeProps) {
           />
         ))}
         <Button
-          isPending={isPeding}
+          disabled={isPending}
           type="button"
           className="self-end p-3"
           onClick={() => addStep({ step: "" })}
         >
           <Plus />
         </Button>
-        <Button isPending={isPeding} type="submit">
+        <Button isPending={isPending} type="submit">
           Submit
         </Button>
       </form>
     </Form>
   );
-}
+};

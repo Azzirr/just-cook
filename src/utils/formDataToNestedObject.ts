@@ -5,7 +5,9 @@
  * nested data (e.g., "ingredients.0.name" for arrays/objects).
  *
  */
-const buildNestedObject = (entries: { name: string; value: any }[]) => {
+const buildNestedObject = (
+  entries: { name: string; value: FormDataEntryValue }[],
+) => {
   const result: Record<string, any> = {};
 
   entries.forEach(({ name, value }) => {
@@ -28,7 +30,7 @@ const buildNestedObject = (entries: { name: string; value: any }[]) => {
 };
 
 export const formDataToNestedObject = (formData: FormData) => {
-  const result: { name: string; value: any }[] = [];
+  const result: { name: string; value: FormDataEntryValue }[] = [];
 
   formData.forEach((value, key) => {
     result.push({ name: key, value });
