@@ -16,7 +16,6 @@ export async function login(
     return {
       errors: parsed.error?.errors.map((error) => error.message),
       message: "Invalid form data",
-      fields: { username: formData["username"].toString() },
       isSuccess: false,
     };
   }
@@ -34,13 +33,11 @@ export async function login(
         case "CredentialsSignin":
           return {
             message: "Invalid credentials!",
-            fields: { username: parsed.data.username },
             isSuccess: false,
           };
         default:
           return {
             message: "Something went wrong!",
-            fields: { username: parsed.data.username },
             isSuccess: false,
           };
       }

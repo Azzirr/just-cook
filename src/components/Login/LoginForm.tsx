@@ -31,7 +31,7 @@ const LoginForm = ({ setShowLoginForm }: AuthFormProps) => {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: state?.fields?.username || "",
+      username: "",
       password: "",
     },
   });

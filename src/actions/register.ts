@@ -4,7 +4,6 @@ import { db } from "@/db";
 import { Role } from "@prisma/client";
 import { registerSchema } from "@/schemas/authSchemas";
 import { FormState } from "@/types/formState";
-import { extractFieldsFromFormData } from "@/utils/extractFieldsFromFormData";
 
 export async function register(prevState: FormState, data: FormData) {
   const formData = Object.fromEntries(data);
@@ -14,7 +13,6 @@ export async function register(prevState: FormState, data: FormData) {
   if (!parsed.success) {
     return {
       errors: parsed.error?.errors.map((error) => error.message),
-      fields: extractFieldsFromFormData(data),
       message: "Invalid form data",
       isSuccess: false,
     };
@@ -34,7 +32,6 @@ export async function register(prevState: FormState, data: FormData) {
 
   if (existingEmail) {
     return {
-      fields: extractFieldsFromFormData(data),
       message: "Email is already in use",
       isSuccess: false,
     };
@@ -42,7 +39,6 @@ export async function register(prevState: FormState, data: FormData) {
 
   if (existingUsername) {
     return {
-      fields: extractFieldsFromFormData(data),
       message: "Username is already in use",
       isSuccess: false,
     };

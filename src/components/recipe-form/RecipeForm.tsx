@@ -24,8 +24,20 @@ import {
 } from "@/components/ui/form";
 
 import { recipeSchema, type Recipe } from "./schemas";
+import { useActionState, useRef } from "react";
+import { addNewRecipe } from "@/actions/addNewRecipe";
+import { onSubmitUtil } from "@/utils/onSubmitUtil";
+import { RecipeCategory } from "@prisma/client";
+import { FormAlert } from "../FormAlert";
 
-export function RecipeForm() {
+type RecipeProps = { categories: RecipeCategory[] };
+
+export const RecipeForm = ({ categories }: RecipeProps) => {
+  const [state, action, isPending] = useActionState(addNewRecipe, {
+    isSuccess: false,
+  });
+
+  const formRef = useRef<HTMLFormElement>(null);
   const form = useForm<Recipe>({
     resolver: zodResolver(recipeSchema),
     defaultValues: {
@@ -55,16 +67,15 @@ export function RecipeForm() {
     name: "ingredients",
   });
 
-  function onSubmit(values: Recipe) {
-    console.log(values);
-  }
-
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        ref={formRef}
+        action={action}
+        onSubmit={onSubmitUtil({ action, formRef, form })}
         className="flex flex-col gap-4"
       >
+        <FormAlert errors={state.errors} message={state.message}></FormAlert>
         <FormField
           control={form.control}
           name="name"
@@ -74,6 +85,7 @@ export function RecipeForm() {
               <FormControl>
                 <Input placeholder="Recipe name" {...field} />
               </FormControl>
+
               <FormMessage />
             </FormItem>
           )}
@@ -84,18 +96,27 @@ export function RecipeForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Category</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value.toString()}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select recipe category" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="main-dish">Main dish</SelectItem>
-                  <SelectItem value="dessert">Dessert</SelectItem>
-                  <SelectItem value="breakfast">Breakfast</SelectItem>
+                  {categories.map((category) => (
+                    <SelectItem
+                      key={category.id}
+                      value={category.id.toString()}
+                    >
+                      {category.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
+              <input type="hidden" name={field.name} value={field.value} />
               <FormMessage />
             </FormItem>
           )}
@@ -146,6 +167,7 @@ export function RecipeForm() {
             />
             {index > 0 && (
               <Button
+                disabled={isPending}
                 type="button"
                 variant="destructive"
                 className="p-3"
@@ -157,6 +179,7 @@ export function RecipeForm() {
           </div>
         ))}
         <Button
+          disabled={isPending}
           type="button"
           className="self-end p-3"
           onClick={() => addIngredient({ name: "", quantity: "" })}
@@ -179,6 +202,7 @@ export function RecipeForm() {
                   </FormControl>
                   {index > 0 && (
                     <Button
+                      disabled={isPending}
                       type="button"
                       variant="destructive"
                       className="p-3"
@@ -194,14 +218,17 @@ export function RecipeForm() {
           />
         ))}
         <Button
+          disabled={isPending}
           type="button"
           className="self-end p-3"
           onClick={() => addStep({ step: "" })}
         >
           <Plus />
         </Button>
-        <Button type="submit">Submit</Button>
+        <Button isPending={isPending} type="submit">
+          Submit
+        </Button>
       </form>
     </Form>
   );
-}
+};
