@@ -22,11 +22,20 @@ export const onSubmitUtil = <T extends z.ZodType>({
   const onSubmit = useCallback(
     async (_values: z.infer<T>) => {
       startTransition(() => {
-        action(new FormData(formRef.current!));
+        const formData = new FormData(formRef.current!);
+        //prevent from sending empty file object
+        const fileInput = formRef.current!.querySelector(
+          'input[type="file"]',
+        ) as HTMLInputElement;
+
+        if (fileInput && fileInput.files && fileInput.files.length === 0) {
+          formData.delete(fileInput.name);
+        }
+
+        action(formData);
       });
     },
     [action],
   );
-
   return form.handleSubmit(onSubmit);
 };
