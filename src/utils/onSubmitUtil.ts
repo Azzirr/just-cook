@@ -23,13 +23,12 @@ export const onSubmitUtil = <T extends z.ZodType>({
     async (_values: z.infer<T>) => {
       startTransition(() => {
         const formData = new FormData(formRef.current!);
-        //prevent from sending empty file object
-        const fileInput = formRef.current!.querySelector(
-          'input[type="file"]',
-        ) as HTMLInputElement;
 
-        if (fileInput && fileInput.files && fileInput.files.length === 0) {
-          formData.delete(fileInput.name);
+        //prevent from sending empty file object
+        for (const [key, value] of formData.entries()) {
+          if (value instanceof File && value.size === 0) {
+            formData.delete(key);
+          }
         }
 
         action(formData);
