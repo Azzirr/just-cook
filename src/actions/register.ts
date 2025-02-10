@@ -4,6 +4,8 @@ import { db } from "@/db";
 import { Role } from "@prisma/client";
 import { registerSchema } from "@/schemas/authSchemas";
 import { FormState } from "@/types/formState";
+import { v4 as uuidv4 } from "uuid";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export async function register(prevState: FormState, data: FormData) {
   const formData = Object.fromEntries(data);
@@ -44,7 +46,7 @@ export async function register(prevState: FormState, data: FormData) {
     };
   }
 
-  await db.user.create({
+  const createdUser = await db.user.create({
     data: {
       username,
       email,
@@ -52,6 +54,20 @@ export async function register(prevState: FormState, data: FormData) {
       isActive: true,
       role: Role.USER,
     },
+  });
+
+  const verificationToken = await db.verificationToken.create({
+    data: {
+      userId: createdUser.id,
+      token: uuidv4(),
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24), //expires in 24h
+    },
+  });
+
+  await sendVerificationEmail({
+    email: createdUser.email,
+    token: verificationToken.token,
+    username: createdUser.username,
   });
 
   return {

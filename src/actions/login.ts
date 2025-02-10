@@ -3,6 +3,7 @@ import { signIn } from "@/auth";
 import { loginSchema } from "@/schemas/authSchemas";
 import { AuthError } from "next-auth";
 import { FormState } from "@/types/formState";
+import { db } from "@/db";
 
 export async function login(
   prevState: FormState,
@@ -21,6 +22,20 @@ export async function login(
   }
 
   const { username, password } = parsed.data;
+
+  const user = await db.user.findFirst({
+    where: {
+      username: username,
+    },
+  });
+
+  if (!user?.emailVerified) {
+    return {
+      message:
+        "User is not verified, please confirm your registration on email",
+      isSuccess: false,
+    };
+  }
 
   try {
     await signIn("credentials", {
