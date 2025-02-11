@@ -41,7 +41,6 @@ export async function login(
     };
   }
 
-  // Check if the user has verified their email
   const hasTokenExpired =
     user.verificationToken?.expires &&
     new Date() > new Date(user.verificationToken.expires);
@@ -54,7 +53,6 @@ export async function login(
         isSuccess: false,
       };
     } else {
-      // If token expired or doesn't exist, send a new verification email
       const verificationToken = await createVerificationToken(user.id);
       await sendVerificationEmail({
         email: user.email,
