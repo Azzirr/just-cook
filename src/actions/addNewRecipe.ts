@@ -12,10 +12,9 @@ export async function addNewRecipe(
   data: FormData,
 ): Promise<FormState> {
   const locale = await getLocale();
-  const formData = formDataToNestedObject(data);
-
-  const parsed = recipeSchema.safeParse(formData);
   const user = await currentUser();
+  const formData = formDataToNestedObject(data);
+  const parsed = recipeSchema.safeParse(formData);
 
   if (!user?.id) {
     return {
@@ -40,19 +39,14 @@ export async function addNewRecipe(
     steps,
   } = parsed.data;
 
-  const parsedSteps = steps.map(({ step }) => step);
-
   const newRecipe = await db.recipe.create({
     data: {
       authorId: user.id,
       name,
       description,
-      steps: parsedSteps,
+      steps: steps.map(({ step }) => step),
       ingredients: {
-        create: ingredients.map((ingredient) => ({
-          name: ingredient.name,
-          quantity: ingredient.quantity,
-        })),
+        create: ingredients,
       },
       recipeCategoryId: Number(categoryId),
     },
