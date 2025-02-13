@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/form";
 
 import { recipeSchema, type Recipe } from "./schemas";
-import { useActionState, useRef } from "react";
+import { useActionState } from "react";
 import { addNewRecipe } from "@/actions/addNewRecipe";
 import { onSubmitUtil } from "@/utils/onSubmitUtil";
 import { RecipeCategory, Unit } from "@prisma/client";
@@ -38,7 +38,6 @@ export const RecipeForm = ({ categories }: RecipeProps) => {
     isSuccess: false,
   });
   const defaultIngredient = { name: "", quantity: 0, unit: Unit.GRAM };
-  const formRef = useRef<HTMLFormElement>(null);
 
   const form = useForm<Recipe>({
     resolver: zodResolver(recipeSchema),
@@ -72,12 +71,10 @@ export const RecipeForm = ({ categories }: RecipeProps) => {
   return (
     <Form {...form}>
       <form
-        ref={formRef}
         action={action}
-        onSubmit={onSubmitUtil({ action, formRef, form })}
+        onSubmit={onSubmitUtil(action, form)}
         className="flex flex-col gap-4"
       >
-        <FormAlert errors={state.errors} message={state.message}></FormAlert>
         <FormField
           control={form.control}
           name="name"
@@ -177,20 +174,23 @@ export const RecipeForm = ({ categories }: RecipeProps) => {
               name={`ingredients.${index}.unit`}
               render={({ field }) => (
                 <FormItem className="grow">
-                  <FormControl>
-                    <Select {...field} onValueChange={field.onChange}>
+                  <Select
+                    defaultValue={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Unit" />
                       </SelectTrigger>
-                      <SelectContent>
-                        {unitTuple.map((unit) => (
-                          <SelectItem key={unit} value={unit}>
-                            {formatUnit(unit, "short")}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
+                    </FormControl>
+                    <SelectContent>
+                      {unitTuple.map((unit) => (
+                        <SelectItem key={unit} value={unit}>
+                          {formatUnit(unit, "short")}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -255,6 +255,7 @@ export const RecipeForm = ({ categories }: RecipeProps) => {
         >
           <Plus />
         </Button>
+        <FormAlert errors={state.errors} message={state.message}></FormAlert>
         <Button isPending={isPending} type="submit">
           Submit
         </Button>

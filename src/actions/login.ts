@@ -1,26 +1,32 @@
 "use server";
+
 import { signIn } from "@/auth";
 import { loginSchema } from "@/schemas/authSchemas";
 import { AuthError } from "next-auth";
 import { FormState } from "@/types/formState";
+import { z } from "zod";
 
 export async function login(
   prevState: FormState,
-  data: FormData,
+  data: FormData | z.infer<typeof loginSchema>,
 ): Promise<FormState> {
-  const formData = Object.fromEntries(data);
+  const {
+    data: parsedData,
+    success,
+    error,
+  } = loginSchema.safeParse(
+    data instanceof FormData ? Object.fromEntries(data) : data,
+  );
 
-  const parsed = loginSchema.safeParse(formData);
-
-  if (!parsed.success) {
+  if (!success) {
     return {
-      errors: parsed.error?.errors.map((error) => error.message),
+      errors: error.errors.map((error) => error.message),
       message: "Invalid form data",
       isSuccess: false,
     };
   }
 
-  const { username, password } = parsed.data;
+  const { username, password } = parsedData;
 
   try {
     await signIn("credentials", {

@@ -1,4 +1,5 @@
 "use server";
+
 import { FormState } from "@/types/formState";
 import { db } from "@/db";
 import { recipeSchema } from "@/components/recipe-form/schemas";
@@ -6,15 +7,22 @@ import { currentUser } from "@/lib/currentUser";
 import { formDataToNestedObject } from "@/utils/formDataToNestedObject";
 import { redirect } from "@/i18n/routing";
 import { getLocale } from "next-intl/server";
+import { z } from "zod";
 
 export async function addNewRecipe(
   prevState: FormState,
-  data: FormData,
+  data: FormData | z.infer<typeof recipeSchema>,
 ): Promise<FormState> {
   const locale = await getLocale();
   const user = await currentUser();
-  const formData = formDataToNestedObject(data);
-  const parsed = recipeSchema.safeParse(formData);
+
+  const {
+    data: parsedData,
+    success,
+    error,
+  } = recipeSchema.safeParse(
+    data instanceof FormData ? formDataToNestedObject(data) : data,
+  );
 
   if (!user?.id) {
     return {
@@ -23,9 +31,9 @@ export async function addNewRecipe(
     };
   }
 
-  if (!parsed.success) {
+  if (!success) {
     return {
-      errors: parsed.error?.errors.map((error) => error.message),
+      errors: error.errors.map((error) => error.message),
       message: "Invalid form data",
       isSuccess: false,
     };
@@ -37,7 +45,7 @@ export async function addNewRecipe(
     description,
     ingredients,
     steps,
-  } = parsed.data;
+  } = parsedData;
 
   const newRecipe = await db.recipe.create({
     data: {
