@@ -67,6 +67,7 @@ enum Unit {
   TEASPOON
   TABLESPOON
   PIECE
+  PINCH
 }
 
 model Ingredient {

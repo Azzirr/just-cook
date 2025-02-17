@@ -11,7 +11,8 @@ const unitAliases: Record<Unit, string> = {
   OUNCE: "oz",
   POUND: "lb",
   MILLIGRAM: "mg",
-  PIECE: "piece",
+  PIECE: "pc",
+  PINCH: "pinch",
 };
 
 export const unitTuple = Object.keys(Unit) as [Unit, ...Unit[]];
