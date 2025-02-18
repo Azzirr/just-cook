@@ -53,6 +53,8 @@ model User {
   shoppingList   ShoppingList?
   createdRecipes Recipe[]
   accounts       Account[]
+
+  favouriteRecipes Int[] @default([])
 }
 
 model Ingredient {
