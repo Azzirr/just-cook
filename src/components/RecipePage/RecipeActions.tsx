@@ -3,9 +3,10 @@ import { Heart, PlusCircleIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
-  addRecipeToFavourites,
-  getFavouriteRecipes,
-  removeRecipeFromFavourites,
+  addRecipeToList,
+  createRecipeList,
+  getRecipesFromList,
+  removeRecipeFromList,
 } from "@/app/actions/actions";
 
 const recipeActions = [
@@ -21,22 +22,26 @@ const recipeActions = [
   },
 ];
 
-function add() {
-  addRecipeToFavourites("cm74xnpas0000wmygiqlxsanz", 2);
+function addToList() {
+  addRecipeToList("cm7dhsh850000wmko43f31f2t", 2, 3);
 }
-function odd() {
-  removeRecipeFromFavourites("cm74xnpas0000wmygiqlxsanz", 1);
+function removeFromList() {
+  removeRecipeFromList("cm7dhsh850000wmko43f31f2t", 1, 3);
 }
-function all() {
-  getFavouriteRecipes("cm74xnpas0000wmygiqlxsanz");
+function getAllRecipes() {
+  getRecipesFromList("cm7dhsh850000wmko43f31f2t", 1);
+}
+function createNewList() {
+  createRecipeList("cm7dhsh850000wmko43f31f2t", "Dishees");
 }
 
 export const RecipeActions = () => {
   return (
     <section>
-      <Button onClick={add}>ADD</Button>
-      <Button onClick={odd}>ODD</Button>
-      <Button onClick={all}>ALL</Button>
+      <Button onClick={addToList}>ADD</Button>
+      <Button onClick={removeFromList}>ODD</Button>
+      <Button onClick={getAllRecipes}>ALL</Button>
+      <Button onClick={createNewList}>CREATE</Button>
       {recipeActions.map(
         ({ icon: Icon, action, screenReadersOnlyText }, index) => (
           <Button

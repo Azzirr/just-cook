@@ -20,99 +20,179 @@ export const fetchRecipesByCategory = async (categoryId: number) => {
     console.log("error");
   }
 };
+/////
 
-export const addRecipeToFavourites = async (
-  userId: string,
-  recipeId: number,
-) => {
+export const createRecipeList = async (userId: string, listName: string) => {
   try {
-    const user = await db.user.findUnique({
+    const userExist = await db.user.findFirst({
       where: { id: userId },
-      include: {
-        favouriteRecipes: true,
-      },
     });
 
-    if (!user) {
+    if (!userExist) {
       console.log("User does not exist");
       return;
     }
 
-    const isAlreadyFavourite = user.favouriteRecipes.some(
-      (recipe) => recipe.id === recipeId,
-    );
+    const isListExist = await db.recipeList.findFirst({
+      where: {
+        name: listName,
+        userId,
+      },
+    });
 
-    if (!isAlreadyFavourite) {
-      await db.user.update({
-        where: { id: userId },
-        data: {
-          favouriteRecipes: {
-            connect: { id: recipeId },
-          },
-        },
-      });
-      console.log("Recipe added");
-    } else console.log("Recipe is already in favourites");
+    if (isListExist) {
+      console.log("List with this name already exist");
+      return;
+    }
+
+    const newList = await db.recipeList.create({
+      data: {
+        name: listName,
+        userId,
+      },
+    });
+
+    console.log("New list created:", newList);
+    return newList;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const removeRecipeFromFavourites = async (
-  userId: string,
-  recipeId: number,
-) => {
+export const deleteRecipeList = async (userId: string, listId: number) => {
   try {
-    const user = await db.user.findUnique({
+    const userExist = await db.user.findFirst({
       where: { id: userId },
-      include: {
-        favouriteRecipes: true,
-      },
     });
 
-    if (!user) {
+    if (!userExist) {
       console.log("User does not exist");
       return;
     }
 
-    const isAlreadyFavourite = user.favouriteRecipes.some(
-      (recipe) => recipe.id === recipeId,
-    );
+    const isListExist = await db.recipeList.findFirst({
+      where: {
+        id: listId,
+        userId,
+      },
+    });
 
-    if (isAlreadyFavourite) {
-      await db.user.update({
-        where: { id: userId },
-        data: {
-          favouriteRecipes: {
-            disconnect: { id: recipeId },
-          },
-        },
-      });
-      console.log("Recipe removed from favourites");
-    } else console.log("Recipe is not in favourites");
+    if (!isListExist) {
+      console.log("List not found");
+      return;
+    }
+
+    await db.recipeList.delete({
+      where: { id: listId },
+    });
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getFavouriteRecipes = async (userId: string) => {
+export const addRecipeToList = async (
+  userId: string,
+  listId: number,
+  recipeId: number,
+) => {
   try {
-    const user = await db.user.findUnique({
-      where: { id: userId },
-      include: {
-        favouriteRecipes: true,
+    const recipeList = await db.recipeList.findFirst({
+      where: { id: listId, userId },
+      include: { recipes: true },
+    });
+
+    if (!recipeList) {
+      console.log("List or user not found or list does not belong to user");
+      return;
+    }
+
+    const recipeExistInList = recipeList.recipes.some(
+      (recipe) => recipe.id === recipeId,
+    );
+
+    if (recipeExistInList) {
+      console.log("List found, but recipe already exist in the list");
+      return;
+    }
+
+    await db.recipeList.update({
+      where: { id: listId },
+      data: {
+        recipes: {
+          connect: { id: recipeId },
+        },
+      },
+    });
+    console.log("Recipe added to the list");
+  } catch (error) {
+    console.log("Error adding recipe to list", error);
+  }
+};
+
+export const removeRecipeFromList = async (
+  userId: string,
+  listId: number,
+  recipeId: number,
+) => {
+  try {
+    const recipeList = await db.recipeList.findFirst({
+      where: { id: listId, userId },
+      include: { recipes: true },
+    });
+
+    if (!recipeList) {
+      console.log("List or user not found or list does not belong to user");
+      return;
+    }
+
+    const recipeExistInList = recipeList.recipes.some(
+      (recipe) => recipe.id === recipeId,
+    );
+
+    if (!recipeExistInList) {
+      console.log("List found, but recipe not found in the list");
+      return;
+    }
+
+    await db.recipeList.update({
+      where: { id: listId },
+      data: {
+        recipes: {
+          disconnect: { id: recipeId },
+        },
       },
     });
 
-    if (!user) {
+    console.log("Recipe removed from list");
+  } catch (error) {
+    console.log("Error removing recipe from list", error);
+  }
+};
+
+export const getRecipesFromList = async (userId: string, listId: number) => {
+  try {
+    const userExist = await db.user.findFirst({
+      where: { id: userId },
+    });
+    if (!userExist) {
       console.log("User does not exist");
-      return [];
+      return;
     }
 
-    console.log(user.favouriteRecipes);
-    return user.favouriteRecipes || [];
+    const recipeList = await db.recipeList.findFirst({
+      where: { id: listId, userId },
+      include: {
+        recipes: true,
+      },
+    });
+
+    if (!recipeList) {
+      console.log("List or user not found or list does not belong to user");
+      return;
+    }
+    console.log(recipeList);
+    return recipeList || [];
   } catch (error) {
-    console.log(error);
-    return [];
+    console.log("Error with reading list", error);
   }
 };
