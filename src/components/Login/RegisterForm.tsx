@@ -7,6 +7,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { toast } from "sonner";
 import { Input } from "../ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -36,7 +37,10 @@ const RegisterForm = ({ setShowLoginForm }: AuthFormProps) => {
 
   useEffect(() => {
     if (state.isSuccess) {
-      setShowLoginForm(true);
+      toast.success("Confirmation email has been sent!", {
+        description: "Please check your email box",
+      });
+      form.reset();
     }
   }, [state.isSuccess]);
 

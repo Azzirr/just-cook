@@ -3,6 +3,9 @@ import { signIn } from "@/auth";
 import { loginSchema } from "@/schemas/authSchemas";
 import { AuthError } from "next-auth";
 import { FormState } from "@/types/formState";
+import { db } from "@/db";
+import { createVerificationToken } from "@/data/createVerificationToken";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export async function login(
   prevState: FormState,
@@ -21,6 +24,49 @@ export async function login(
   }
 
   const { username, password } = parsed.data;
+
+  const user = await db.user.findFirst({
+    where: {
+      username: username,
+    },
+    include: {
+      verificationToken: true,
+    },
+  });
+
+  if (!user) {
+    return {
+      message: "Invalid credentials!",
+      isSuccess: false,
+    };
+  }
+
+  const hasTokenExpired =
+    user.verificationToken?.expires &&
+    new Date() > new Date(user.verificationToken.expires);
+
+  if (!user.emailVerified) {
+    if (user.verificationToken && !hasTokenExpired) {
+      return {
+        message:
+          "User is not verified. Please confirm your registration via email.",
+        isSuccess: false,
+      };
+    } else {
+      const verificationToken = await createVerificationToken(user.id);
+      await sendVerificationEmail({
+        email: user.email,
+        token: verificationToken.token,
+        username: user.username,
+      });
+
+      return {
+        message:
+          "User is not verified. A new verification link has been sent to your email.",
+        isSuccess: false,
+      };
+    }
+  }
 
   try {
     await signIn("credentials", {
