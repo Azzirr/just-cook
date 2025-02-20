@@ -28,7 +28,7 @@ export const addRecipeToFavourites = async (
   try {
     const user = await db.user.findUnique({
       where: { id: userId },
-      select: {
+      include: {
         favouriteRecipes: true,
       },
     });
@@ -38,12 +38,16 @@ export const addRecipeToFavourites = async (
       return;
     }
 
-    if (!user.favouriteRecipes.includes(recipeId)) {
+    const isAlreadyFavourite = user.favouriteRecipes.some(
+      (recipe) => recipe.id === recipeId,
+    );
+
+    if (!isAlreadyFavourite) {
       await db.user.update({
         where: { id: userId },
         data: {
           favouriteRecipes: {
-            push: recipeId,
+            connect: { id: recipeId },
           },
         },
       });
@@ -61,7 +65,7 @@ export const removeRecipeFromFavourites = async (
   try {
     const user = await db.user.findUnique({
       where: { id: userId },
-      select: {
+      include: {
         favouriteRecipes: true,
       },
     });
@@ -71,17 +75,21 @@ export const removeRecipeFromFavourites = async (
       return;
     }
 
-    if (user.favouriteRecipes.includes(recipeId)) {
+    const isAlreadyFavourite = user.favouriteRecipes.some(
+      (recipe) => recipe.id === recipeId,
+    );
+
+    if (isAlreadyFavourite) {
       await db.user.update({
         where: { id: userId },
         data: {
           favouriteRecipes: {
-            set: user.favouriteRecipes.filter((id) => id !== recipeId),
+            disconnect: { id: recipeId },
           },
         },
       });
-      console.log("Recipe removed");
-    } else console.log("Error");
+      console.log("Recipe removed from favourites");
+    } else console.log("Recipe is not in favourites");
   } catch (error) {
     console.log(error);
   }
@@ -91,7 +99,7 @@ export const getFavouriteRecipes = async (userId: string) => {
   try {
     const user = await db.user.findUnique({
       where: { id: userId },
-      select: {
+      include: {
         favouriteRecipes: true,
       },
     });
@@ -101,14 +109,8 @@ export const getFavouriteRecipes = async (userId: string) => {
       return [];
     }
 
-    const favouriteRecipes = await db.recipe.findMany({
-      where: {
-        id: { in: user.favouriteRecipes },
-      },
-    });
-
-    console.log(favouriteRecipes);
-    return favouriteRecipes || [];
+    console.log(user.favouriteRecipes);
+    return user.favouriteRecipes || [];
   } catch (error) {
     console.log(error);
     return [];

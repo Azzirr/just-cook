@@ -54,7 +54,7 @@ model User {
   createdRecipes Recipe[]
   accounts       Account[]
 
-  favouriteRecipes Int[] @default([])
+  favouriteRecipes Recipe[] @relation("UserFavouriteRecipes")
 }
 
 model Ingredient {
@@ -81,6 +81,7 @@ model Recipe {
   category RecipeCategory? @relation(fields: [recipeCategoryId], references: [id])
   author   User            @relation(fields: [authorId], references: [id])
   tag      Tag[]
+  favouriteBy User[] @relation("UserFavouriteRecipes")
 }
 
 model RecipeCategory {

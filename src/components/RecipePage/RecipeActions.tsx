@@ -2,6 +2,11 @@
 import { Heart, PlusCircleIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import {
+  addRecipeToFavourites,
+  getFavouriteRecipes,
+  removeRecipeFromFavourites,
+} from "@/app/actions/actions";
 
 const recipeActions = [
   {
@@ -16,9 +21,22 @@ const recipeActions = [
   },
 ];
 
+function add() {
+  addRecipeToFavourites("cm74xnpas0000wmygiqlxsanz", 2);
+}
+function odd() {
+  removeRecipeFromFavourites("cm74xnpas0000wmygiqlxsanz", 1);
+}
+function all() {
+  getFavouriteRecipes("cm74xnpas0000wmygiqlxsanz");
+}
+
 export const RecipeActions = () => {
   return (
     <section>
+      <Button onClick={add}>ADD</Button>
+      <Button onClick={odd}>ODD</Button>
+      <Button onClick={all}>ALL</Button>
       {recipeActions.map(
         ({ icon: Icon, action, screenReadersOnlyText }, index) => (
           <Button
