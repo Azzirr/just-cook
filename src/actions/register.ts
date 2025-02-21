@@ -1,11 +1,14 @@
 "use server";
 
 import bcrypt from "bcryptjs";
-import { db } from "@/db";
+import { z } from "zod";
+
 import { Role } from "@prisma/client";
+import { db } from "@/db";
 import { registerSchema } from "@/schemas/authSchemas";
 import { FormState } from "@/types/formState";
-import { z } from "zod";
+import { sendVerificationEmail } from "@/lib/mail";
+import { createVerificationToken } from "@/data/createVerificationToken";
 
 export async function register(
   prevState: FormState,
@@ -53,7 +56,7 @@ export async function register(
     };
   }
 
-  await db.user.create({
+  const createdUser = await db.user.create({
     data: {
       username,
       email,
@@ -61,6 +64,14 @@ export async function register(
       isActive: true,
       role: Role.USER,
     },
+  });
+
+  const verificationToken = await createVerificationToken(createdUser.id);
+
+  await sendVerificationEmail({
+    email: createdUser.email,
+    token: verificationToken.token,
+    username: createdUser.username,
   });
 
   return {
