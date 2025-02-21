@@ -1,7 +1,7 @@
 "use server";
 import { FormState } from "@/types/formState";
 import { profileSchema } from "@/schemas/profileSchema";
-import { currentSessionUser } from "@/lib/currentSessionUser";
+import { currentSession } from "@/lib/currentSession";
 import { db } from "@/db";
 import { redirect } from "@/i18n/routing";
 import { getLocale } from "next-intl/server";
@@ -10,7 +10,7 @@ export const editUserData = async (
   prevState: FormState,
   data: FormData,
 ): Promise<FormState> => {
-  const user = await currentSessionUser();
+  const user = await currentSession();
   if (!user?.id) {
     return {
       message: "Unauthorized",

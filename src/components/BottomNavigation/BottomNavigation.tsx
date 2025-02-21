@@ -8,13 +8,13 @@ import {
 
 import { Link } from "@/i18n/routing";
 import { getTranslations } from "next-intl/server";
-import { currentSessionUser } from "@/lib/currentSessionUser";
+import { currentSession } from "@/lib/currentSession";
 import { getUserById } from "@/data/user";
 
 const BottomNavigation = async () => {
   const t = await getTranslations("TopNavigation");
 
-  const sessionUser = await currentSessionUser();
+  const sessionUser = await currentSession();
   const user = sessionUser?.id ? await getUserById(sessionUser.id) : null;
 
   return (

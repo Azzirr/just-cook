@@ -3,7 +3,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { FilePenLine } from "lucide-react";
 import { UserProfileModalForm } from "./UserProfileModalForm";
 import { User } from "@prisma/client";
-import { currentSessionUser } from "@/lib/currentSessionUser";
+import { currentSession } from "@/lib/currentSession";
 
 type UserProfileHeaderButtonsProps = {
   user: User;
@@ -12,7 +12,7 @@ type UserProfileHeaderButtonsProps = {
 export const UserProfileHeaderButtons = async ({
   user,
 }: UserProfileHeaderButtonsProps) => {
-  const sessionUser = await currentSessionUser();
+  const sessionUser = await currentSession();
   const isViewingOwnProfile = sessionUser?.id === user.id;
 
   return isViewingOwnProfile ? (

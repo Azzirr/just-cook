@@ -5,7 +5,7 @@ import { recipeSchema } from "@/components/recipe-form/schemas";
 import { formDataToNestedObject } from "@/utils/formDataToNestedObject";
 import { redirect } from "@/i18n/routing";
 import { getLocale } from "next-intl/server";
-import { currentSessionUser } from "@/lib/currentSessionUser";
+import { currentSession } from "@/lib/currentSession";
 
 export async function addNewRecipe(
   prevState: FormState,
@@ -15,7 +15,7 @@ export async function addNewRecipe(
   const formData = formDataToNestedObject(data);
 
   const parsed = recipeSchema.safeParse(formData);
-  const user = await currentSessionUser();
+  const user = await currentSession();
 
   if (!user?.id) {
     return {
