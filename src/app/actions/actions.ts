@@ -21,24 +21,52 @@ export const fetchRecipesByCategory = async (categoryId: number) => {
   }
 };
 /////
+interface IsListExistCriteria {
+  id?: number;
+  name?: string;
+  userId?: string;
+  includeRecipes?: boolean;
+}
+interface ListWithRecipes {
+  id: number;
+  userId: string;
+  recipes: { id: number }[];
+}
+
+const checkIsUserExist = async (userId: string) => {
+  const isUserExist = await db.user.findFirst({
+    where: { id: userId },
+  });
+  return isUserExist ? true : false;
+};
+
+const checkIsListExist = async (criteria: IsListExistCriteria) => {
+  return await db.recipeList.findFirst({
+    where: {
+      ...criteria,
+    },
+  });
+};
+
+const getListWithRecipes = async (
+  listId: number,
+  userId: string,
+): Promise<ListWithRecipes | null> => {
+  return await db.recipeList.findFirst({
+    where: { id: listId, userId },
+    include: { recipes: true },
+  });
+};
 
 export const createRecipeList = async (userId: string, listName: string) => {
   try {
-    const userExist = await db.user.findFirst({
-      where: { id: userId },
-    });
-
-    if (!userExist) {
+    const isUserExist = await checkIsUserExist(userId);
+    if (!isUserExist) {
       console.log("User does not exist");
       return;
     }
 
-    const isListExist = await db.recipeList.findFirst({
-      where: {
-        name: listName,
-        userId,
-      },
-    });
+    const isListExist = await checkIsListExist({ name: listName, userId });
 
     if (isListExist) {
       console.log("List with this name already exist");
@@ -61,21 +89,13 @@ export const createRecipeList = async (userId: string, listName: string) => {
 
 export const deleteRecipeList = async (userId: string, listId: number) => {
   try {
-    const userExist = await db.user.findFirst({
-      where: { id: userId },
-    });
-
-    if (!userExist) {
+    const isUserExist = await checkIsUserExist(userId);
+    if (!isUserExist) {
       console.log("User does not exist");
       return;
     }
 
-    const isListExist = await db.recipeList.findFirst({
-      where: {
-        id: listId,
-        userId,
-      },
-    });
+    const isListExist = await checkIsListExist({ id: listId, userId });
 
     if (!isListExist) {
       console.log("List not found");
@@ -96,10 +116,7 @@ export const addRecipeToList = async (
   recipeId: number,
 ) => {
   try {
-    const recipeList = await db.recipeList.findFirst({
-      where: { id: listId, userId },
-      include: { recipes: true },
-    });
+    const recipeList = await getListWithRecipes(listId, userId);
 
     if (!recipeList) {
       console.log("List or user not found or list does not belong to user");
@@ -135,10 +152,7 @@ export const removeRecipeFromList = async (
   recipeId: number,
 ) => {
   try {
-    const recipeList = await db.recipeList.findFirst({
-      where: { id: listId, userId },
-      include: { recipes: true },
-    });
+    const recipeList = await getListWithRecipes(listId, userId);
 
     if (!recipeList) {
       console.log("List or user not found or list does not belong to user");
@@ -171,20 +185,14 @@ export const removeRecipeFromList = async (
 
 export const getRecipesFromList = async (userId: string, listId: number) => {
   try {
-    const userExist = await db.user.findFirst({
-      where: { id: userId },
-    });
-    if (!userExist) {
+    const isUserExist = await checkIsUserExist(userId);
+
+    if (!isUserExist) {
       console.log("User does not exist");
       return;
     }
 
-    const recipeList = await db.recipeList.findFirst({
-      where: { id: listId, userId },
-      include: {
-        recipes: true,
-      },
-    });
+    const recipeList = await getListWithRecipes(listId, userId);
 
     if (!recipeList) {
       console.log("List or user not found or list does not belong to user");

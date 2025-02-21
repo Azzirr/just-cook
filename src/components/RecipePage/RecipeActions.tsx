@@ -23,16 +23,16 @@ const recipeActions = [
 ];
 
 function addToList() {
-  addRecipeToList("cm7dhsh850000wmko43f31f2t", 2, 3);
+  addRecipeToList("cm7f2p20q0000wm78xqnwt1ha", 4, 3);
 }
 function removeFromList() {
-  removeRecipeFromList("cm7dhsh850000wmko43f31f2t", 1, 3);
+  removeRecipeFromList("cm7f2p20q0000wm78xqnwt1ha", 4, 3);
 }
 function getAllRecipes() {
-  getRecipesFromList("cm7dhsh850000wmko43f31f2t", 1);
+  getRecipesFromList("cm7f2p20q0000wm78xqnwt1ha", 1);
 }
 function createNewList() {
-  createRecipeList("cm7dhsh850000wmko43f31f2t", "Dishees");
+  createRecipeList("cm7f2p20q0000wm78xqnwt1ha", "Dishes");
 }
 
 export const RecipeActions = () => {
