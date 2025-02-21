@@ -37,6 +37,13 @@ export async function newEmailVerification(
     };
   }
 
+  if (user.emailVerified) {
+    return {
+      message: "Your email is already verified",
+      isSuccess: false,
+    };
+  }
+
   const hasTokenExpired =
     user.verificationToken?.expires &&
     new Date() > new Date(user.verificationToken?.expires);
@@ -48,14 +55,18 @@ export async function newEmailVerification(
     };
   }
 
-  if (user.verificationToken?.token === token) {
-    await db.user.update({
-      where: { username: user.username },
-      data: {
-        emailVerified: true,
-      },
-    });
-  }
+  await db.user.update({
+    where: { username: user.username },
+    data: {
+      emailVerified: true,
+    },
+  });
+
+  await db.verificationToken.delete({
+    where: {
+      userId: user.id,
+    },
+  });
 
   const locale = await getLocale();
 

@@ -1,5 +1,4 @@
 import { db } from "@/db";
-import { v4 as uuidv4 } from "uuid";
 
 const TOKEN_EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 24 hours
 
@@ -29,7 +28,7 @@ export const createVerificationToken = async (userId: string) => {
   return await db.verificationToken.create({
     data: {
       userId: userId,
-      token: uuidv4(),
+      token: crypto.randomUUID(),
       expires: new Date(Date.now() + TOKEN_EXPIRATION_TIME),
     },
   });
