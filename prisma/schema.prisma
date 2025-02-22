@@ -39,26 +39,52 @@ model Account {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  avatar    String?
-  email     String   @unique
-  username  String   @unique
-  password  String
-  firstName String?
-  isActive  Boolean  @default(true)
-  role      Role     @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String   @id @default(cuid())
+  avatar        String?
+  email         String   @unique
+  emailVerified Boolean  @default(false)
+  username      String   @unique
+  password      String
+  firstName     String?
+  isActive      Boolean  @default(true)
+  role          Role     @default(USER)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  shoppingList   ShoppingList?
-  createdRecipes Recipe[]
-  accounts       Account[]
+  shoppingList      ShoppingList?
+  createdRecipes    Recipe[]
+  accounts          Account[]
+  verificationToken VerificationToken?
+}
+
+model VerificationToken {
+  id      String   @id @default(cuid())
+  token   String   @unique
+  expires DateTime
+  userId  String   @unique
+  user    User     @relation(fields: [userId], references: [id])
+}
+
+enum Unit {
+  GRAM
+  MILLIGRAM
+  KILOGRAM
+  POUND
+  OUNCE
+  MILLILITER
+  LITER
+  CUP
+  TEASPOON
+  TABLESPOON
+  PIECE
+  PINCH
 }
 
 model Ingredient {
   id       Int     @id @default(autoincrement())
   name     String
-  quantity String
+  quantity Float
+  unit     Unit
   Recipe   Recipe? @relation(fields: [recipeId], references: [id])
   recipeId Int?
 }

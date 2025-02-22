@@ -1,4 +1,5 @@
 "use server";
+
 import { FormState } from "@/types/formState";
 import { db } from "@/db";
 import { recipeSchema } from "@/components/recipe-form/schemas";
@@ -6,16 +7,23 @@ import { formDataToNestedObject } from "@/utils/formDataToNestedObject";
 import { redirect } from "@/i18n/routing";
 import { getLocale } from "next-intl/server";
 import { currentSession } from "@/lib/currentSession";
+import { z } from "zod";
 
 export async function addNewRecipe(
   prevState: FormState,
-  data: FormData,
+  data: FormData | z.infer<typeof recipeSchema>,
 ): Promise<FormState> {
   const locale = await getLocale();
-  const formData = formDataToNestedObject(data);
 
-  const parsed = recipeSchema.safeParse(formData);
   const user = await currentSession();
+
+  const {
+    data: parsedData,
+    success,
+    error,
+  } = recipeSchema.safeParse(
+    data instanceof FormData ? formDataToNestedObject(data) : data,
+  );
 
   if (!user?.id) {
     return {
@@ -24,9 +32,9 @@ export async function addNewRecipe(
     };
   }
 
-  if (!parsed.success) {
+  if (!success) {
     return {
-      errors: parsed.error?.errors.map((error) => error.message),
+      errors: error.errors.map((error) => error.message),
       message: "Invalid form data",
       isSuccess: false,
     };
@@ -38,21 +46,16 @@ export async function addNewRecipe(
     description,
     ingredients,
     steps,
-  } = parsed.data;
-
-  const parsedSteps = steps.map(({ step }) => step);
+  } = parsedData;
 
   const newRecipe = await db.recipe.create({
     data: {
       authorId: user.id,
       name,
       description,
-      steps: parsedSteps,
+      steps: steps.map(({ step }) => step),
       ingredients: {
-        create: ingredients.map((ingredient) => ({
-          name: ingredient.name,
-          quantity: ingredient.quantity,
-        })),
+        create: ingredients,
       },
       recipeCategoryId: Number(categoryId),
     },
