@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { AuthFormProps } from "./types";
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect } from "react";
 import { register } from "@/actions/register";
 import { onSubmitUtil } from "@/utils/onSubmitUtil";
 import { FormAlert } from "@/components/FormAlert";
@@ -23,7 +23,6 @@ const RegisterForm = ({ setShowLoginForm }: AuthFormProps) => {
   const [state, action, isPending] = useActionState(register, {
     isSuccess: false,
   });
-  const formRef = useRef<HTMLFormElement>(null);
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -55,9 +54,8 @@ const RegisterForm = ({ setShowLoginForm }: AuthFormProps) => {
       <div className="w-full">
         <Form {...form}>
           <form
-            ref={formRef}
             action={action}
-            onSubmit={onSubmitUtil({ action, formRef, form })}
+            onSubmit={onSubmitUtil(action, form)}
             className="space-y-5"
           >
             <FormAlert

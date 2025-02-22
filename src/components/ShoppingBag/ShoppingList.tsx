@@ -28,8 +28,8 @@ export const ShoppingBag = () => {
       ) : (
         <ScrollArea className="px-2 py-1">
           <div className="flex flex-col gap-2">
-            {shoppingBagItems.map((item) => (
-              <ShoppingListItem key={item.id} {...item} />
+            {shoppingBagItems.map((item, index) => (
+              <ShoppingListItem key={index} {...item} />
             ))}
           </div>
         </ScrollArea>

@@ -65,10 +65,26 @@ model VerificationToken {
   user    User     @relation(fields: [userId], references: [id])
 }
 
+enum Unit {
+  GRAM
+  MILLIGRAM
+  KILOGRAM
+  POUND
+  OUNCE
+  MILLILITER
+  LITER
+  CUP
+  TEASPOON
+  TABLESPOON
+  PIECE
+  PINCH
+}
+
 model Ingredient {
   id       Int     @id @default(autoincrement())
   name     String
-  quantity String
+  quantity Float
+  unit     Unit
   Recipe   Recipe? @relation(fields: [recipeId], references: [id])
   recipeId Int?
 }
