@@ -2,46 +2,27 @@
 import { Heart, PlusCircleIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  addRecipeToList,
-  createRecipeList,
-  getRecipesFromList,
-  removeRecipeFromList,
-} from "@/actions/allFavouriteListActions";
+import { addRecipeToList } from "@/actions/allFavouriteListActions";
 
 const recipeActions = [
   {
     icon: Heart,
-    action: () => console.log("Added to favorites"),
+    //There is no 3rd argument, so we are adding recipe to Favourites list
+    //TODO - take authorized user id and paste it to addRecipeToList, also add error or something if user is not logged in
+    action: () => addRecipeToList("", 2),
     screenReadersOnlyText: "Add recipe to favorites",
   },
   {
     icon: PlusCircleIcon,
+    //TODO - show a modal to user, which has all custom Recipe Lists and give him an option to add recipe to
     action: () => console.log("Added to list"),
     screenReadersOnlyText: "Add recipe to list",
   },
 ];
 
-function addToList() {
-  addRecipeToList("cm7f2p20q0000wm78xqnwt1ha", 4, 3);
-}
-function removeFromList() {
-  removeRecipeFromList("cm7f2p20q0000wm78xqnwt1ha", 4, 3);
-}
-function getAllRecipes() {
-  getRecipesFromList("cm7f2p20q0000wm78xqnwt1ha", 1);
-}
-function createNewList() {
-  createRecipeList("cm7f2p20q0000wm78xqnwt1ha", "Dishes");
-}
-
 export const RecipeActions = () => {
   return (
     <section>
-      <Button onClick={addToList}>ADD</Button>
-      <Button onClick={removeFromList}>ODD</Button>
-      <Button onClick={getAllRecipes}>ALL</Button>
-      <Button onClick={createNewList}>CREATE</Button>
       {recipeActions.map(
         ({ icon: Icon, action, screenReadersOnlyText }, index) => (
           <Button

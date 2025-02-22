@@ -92,11 +92,27 @@ export const deleteRecipeList = async (userId: string, listId: number) => {
 
 export const addRecipeToList = async (
   userId: string,
-  listId: number,
   recipeId: number,
+  listId?: number,
 ) => {
   try {
-    const recipeList = await getListWithRecipes(listId, userId);
+    let targetListId = listId;
+
+    // If there is no listId argument in function, we are looking for personal Favourites list
+    if (!targetListId) {
+      const favouritesList = await db.recipeList.findFirst({
+        where: { userId, isDefault: true },
+      });
+
+      if (!favouritesList) {
+        console.log("Favourites list not found for this user");
+        return;
+      }
+
+      targetListId = favouritesList.id;
+    }
+
+    const recipeList = await getListWithRecipes(targetListId, userId);
 
     if (!recipeList) {
       console.log("List or user not found or list does not belong to user");
@@ -108,19 +124,20 @@ export const addRecipeToList = async (
     );
 
     if (recipeExistInList) {
-      console.log("List found, but recipe already exist in the list");
+      console.log("Recipe already exists in the list");
       return;
     }
 
     await db.recipeList.update({
-      where: { id: listId },
+      where: { id: targetListId },
       data: {
         recipes: {
           connect: { id: recipeId },
         },
       },
     });
-    console.log("Recipe added to the list");
+
+    console.log(`Recipe added to list ${targetListId}`);
   } catch (error) {
     console.log("Error adding recipe to list", error);
   }

@@ -111,4 +111,6 @@ model RecipeList{
   user User @relation(fields: [userId], references: [id])
 
   recipes Recipe[] 
+
+  isDefault Boolean @default(false)
 }

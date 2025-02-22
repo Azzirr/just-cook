@@ -54,6 +54,7 @@ export async function register(prevState: FormState, data: FormData) {
       recipeLists: {
         create: {
           name: "Favourites",
+          isDefault: true,
         },
       },
     },
