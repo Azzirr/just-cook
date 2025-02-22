@@ -34,8 +34,6 @@ export const UserProfileModalForm = ({ user }: UserProfileModalFormProps) => {
     user.avatar,
   );
 
-  const formRef = useRef<HTMLFormElement>(null);
-
   const form = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -65,9 +63,9 @@ export const UserProfileModalForm = ({ user }: UserProfileModalFormProps) => {
       <Form {...form}>
         <FormAlert message={state?.message} errors={state?.errors} />
         <form
-          ref={formRef}
           action={action}
-          onSubmit={onSubmitUtil({ action, formRef, form })}
+          //TODO: consider adding only dirty inputs
+          onSubmit={onSubmitUtil(action, form)}
           className="space-y-5"
         >
           <div className="flex gap-2">

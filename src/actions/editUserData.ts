@@ -5,10 +5,11 @@ import { currentSession } from "@/lib/currentSession";
 import { db } from "@/db";
 import { redirect } from "@/i18n/routing";
 import { getLocale } from "next-intl/server";
+import { z } from "zod";
 
 export const editUserData = async (
   prevState: FormState,
-  data: FormData,
+  data: FormData | z.infer<typeof profileSchema>,
 ): Promise<FormState> => {
   const user = await currentSession();
   if (!user?.id) {
@@ -19,18 +20,24 @@ export const editUserData = async (
   }
 
   const locale = await getLocale();
-  const formData = Object.fromEntries(data);
-  const parsed = profileSchema.safeParse(formData);
 
-  if (!parsed.success) {
+  const {
+    data: parsedData,
+    success,
+    error,
+  } = profileSchema.safeParse(
+    data instanceof FormData ? Object.fromEntries(data) : data,
+  );
+
+  if (!success) {
     return {
-      errors: parsed.error?.errors.map((error) => error.message),
+      errors: error?.errors.map((error) => error.message),
       message: "Invalid form data",
       isSuccess: false,
     };
   }
 
-  const { username, firstName, avatar } = parsed.data;
+  const { username, firstName, avatar } = parsedData;
 
   //TODO: connect image hosting for assets
   const existingUsername = await db.user.findFirst({
