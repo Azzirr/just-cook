@@ -19,10 +19,12 @@ const avatarSchema = z
     `Only ${ACCEPTED_IMAGE_FORMATS.map((format) => `.${format}`).join(", ")} formats are supported.`,
   );
 
-export const profileSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters",
-  }),
-  avatar: avatarSchema.or(z.null()).optional(),
-  firstName: z.string().optional(),
-});
+export const profileSchema = z
+  .object({
+    username: z.string().min(2, {
+      message: "Username must be at least 2 characters",
+    }),
+    avatar: avatarSchema.or(z.null()).optional(),
+    firstName: z.string().optional(),
+  })
+  .partial();

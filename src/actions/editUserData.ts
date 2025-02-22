@@ -18,7 +18,6 @@ export const editUserData = async (
       isSuccess: false,
     };
   }
-
   const locale = await getLocale();
 
   const {
@@ -39,20 +38,20 @@ export const editUserData = async (
 
   const { username, firstName, avatar } = parsedData;
 
-  //TODO: connect image hosting for assets
-  const existingUsername = await db.user.findFirst({
-    where: {
-      username,
-    },
-  });
+  if (username) {
+    const existingUsername = await db.user.findFirst({
+      where: {
+        username,
+      },
+    });
 
-  if (existingUsername) {
-    return {
-      message: "Username is already in use",
-      isSuccess: false,
-    };
+    if (existingUsername) {
+      return {
+        message: "Username is already in use",
+        isSuccess: false,
+      };
+    }
   }
-
   const updatedUser = await db.user.update({
     where: {
       id: user.id,

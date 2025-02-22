@@ -54,6 +54,19 @@ export const UserProfileModalForm = ({ user }: UserProfileModalFormProps) => {
     }
   };
 
+  const handleActionForDirtyInputs = <T,>(data: T) => {
+    const { dirtyFields } = form.formState;
+
+    const dirtyKeys = Object.keys(dirtyFields);
+
+    const onlyDirtyFields = dirtyKeys.reduce((acc, key) => {
+      acc[key as keyof T] = data[key as keyof T];
+      return acc;
+    }, {} as Partial<T>);
+
+    action(onlyDirtyFields);
+  };
+
   return (
     <DialogContent>
       <DialogHeader>
@@ -64,8 +77,7 @@ export const UserProfileModalForm = ({ user }: UserProfileModalFormProps) => {
         <FormAlert message={state?.message} errors={state?.errors} />
         <form
           action={action}
-          //TODO: consider adding only dirty inputs
-          onSubmit={onSubmitUtil(action, form)}
+          onSubmit={onSubmitUtil(handleActionForDirtyInputs, form)}
           className="space-y-5"
         >
           <div className="flex gap-2">
