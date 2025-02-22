@@ -7,7 +7,7 @@ import {
   createRecipeList,
   getRecipesFromList,
   removeRecipeFromList,
-} from "@/app/actions/actions";
+} from "@/actions/allFavouriteListActions";
 
 const recipeActions = [
   {

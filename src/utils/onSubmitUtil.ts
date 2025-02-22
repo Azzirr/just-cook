@@ -12,7 +12,7 @@ export const onSubmitUtil = <T extends z.ZodType>({
   form,
 }: {
   action: (data: FormData) => void;
-  formRef: React.RefObject<HTMLFormElement>;
+  formRef: React.RefObject<HTMLFormElement | null>;
   form: {
     handleSubmit: (
       callback: (values: z.infer<T>) => void,
