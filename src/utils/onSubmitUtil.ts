@@ -18,6 +18,5 @@ export const onSubmitUtil = <T extends Record<string, unknown>>(
     },
     [action],
   );
-
   return form.handleSubmit(onSubmit);
 };

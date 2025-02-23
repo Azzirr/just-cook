@@ -3,10 +3,10 @@
 import { FormState } from "@/types/formState";
 import { db } from "@/db";
 import { recipeSchema } from "@/components/recipe-form/schemas";
-import { currentUser } from "@/lib/currentUser";
 import { formDataToNestedObject } from "@/utils/formDataToNestedObject";
 import { redirect } from "@/i18n/routing";
 import { getLocale } from "next-intl/server";
+import { currentSession } from "@/lib/currentSession";
 import { z } from "zod";
 
 export async function addNewRecipe(
@@ -14,7 +14,8 @@ export async function addNewRecipe(
   data: FormData | z.infer<typeof recipeSchema>,
 ): Promise<FormState> {
   const locale = await getLocale();
-  const user = await currentUser();
+
+  const user = await currentSession();
 
   const {
     data: parsedData,
