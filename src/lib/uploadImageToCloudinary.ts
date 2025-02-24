@@ -4,7 +4,7 @@ import {
   type UploadApiErrorResponse,
 } from "cloudinary";
 
-const fileToBufer = async (image: File) => {
+const fileToBuffer = async (image: File) => {
   const arrayBuffer = await image.arrayBuffer();
   return new Uint8Array(arrayBuffer);
 };
@@ -12,7 +12,7 @@ const fileToBufer = async (image: File) => {
 export const uploadImageToCloudinary = async (
   image: File,
 ): Promise<UploadApiResponse> => {
-  const buffer = await fileToBufer(image);
+  const buffer = await fileToBuffer(image);
 
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(

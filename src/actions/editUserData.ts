@@ -55,10 +55,10 @@ export const editUserData = async (
     }
   }
 
-  let uploadedImageUrl;
+  let uploadedAvatarUrl;
 
   if (avatar) {
-    uploadedImageUrl = (await uploadImageToCloudinary(avatar)).url;
+    uploadedAvatarUrl = (await uploadImageToCloudinary(avatar)).url;
   }
 
   const updatedUser = await db.user.update({
@@ -68,7 +68,7 @@ export const editUserData = async (
     data: {
       firstName,
       username,
-      avatar: uploadedImageUrl,
+      avatar: uploadedAvatarUrl,
     },
   });
 
