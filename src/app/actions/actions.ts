@@ -1,5 +1,6 @@
 "use server";
 import { db } from "@/db";
+import type { Recipe, RecipeCategory } from "@prisma/client";
 
 export const fetchCategories = async () => {
   try {
@@ -8,23 +9,15 @@ export const fetchCategories = async () => {
     console.log(error);
   }
 };
-// TODO - to delete, but I left it for now
-// export const fetchRecipes = async () => {
-//   try {
-//     return db.recipe.findMany();
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
-export const fetchRecipesByCategory = async (categoryId: number) => {
-  try {
-    return await db.recipe.findMany({
-      where: {
-        recipeCategoryId: categoryId,
+export const fetchRecipesByCategory = async (
+  categorySlug: RecipeCategory["slug"],
+): Promise<Recipe[]> => {
+  return db.recipe.findMany({
+    where: {
+      category: {
+        slug: categorySlug,
       },
-    });
-  } catch (error) {
-    console.log("error");
-  }
+    },
+  });
 };

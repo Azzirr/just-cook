@@ -92,6 +92,7 @@ model Ingredient {
 model Recipe {
   id               Int          @id @default(autoincrement())
   name             String
+  slug             String       @unique
   description      String
   steps            String[]
   ingredients      Ingredient[]
@@ -110,6 +111,7 @@ model Recipe {
 model RecipeCategory {
   id      Int      @id @default(autoincrement())
   name    String
+  slug    String   @unique
   recipes Recipe[]
 }
 
