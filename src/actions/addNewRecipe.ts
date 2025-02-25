@@ -14,7 +14,6 @@ export async function addNewRecipe(
   data: FormData | z.infer<typeof recipeSchema>,
 ): Promise<FormState> {
   const locale = await getLocale();
-
   const user = await currentSession();
 
   const {
@@ -42,27 +41,43 @@ export async function addNewRecipe(
 
   const {
     name,
-    category: categoryId,
+    category: categorySlug,
     description,
     ingredients,
     steps,
   } = parsedData;
 
+  const category = await db.recipeCategory.findUnique({
+    where: {
+      slug: categorySlug,
+    },
+  });
+
+  if (!category) {
+    return {
+      message: "Category not found",
+      isSuccess: false,
+    };
+  }
+
+  const slug = name.toLowerCase().replace(/\s/g, "-");
+
   const newRecipe = await db.recipe.create({
     data: {
       authorId: user.id,
       name,
+      slug,
       description,
       steps: steps.map(({ step }) => step),
       ingredients: {
         create: ingredients,
       },
-      recipeCategoryId: Number(categoryId),
+      recipeCategoryId: category.id,
     },
   });
 
   redirect({
-    href: `/category/${categoryId}/${newRecipe.id}`,
+    href: `/category/${categorySlug}/${newRecipe.id}`,
     locale,
   });
 
