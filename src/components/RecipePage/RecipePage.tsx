@@ -1,7 +1,7 @@
 import { RecipeSteps } from "./RecipeSteps";
 import { RecipeIngredients } from "./RecipeIngredients";
 import { RecipeActions } from "./RecipeActions";
-import { formatShortDate } from "@/utils/formatShortDate";
+import { useFormatShortDate } from "@/hooks/useFormatShortDate";
 import { Recipe, User, Ingredient } from "@prisma/client";
 
 type RecipePageProps = {
@@ -9,6 +9,7 @@ type RecipePageProps = {
 };
 
 export const RecipePage = ({ recipe }: RecipePageProps) => {
+  const formatDate = useFormatShortDate();
   return (
     <div className="mx-auto flex max-w-[80ch] flex-col gap-3 p-6">
       <section className="flex flex-col justify-between gap-3 sm:flex-row">
@@ -18,10 +19,10 @@ export const RecipePage = ({ recipe }: RecipePageProps) => {
         </div>
         <div className="mb-2 sm:mt-2">
           <p className="mb-1 text-sm text-muted-foreground">
-            Created {formatShortDate(recipe.createdAt)}
+            Created {formatDate(recipe.createdAt)}
           </p>
           <p className="text-sm text-muted-foreground">
-            Updated {formatShortDate(recipe.updatedAt)}
+            Updated {formatDate(recipe.updatedAt)}
           </p>
         </div>
       </section>
