@@ -1,5 +1,4 @@
 "use server";
-
 import { FormState } from "@/types/formState";
 import { profileSchema } from "@/schemas/profileSchema";
 import { currentSession } from "@/lib/currentSession";
@@ -7,7 +6,6 @@ import { db } from "@/db";
 import { redirect } from "@/i18n/routing";
 import { getLocale } from "next-intl/server";
 import { z } from "zod";
-import { uploadImageToCloudinary } from "@/lib/uploadImageToCloudinary";
 
 export const editUserData = async (
   prevState: FormState,
@@ -54,13 +52,6 @@ export const editUserData = async (
       };
     }
   }
-
-  let uploadedAvatarUrl;
-
-  if (avatar) {
-    uploadedAvatarUrl = (await uploadImageToCloudinary(avatar)).url;
-  }
-
   const updatedUser = await db.user.update({
     where: {
       id: user.id,
@@ -68,7 +59,6 @@ export const editUserData = async (
     data: {
       firstName,
       username,
-      avatar: uploadedAvatarUrl,
     },
   });
 
