@@ -32,9 +32,7 @@ const Recipes = ({ recipes, query }: RecipesProps) => {
               variant="secondary"
               className="rounded-3xl text-lg"
             >
-              <Link
-                href={`/category/${recipe.recipeCategoryId}/${recipe.name}`}
-              >
+              <Link href={`/category/${recipe.recipeCategoryId}/${recipe.id}`}>
                 {recipe.name}
               </Link>
             </Button>
