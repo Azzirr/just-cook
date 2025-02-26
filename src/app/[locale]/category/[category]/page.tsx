@@ -1,4 +1,4 @@
-import { fetchRecipesByCategory } from "@/app/actions/actions";
+import { getRecipesByCategory } from "@/actions/getCategories";
 import Recipes from "@/components/Recipe/Recipe";
 
 interface CategoryProps {
@@ -9,7 +9,7 @@ interface CategoryProps {
 const category = async ({ params, searchParams }: CategoryProps) => {
   const { category } = await params;
   const categoryId = parseInt(category);
-  const recipes = await fetchRecipesByCategory(categoryId);
+  const recipes = await getRecipesByCategory(categoryId);
   const query = (await searchParams).query || "";
 
   return (

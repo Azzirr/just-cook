@@ -59,7 +59,7 @@ const pizzaRecipe = {
   ],
 };
 
-export const RecipePage = () => {
+export const RecipePage = (user: any) => {
   return (
     <div className="mx-auto flex max-w-[80ch] flex-col gap-3 p-6">
       <section className="flex flex-col justify-between gap-3 sm:flex-row">
@@ -76,7 +76,7 @@ export const RecipePage = () => {
           </p>
         </div>
       </section>
-      <RecipeActions />
+      <RecipeActions user={user} />
       <section>
         <p>{pizzaRecipe.description}</p>
       </section>

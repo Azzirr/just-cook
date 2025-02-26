@@ -51,9 +51,12 @@ model User {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  shoppingList      ShoppingList?
-  createdRecipes    Recipe[]
-  accounts          Account[]
+  shoppingList   ShoppingList?
+  createdRecipes Recipe[]
+  accounts       Account[]
+
+  recipeLists RecipeList[]
+  
   verificationToken VerificationToken?
 }
 
@@ -105,6 +108,7 @@ model Recipe {
   category RecipeCategory? @relation(fields: [recipeCategoryId], references: [id])
   author   User            @relation(fields: [authorId], references: [id])
   tag      Tag[]
+  recipeLists RecipeList[]
 }
 
 model RecipeCategory {
@@ -125,4 +129,15 @@ model ShoppingList {
 
   user        User     @relation(fields: [userId], references: [id])
   ingredients String[]
+}
+
+model RecipeList{
+  id Int @id @default(autoincrement())
+  name String
+  userId String
+  user User @relation(fields: [userId], references: [id])
+
+  recipes Recipe[] 
+
+  isDefault Boolean @default(false)
 }

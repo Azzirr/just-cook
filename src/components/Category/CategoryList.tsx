@@ -1,4 +1,4 @@
-import { fetchCategories } from "@/app/actions/actions";
+import { getCategories } from "@/actions/getCategories";
 import { Button } from "@/components/ui/button";
 
 import { Link } from "@/i18n/routing";
@@ -25,7 +25,7 @@ const categories = [
 
 const CategoryList = async ({ query }: { query: string }) => {
   // TODO - uncomment this, it's a default code
-  // const categories = await fetchCategories();
+  // const categories = await getCategories();
 
   const filteredCategories = (categories || []).filter((category) => {
     return category.name.toLowerCase().includes(query.toLocaleLowerCase());
