@@ -23,13 +23,11 @@ export const uploadImageToCloudinary = async (
       ) => {
         if (error) {
           reject(error);
-          return;
-        }
-        if (!result) {
+        } else if (result) {
+          resolve(result);
+        } else {
           reject(new Error("Upload failed: No result received"));
-          return;
         }
-        resolve(result);
       },
     );
 

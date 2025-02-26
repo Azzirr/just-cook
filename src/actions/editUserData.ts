@@ -55,11 +55,9 @@ export const editUserData = async (
     }
   }
 
-  let uploadedAvatarUrl;
-
-  if (avatar) {
-    uploadedAvatarUrl = (await uploadImageToCloudinary(avatar)).url;
-  }
+  const uploadedAvatarUrl = avatar
+    ? (await uploadImageToCloudinary(avatar)).secure_url
+    : null;
 
   const updatedUser = await db.user.update({
     where: {
