@@ -38,6 +38,26 @@ const getListWithRecipes = async (
   });
 };
 
+export const getRecipeLists = async (
+  userId: string,
+  excludeFavouritesList: boolean,
+) => {
+  try {
+    const recipeLists = await db.recipeList.findMany({
+      where: { userId },
+    });
+
+    if (excludeFavouritesList) {
+      console.log(recipeLists.slice(1));
+      return recipeLists.slice(1);
+    }
+
+    return recipeLists;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const createRecipeList = async (userId: string, listName: string) => {
   try {
     const isUserExist = await checkIsUserExist(userId);

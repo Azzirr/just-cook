@@ -24,5 +24,9 @@
   "Favourites": {
     "favourites": "Favourites",
     "myMenu": "My menu"
+  },
+  "RecipePageDialog": {
+    "chooseYourList": "Choose your list",
+    "chooseYourListDescription": "Add recipe to list using plus icon"
   }
 }

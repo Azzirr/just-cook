@@ -3,24 +3,33 @@ import { Heart, PlusCircleIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { addRecipeToList } from "@/actions/allFavouriteListActions";
+import { useState } from "react";
+import { RecipePageDialog } from "./RecipePageDialog";
 
-const recipeActions = [
-  {
-    icon: Heart,
-    //There is no 3rd argument, so we are adding recipe to Favourites list
-    //TODO - take authorized user id and paste it to addRecipeToList, also add error or something if user is not logged in
-    action: () => addRecipeToList("", 2),
-    screenReadersOnlyText: "Add recipe to favorites",
-  },
-  {
-    icon: PlusCircleIcon,
-    //TODO - show a modal to user, which has all custom Recipe Lists and give him an option to add recipe to
-    action: () => console.log("Added to list"),
-    screenReadersOnlyText: "Add recipe to list",
-  },
-];
+export const RecipeActions = (user: any) => {
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const recipeActions = [
+    {
+      icon: Heart,
+      //There is no 3rd argument, so we are adding recipe to Favourites list
+      //TODO - take authorized user id and paste it to addRecipeToList, also add error or something if user is not logged in
+      action: () => {
+        if (user.id) {
+          addRecipeToList(user.id, 2); //TODO - change "2" to real id
+        } else {
+          console.error("User ID is not available");
+        }
+      },
+      screenReadersOnlyText: "Add recipe to favorites",
+    },
+    {
+      icon: PlusCircleIcon,
+      //TODO - show a modal to user, which has all custom Recipe Lists and give him an option to add recipe to
+      action: () => setOpenDialog(true),
+      screenReadersOnlyText: "Add recipe to list",
+    },
+  ];
 
-export const RecipeActions = () => {
   return (
     <section>
       {recipeActions.map(
@@ -36,6 +45,11 @@ export const RecipeActions = () => {
           </Button>
         ),
       )}
+      <RecipePageDialog
+        open={openDialog}
+        setOpen={setOpenDialog}
+        userId={user.id}
+      />
     </section>
   );
 };
