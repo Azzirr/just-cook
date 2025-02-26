@@ -1,11 +1,11 @@
 import { RecipeSteps } from "./RecipeSteps";
 import { RecipeIngredients } from "./RecipeIngredients";
 import { RecipeActions } from "./RecipeActions";
-import type { RecipeWithAuthor } from "@/actions/getRecipe";
 import { formatShortDate } from "@/utils/formatShortDate";
+import { Recipe, User, Ingredient } from "@prisma/client";
 
 type RecipePageProps = {
-  recipe: RecipeWithAuthor;
+  recipe: Recipe & { author: User; ingredients: Ingredient[] };
 };
 
 export const RecipePage = ({ recipe }: RecipePageProps) => {

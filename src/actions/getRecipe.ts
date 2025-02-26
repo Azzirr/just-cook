@@ -1,14 +1,8 @@
 "use server";
 
 import { db } from "@/db";
-import { Ingredient, Recipe, User } from "@prisma/client";
 
-export type RecipeWithAuthor = Recipe & {
-  author: User;
-  ingredients: Ingredient[];
-};
-
-export async function getRecipe(id: number): Promise<RecipeWithAuthor | null> {
+export async function getRecipe(id: number) {
   try {
     const recipe = await db.recipe.findUnique({
       where: {
@@ -20,7 +14,7 @@ export async function getRecipe(id: number): Promise<RecipeWithAuthor | null> {
       },
     });
 
-    return recipe as RecipeWithAuthor;
+    return recipe;
   } catch (e) {
     return null;
   }
