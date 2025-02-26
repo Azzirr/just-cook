@@ -1,3 +1,6 @@
+import { AlertCircle } from "lucide-react";
+
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 type FormAlertProps = {
   message?: string;
   errors?: string[];
@@ -6,12 +9,20 @@ type FormAlertProps = {
 export const FormAlert = ({ message, errors }: FormAlertProps) => {
   return (
     <>
-      {message && <p className="text-yellow-700">{message}</p>}
+      {message && (
+        <Alert variant="information">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Info</AlertTitle>
+          <AlertDescription>{message}</AlertDescription>
+        </Alert>
+      )}
       {errors &&
         errors.map((error, index) => (
-          <p key={index} className="text-red-500">
-            {error}
-          </p>
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
         ))}
     </>
   );

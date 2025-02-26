@@ -24,11 +24,12 @@ import {
 } from "@/components/ui/form";
 
 import { recipeSchema, type Recipe } from "./schemas";
-import { useActionState, useRef } from "react";
+import { useActionState } from "react";
 import { addNewRecipe } from "@/actions/addNewRecipe";
 import { onSubmitUtil } from "@/utils/onSubmitUtil";
-import { RecipeCategory } from "@prisma/client";
+import { RecipeCategory, Unit } from "@prisma/client";
 import { FormAlert } from "../FormAlert";
+import { formatUnit, unitTuple } from "@/utils/ingredientUnits";
 
 type RecipeProps = { categories: RecipeCategory[] };
 
@@ -36,15 +37,15 @@ export const RecipeForm = ({ categories }: RecipeProps) => {
   const [state, action, isPending] = useActionState(addNewRecipe, {
     isSuccess: false,
   });
+  const defaultIngredient = { name: "", quantity: 0, unit: Unit.GRAM };
 
-  const formRef = useRef<HTMLFormElement>(null);
   const form = useForm<Recipe>({
     resolver: zodResolver(recipeSchema),
     defaultValues: {
       name: "",
       category: "",
       description: "",
-      ingredients: [{ name: "", quantity: "" }],
+      ingredients: [defaultIngredient],
       steps: [{ step: "" }],
     },
   });
@@ -70,12 +71,10 @@ export const RecipeForm = ({ categories }: RecipeProps) => {
   return (
     <Form {...form}>
       <form
-        ref={formRef}
         action={action}
-        onSubmit={onSubmitUtil({ action, formRef, form })}
+        onSubmit={onSubmitUtil(action, form)}
         className="flex flex-col gap-4"
       >
-        <FormAlert errors={state.errors} message={state.message}></FormAlert>
         <FormField
           control={form.control}
           name="name"
@@ -159,8 +158,39 @@ export const RecipeForm = ({ categories }: RecipeProps) => {
               render={({ field }) => (
                 <FormItem className="grow">
                   <FormControl>
-                    <Input placeholder="Quantity" {...field} />
+                    <Input
+                      type="number"
+                      placeholder="Quantity"
+                      {...field}
+                      step={0.01}
+                    />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name={`ingredients.${index}.unit`}
+              render={({ field }) => (
+                <FormItem className="grow">
+                  <Select
+                    defaultValue={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Unit" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {unitTuple.map((unit) => (
+                        <SelectItem key={unit} value={unit}>
+                          {formatUnit(unit, "short")}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -182,7 +212,7 @@ export const RecipeForm = ({ categories }: RecipeProps) => {
           disabled={isPending}
           type="button"
           className="self-end p-3"
-          onClick={() => addIngredient({ name: "", quantity: "" })}
+          onClick={() => addIngredient(defaultIngredient)}
         >
           <Plus />
         </Button>
@@ -225,6 +255,7 @@ export const RecipeForm = ({ categories }: RecipeProps) => {
         >
           <Plus />
         </Button>
+        <FormAlert errors={state.errors} message={state.message}></FormAlert>
         <Button isPending={isPending} type="submit">
           Submit
         </Button>
