@@ -1,21 +1,21 @@
 import { getRecipe } from "@/actions/getRecipe";
-import { RecipePage } from "@/components/RecipePage/RecipePage";
+import { RecipeDetail } from "@/components/RecipeDetail/RecipeDetail";
 import { notFound } from "next/navigation";
 
 type RecipeParams = {
   params: Promise<{
-    recipe: string;
+    recipeSlug: string;
   }>;
 };
 
-const recipe = async ({ params }: RecipeParams) => {
-  const { recipe: recipeId } = await params;
+const RecipePage = async ({ params }: RecipeParams) => {
+  const { recipeSlug } = await params;
 
-  const recipe = await getRecipe(Number(recipeId));
+  const recipe = await getRecipe(recipeSlug);
 
   if (!recipe) return notFound();
 
-  return <RecipePage recipe={recipe} />;
+  return <RecipeDetail recipe={recipe} />;
 };
 
-export default recipe;
+export default RecipePage;

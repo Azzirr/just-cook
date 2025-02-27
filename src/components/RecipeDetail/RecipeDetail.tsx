@@ -8,7 +8,7 @@ type RecipePageProps = {
   recipe: Recipe & { author: User; ingredients: Ingredient[] };
 };
 
-export const RecipePage = ({ recipe }: RecipePageProps) => {
+export const RecipeDetail = ({ recipe }: RecipePageProps) => {
   const formatDate = useFormatShortDate();
   return (
     <div className="mx-auto flex max-w-[80ch] flex-col gap-3 p-6">
