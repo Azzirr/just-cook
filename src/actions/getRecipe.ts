@@ -3,10 +3,10 @@
 import { db } from "@/db";
 import type { Recipe } from "@prisma/client";
 
-export async function getRecipe(slug: Recipe["slug"]) {
+export async function getRecipe(id: Recipe["id"]) {
   try {
     return await db.recipe.findUnique({
-      where: { slug },
+      where: { id },
       include: {
         author: true,
         ingredients: true,

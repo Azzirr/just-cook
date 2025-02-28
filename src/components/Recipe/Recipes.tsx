@@ -33,7 +33,9 @@ const Recipes = ({ recipes, query = "" }: RecipesProps) => {
                 variant="secondary"
                 className="rounded-3xl text-lg"
               >
-                <Link href={`/recipes/${recipe.slug}`}>{recipe.name}</Link>
+                <Link href={`/recipes/${recipe.id}/${recipe.slug}`}>
+                  {recipe.name}
+                </Link>
               </Button>
             ))
           )}

@@ -13,7 +13,7 @@ import { slugify } from "@/utils/slugify";
 export async function addNewRecipe(
   prevState: FormState,
   data: FormData | z.infer<typeof recipeSchema>,
-): Promise<FormState> {
+): Promise<FormState | void> {
   const locale = await getLocale();
   const user = await currentSession();
 
@@ -40,47 +40,24 @@ export async function addNewRecipe(
     };
   }
 
-  const {
-    name,
-    category: categoryId,
-    description,
-    ingredients,
-    steps,
-  } = parsedData;
-
-  const category = await db.recipeCategory.findUnique({
-    where: {
-      id: parseInt(categoryId),
-    },
-  });
-
-  if (!category) {
-    return {
-      message: "Category not found",
-      isSuccess: false,
-    };
-  }
+  const { name, category, description, ingredients, steps } = parsedData;
 
   const newRecipe = await db.recipe.create({
     data: {
       authorId: user.id,
       name,
-      slug: slugify(name),
       description,
+      slug: slugify(name),
       steps: steps.map(({ step }) => step),
       ingredients: {
         create: ingredients,
       },
-      recipeCategoryId: category.id,
+      categoryId: parseInt(category),
     },
   });
 
   redirect({
-    href: `/recipes/${newRecipe.slug}`,
+    href: `/recipes/${newRecipe.id}/${newRecipe.slug}`,
     locale,
   });
-
-  return {
-    isSuccess: true,
-  };
 }
