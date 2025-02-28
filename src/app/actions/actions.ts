@@ -2,22 +2,26 @@
 import { db } from "@/db";
 import type { Recipe, RecipeCategory } from "@prisma/client";
 
-export const fetchCategories = async () => {
+export const getCategories = async (): Promise<RecipeCategory[]> => {
   try {
-    return db.recipeCategory.findMany();
+    return await db.recipeCategory.findMany();
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    return [];
   }
 };
 
-export const fetchRecipesByCategory = async (
+export const getCategoryRecipes = async (
   categorySlug: RecipeCategory["slug"],
 ): Promise<Recipe[]> => {
-  return db.recipe.findMany({
-    where: {
-      category: {
-        slug: categorySlug,
+  try {
+    return await db.recipe.findMany({
+      where: {
+        category: { slug: categorySlug },
       },
-    },
-  });
+    });
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 };
