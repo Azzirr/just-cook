@@ -7,7 +7,7 @@ import { Link } from "@/i18n/routing";
 import { currentSession } from "@/lib/currentSession";
 import { getUserById } from "@/data/user";
 
-const TopNavigation = async () => {
+export const TopNavigation = async () => {
   const t = await getTranslations("TopNavigation");
   const session = await currentSession();
   const user = session?.id ? await getUserById(session.id) : null;
@@ -33,4 +33,3 @@ const TopNavigation = async () => {
     </div>
   );
 };
-export default TopNavigation;

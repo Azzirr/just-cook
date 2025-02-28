@@ -15,7 +15,6 @@ import { LogoutButton } from "@/components/MoreMenu/LogoutButton";
 
 import { Link } from "@/i18n/routing";
 import { currentSession } from "@/lib/currentSession";
-import { getUserById } from "@/data/user";
 import type { Notification } from "@/components/notification-box/types";
 
 const notifications: Notification[] = [
@@ -69,7 +68,7 @@ const notifications: Notification[] = [
   },
 ];
 
-const BottomNavigation = async () => {
+export const BottomNavigation = async () => {
   const t = await getTranslations("TopNavigation");
   const session = await currentSession();
   const hasNotifications = notifications.length > 0;
@@ -104,4 +103,3 @@ const BottomNavigation = async () => {
     </div>
   );
 };
-export default BottomNavigation;

@@ -3,8 +3,8 @@ import { Roboto } from "next/font/google";
 
 import { Toaster } from "@/components/ui/sonner";
 
-import TopNavigation from "@/components/TopNavigation/TopNavigation";
-import BottomNavigation from "@/components/BottomNavigation/BottomNavigation";
+import { TopNavigation } from "@/components/TopNavigation/TopNavigation";
+import { BottomNavigation } from "@/components/BottomNavigation/BottomNavigation";
 
 import { Locale } from "@/i18n/routing";
 
