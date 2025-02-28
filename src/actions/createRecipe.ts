@@ -1,19 +1,20 @@
 "use server";
 
-import { FormState } from "@/types/formState";
+import { z } from "zod";
+import { getLocale } from "next-intl/server";
+import { slugify } from "transliteration";
+
 import { db } from "@/db";
 import { recipeSchema } from "@/components/recipe-form/schemas";
-import { formDataToNestedObject } from "@/utils/formDataToNestedObject";
 import { redirect } from "@/i18n/routing";
-import { getLocale } from "next-intl/server";
 import { currentSession } from "@/lib/currentSession";
-import { z } from "zod";
-import { slugify } from "@/utils/slugify";
+import { formDataToNestedObject } from "@/utils/formDataToNestedObject";
+import type { FormState } from "@/types/formState";
 
-export async function addNewRecipe(
+export async function createRecipe(
   prevState: FormState,
   data: FormData | z.infer<typeof recipeSchema>,
-): Promise<FormState | void> {
+): Promise<FormState> {
   const locale = await getLocale();
   const user = await currentSession();
 
@@ -56,7 +57,8 @@ export async function addNewRecipe(
     },
   });
 
-  redirect({
+  // Return redirect, otherwise action return type complains
+  return redirect({
     href: `/recipes/${newRecipe.id}/${newRecipe.slug}`,
     locale,
   });
