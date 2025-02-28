@@ -41,6 +41,7 @@ const FavouriteRecipes = () => {
         <TabsContent value="favourites" className="mt-5">
           <Separator />
           {favouriteRecipes.map((recipe, index) => (
+            // TODO - fix redirect
             <Link href={`/categories/1/${recipe.name}`} key={recipe.id}>
               <MyMenuElement recipe={recipe} index={index} />
             </Link>

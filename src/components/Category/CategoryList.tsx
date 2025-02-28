@@ -2,7 +2,6 @@ import { getCategories } from "@/app/actions/actions";
 import { Button } from "@/components/ui/button";
 
 import { Link } from "@/i18n/routing";
-import { RecipeCategory } from "@prisma/client";
 
 const CategoryList = async ({ query }: { query: string }) => {
   const categories = await getCategories();
@@ -16,7 +15,7 @@ const CategoryList = async ({ query }: { query: string }) => {
       {filteredCategories.length === 0 ? (
         <p className="mx-auto text-lg text-red-700">No categories found...</p>
       ) : (
-        filteredCategories.map((category: RecipeCategory) => (
+        filteredCategories.map((category) => (
           <Button
             key={category.id}
             asChild
