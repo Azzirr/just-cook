@@ -25,7 +25,7 @@ import {
 
 import { recipeSchema, type Recipe } from "./schemas";
 import { useActionState } from "react";
-import { addNewRecipe } from "@/actions/addNewRecipe";
+import { createRecipe } from "@/actions/createRecipe";
 import { onSubmitUtil } from "@/utils/onSubmitUtil";
 import { RecipeCategory, Unit } from "@prisma/client";
 import { FormAlert } from "../FormAlert";
@@ -34,7 +34,7 @@ import { formatUnit, unitTuple } from "@/utils/ingredientUnits";
 type RecipeProps = { categories: RecipeCategory[] };
 
 export const RecipeForm = ({ categories }: RecipeProps) => {
-  const [state, action, isPending] = useActionState(addNewRecipe, {
+  const [state, action, isPending] = useActionState(createRecipe, {
     isSuccess: false,
   });
   const defaultIngredient = { name: "", quantity: 0, unit: Unit.GRAM };

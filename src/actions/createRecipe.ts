@@ -1,20 +1,21 @@
 "use server";
 
-import { FormState } from "@/types/formState";
+import { z } from "zod";
+import { getLocale } from "next-intl/server";
+import { slugify } from "transliteration";
+
 import { db } from "@/db";
 import { recipeSchema } from "@/components/recipe-form/schemas";
-import { formDataToNestedObject } from "@/utils/formDataToNestedObject";
 import { redirect } from "@/i18n/routing";
-import { getLocale } from "next-intl/server";
 import { currentSession } from "@/lib/currentSession";
-import { z } from "zod";
+import { formDataToNestedObject } from "@/utils/formDataToNestedObject";
+import type { FormState } from "@/types/formState";
 
-export async function addNewRecipe(
+export async function createRecipe(
   prevState: FormState,
   data: FormData | z.infer<typeof recipeSchema>,
 ): Promise<FormState> {
   const locale = await getLocale();
-
   const user = await currentSession();
 
   const {
@@ -40,33 +41,25 @@ export async function addNewRecipe(
     };
   }
 
-  const {
-    name,
-    category: categoryId,
-    description,
-    ingredients,
-    steps,
-  } = parsedData;
+  const { name, category, description, ingredients, steps } = parsedData;
 
   const newRecipe = await db.recipe.create({
     data: {
       authorId: user.id,
       name,
       description,
+      slug: slugify(name),
       steps: steps.map(({ step }) => step),
       ingredients: {
         create: ingredients,
       },
-      recipeCategoryId: Number(categoryId),
+      categoryId: parseInt(category),
     },
   });
 
-  redirect({
-    href: `/category/${categoryId}/${newRecipe.id}`,
+  // Return redirect, otherwise action return type complains
+  return redirect({
+    href: `/recipes/${newRecipe.id}/${newRecipe.slug}`,
     locale,
   });
-
-  return {
-    isSuccess: true,
-  };
 }

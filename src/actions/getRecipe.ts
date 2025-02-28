@@ -1,20 +1,17 @@
 "use server";
 
 import { db } from "@/db";
+import type { Recipe } from "@prisma/client";
 
-export async function getRecipe(id: number) {
+export async function getRecipe(id: Recipe["id"]) {
   try {
-    const recipe = await db.recipe.findUnique({
-      where: {
-        id,
-      },
+    return await db.recipe.findUnique({
+      where: { id },
       include: {
         author: true,
         ingredients: true,
       },
     });
-
-    return recipe;
   } catch (e) {
     return null;
   }

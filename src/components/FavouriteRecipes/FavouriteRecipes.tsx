@@ -42,7 +42,7 @@ const FavouriteRecipes = () => {
           <Separator />
           {favouriteRecipes.map((recipe, index) => (
             // TODO - fix redirect
-            <Link href={`/category/1/${recipe.name}`} key={recipe.id}>
+            <Link href={`/categories/1/${recipe.name}`} key={recipe.id}>
               <MyMenuElement recipe={recipe} index={index} />
             </Link>
           ))}
