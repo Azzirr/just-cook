@@ -91,6 +91,28 @@ export const RecipeForm = ({ categories }: RecipeProps) => {
         />
         <FormField
           control={form.control}
+          name="image"
+          render={({ field: { onChange, value, ...fieldProps } }) => (
+            <FormItem>
+              <FormLabel>Image of dish</FormLabel>
+              <FormControl>
+                <Input
+                  {...fieldProps}
+                  type="file"
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    if (file) {
+                      onChange(file);
+                    }
+                  }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="category"
           render={({ field }) => (
             <FormItem>
