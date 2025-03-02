@@ -5,36 +5,36 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { truncateText } from "@/utils/truncateText";
+import { Recipe } from "@prisma/client";
+import { Utensils } from "lucide-react";
+import Image from "next/image";
 
 export type RecipeCardProps = {
-  name: string;
-  id: number;
-  description: string;
-  tags: string[];
-  // image: string;
+  recipe: Recipe;
 };
 
-export const RecipeCard = (props: RecipeCardProps) => {
+export const RecipeCard = ({ recipe }: RecipeCardProps) => {
+  const { name, description, images } = recipe;
+  const recipeImage = images[0];
+
   return (
-    <Card className="h-64 w-60">
-      <CardHeader>
-        <CardTitle className="text-2xl">{props.name}</CardTitle>
+    <Card className="w-64 cursor-pointer overflow-hidden rounded-2xl shadow-md">
+      <div className="relative h-40 w-full">
+        {recipeImage ? (
+          <Image src={recipeImage} alt={name} fill className="object-cover" />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            <Utensils className="size-12" strokeWidth={1.5} />
+          </div>
+        )}
+      </div>
+      <CardHeader className="p-4 pb-2">
+        <CardTitle className="text-lg font-semibold">{name}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="flex gap-1">
-          {props.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full bg-black px-3 py-1 text-xs font-bold text-white"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+      <CardContent className="px-4 pb-4 text-sm text-gray-600">
+        {truncateText(description)}
       </CardContent>
-      <CardFooter className="text-muted-foreground">
-        {props.description}
-      </CardFooter>
     </Card>
   );
 };
