@@ -8,7 +8,7 @@ import { Link } from "@/i18n/routing";
 const AuthUser = () => {
   const [showLoginForm, setShowLoginForm] = useState<boolean>(true);
   return (
-    <div className="flex min-h-[calc(100vh-133px)] items-center justify-center">
+    <div className="flex grow items-center justify-center">
       <div className="max-w-lg p-3">
         {/* TODO: I want to add some kind of animation library for animate things on the app. We will reach discuss about it */}
         {showLoginForm ? (
