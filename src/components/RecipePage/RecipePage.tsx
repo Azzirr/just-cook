@@ -28,14 +28,16 @@ export const RecipePage = ({ recipe }: RecipePageProps) => {
         </div>
       </section>
       <RecipeActions />
-      <div className="relative h-[400px] w-full">
-        <Image
-          className="rounded-md object-cover"
-          src={recipe.images[0]}
-          fill
-          alt={recipe.name}
-        ></Image>
-      </div>
+      {recipe?.images[0] && (
+        <div className="relative h-[400px] w-full">
+          <Image
+            className="rounded-md object-cover"
+            src={recipe.images[0]}
+            fill
+            alt={recipe.name}
+          ></Image>
+        </div>
+      )}
       <section>
         <p>{recipe.description}</p>
       </section>
