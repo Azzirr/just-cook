@@ -8,6 +8,7 @@ import { redirect } from "@/i18n/routing";
 import { getLocale } from "next-intl/server";
 import { currentSession } from "@/lib/currentSession";
 import { z } from "zod";
+import { uploadImageToCloudinary } from "@/lib/uploadImageToCloudinary";
 
 export async function addNewRecipe(
   prevState: FormState,
@@ -46,13 +47,19 @@ export async function addNewRecipe(
     description,
     ingredients,
     steps,
+    image,
   } = parsedData;
+
+  const uploadedImageUrl = image
+    ? (await uploadImageToCloudinary(image)).secure_url
+    : null;
 
   const newRecipe = await db.recipe.create({
     data: {
       authorId: user.id,
       name,
       description,
+      images: uploadedImageUrl ? [uploadedImageUrl] : [],
       steps: steps.map(({ step }) => step),
       ingredients: {
         create: ingredients,

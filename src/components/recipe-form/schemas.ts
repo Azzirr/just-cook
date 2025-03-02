@@ -1,11 +1,13 @@
 import { z } from "zod";
 
 import { unitTuple } from "@/utils/ingredientUnits";
+import { imageSchema } from "@/schemas/imageSchema";
 
 export const recipeSchema = z.object({
   name: z.string().min(2, { message: "Recipe name is required" }).max(100, {
     message: "Recipe name must be less than 100 characters long",
   }),
+  image: imageSchema.or(z.null()).optional(),
   category: z.string().min(1, { message: "Category is required" }),
   description: z.string().max(500, {
     message: "Description must be less than 500 characters long",
