@@ -1,4 +1,4 @@
-import { getRecipe } from "@/actions/getRecipe";
+import { getRecipe } from "@/actions/recipes/getRecipe";
 import { RecipePage } from "@/components/RecipePage/RecipePage";
 import { notFound } from "next/navigation";
 

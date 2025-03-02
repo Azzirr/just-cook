@@ -8,18 +8,15 @@ import {
 import { User } from "@prisma/client";
 import { useFormatter } from "next-intl";
 import { getUsernameInitials } from "@/utils/getUsernameInitials";
+import { useFormatShortDate } from "@/hooks/useFormatShortDate";
 
 type UserProfileCardProps = {
   user: User;
 };
 
 const UserProfileCard = ({ user }: UserProfileCardProps) => {
-  const format = useFormatter();
-  const joinDate = format.dateTime(user.createdAt, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+  const format = useFormatShortDate();
+  const joinDate = format(user.createdAt);
 
   return (
     <div className="flex justify-between">
