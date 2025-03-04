@@ -1,4 +1,4 @@
-import { getCategories } from "@/actions/getCategories";
+import { getCategories } from "@/actions/categories/getCategories";
 import { Button } from "@/components/ui/button";
 
 import { Link } from "@/i18n/routing";

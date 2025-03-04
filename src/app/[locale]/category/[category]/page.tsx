@@ -1,4 +1,4 @@
-import { getRecipesByCategory } from "@/actions/getCategories";
+import { getRecipesByCategory } from "@/actions/categories/getCategories";
 import Recipes from "@/components/Recipe/Recipe";
 
 interface CategoryProps {

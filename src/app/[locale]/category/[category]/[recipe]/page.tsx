@@ -1,8 +1,8 @@
 import { RecipePage } from "@/components/RecipePage/RecipePage";
-import { currentUser } from "@/lib/currentUser";
+import { currentSession } from "@/lib/currentSession";
 
 const recipe = async () => {
-  const user = await currentUser();
+  const user = await currentSession();
   return <RecipePage user={user} />;
 };
 
