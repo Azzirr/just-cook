@@ -10,12 +10,12 @@ import {
 import { Recipe } from "@prisma/client";
 import { Link } from "@/i18n/routing";
 
-type CreatedRecipesSectionProps = { recipes?: Recipe[] | null };
+type CreatedRecipesSectionProps = { recipes: Recipe[] };
 
 export const CreatedRecipesSection = ({
   recipes = [],
 }: CreatedRecipesSectionProps) => {
-  const hasRecipes = recipes && recipes.length > 0;
+  const hasRecipes = recipes.length > 0;
 
   return (
     <Section>

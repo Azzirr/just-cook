@@ -23,7 +23,7 @@ const User = async ({ params }: UserProps) => {
     <div className="container mx-auto py-5">
       <UserProfileCard user={user} />
       <Separator />
-      <CreatedRecipesSection recipes={recipes} />
+      <CreatedRecipesSection recipes={recipes || []} />
       <Separator />
       <RecentActivity />
     </div>

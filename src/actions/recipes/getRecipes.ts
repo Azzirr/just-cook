@@ -2,14 +2,12 @@
 
 import { db } from "@/db";
 
-type GetRecipesOptions = {
+type GetRecipes = {
   authorId: string;
   limit?: number;
 };
 
-export const getRecipes = async (options: GetRecipesOptions) => {
-  const { authorId, limit } = options;
-
+export const getRecipes = async ({ authorId, limit }: GetRecipes) => {
   try {
     const recipes = await db.recipe.findMany({
       where: {
