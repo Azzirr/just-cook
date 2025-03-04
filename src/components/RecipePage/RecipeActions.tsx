@@ -5,17 +5,24 @@ import { Button } from "@/components/ui/button";
 import { addRecipeToList } from "@/actions/allFavouriteListActions";
 import { useState } from "react";
 import { RecipePageDialog } from "./RecipePageDialog";
+import { RecipeList } from "@prisma/client";
 
-export const RecipeActions = (user: any) => {
+type RecipeActionsProps = {
+  userId?: string;
+  userLists: RecipeList[];
+};
+
+export const RecipeActions = ({ userId, userLists }: RecipeActionsProps) => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+
   const recipeActions = [
     {
       icon: Heart,
       //There is no 3rd argument, so we are adding recipe to Favourites list
       //TODO - take authorized user id and paste it to addRecipeToList, also add error or something if user is not logged in
       action: () => {
-        if (user.id) {
-          addRecipeToList(user.id, 2); //TODO - change "2" to real id
+        if (userId) {
+          addRecipeToList(userId, 1); //TODO - change "2" to real id
         } else {
           console.error("User ID is not available");
         }
@@ -46,9 +53,10 @@ export const RecipeActions = (user: any) => {
         ),
       )}
       <RecipePageDialog
-        open={openDialog}
+        isOpen={openDialog}
         setOpen={setOpenDialog}
-        userId={user.id}
+        userId={userId}
+        userLists={userLists}
       />
     </section>
   );

@@ -1,26 +1,19 @@
 "use server";
 import { db } from "@/db";
 
-interface IsListExistCriteria {
+type QueryFiltersCriteria = {
   id?: number;
   name?: string;
   userId?: string;
   includeRecipes?: boolean;
-}
-interface ListWithRecipes {
+};
+type ListWithRecipes = {
   id: number;
   userId: string;
   recipes: { id: number }[];
-}
-
-const checkIsUserExist = async (userId: string) => {
-  const isUserExist = await db.user.findFirst({
-    where: { id: userId },
-  });
-  return isUserExist ? true : false;
 };
 
-const checkIsListExist = async (criteria: IsListExistCriteria) => {
+const recipeListExist = async (criteria: QueryFiltersCriteria) => {
   return await db.recipeList.findFirst({
     where: {
       ...criteria,
@@ -60,13 +53,7 @@ export const getRecipeLists = async (
 
 export const createRecipeList = async (userId: string, listName: string) => {
   try {
-    const isUserExist = await checkIsUserExist(userId);
-    if (!isUserExist) {
-      console.log("User does not exist");
-      return;
-    }
-
-    const isListExist = await checkIsListExist({ name: listName, userId });
+    const isListExist = await recipeListExist({ name: listName, userId });
 
     if (isListExist) {
       console.log("List with this name already exist");
@@ -89,13 +76,7 @@ export const createRecipeList = async (userId: string, listName: string) => {
 
 export const deleteRecipeList = async (userId: string, listId: number) => {
   try {
-    const isUserExist = await checkIsUserExist(userId);
-    if (!isUserExist) {
-      console.log("User does not exist");
-      return;
-    }
-
-    const isListExist = await checkIsListExist({ id: listId, userId });
+    const isListExist = await recipeListExist({ id: listId, userId });
 
     if (!isListExist) {
       console.log("List not found");
@@ -202,13 +183,6 @@ export const removeRecipeFromList = async (
 
 export const getRecipesFromList = async (userId: string, listId: number) => {
   try {
-    const isUserExist = await checkIsUserExist(userId);
-
-    if (!isUserExist) {
-      console.log("User does not exist");
-      return;
-    }
-
     const recipeList = await getListWithRecipes(listId, userId);
 
     if (!recipeList) {
@@ -216,7 +190,7 @@ export const getRecipesFromList = async (userId: string, listId: number) => {
       return;
     }
     console.log(recipeList);
-    return recipeList || [];
+    return recipeList;
   } catch (error) {
     console.log("Error with reading list", error);
   }

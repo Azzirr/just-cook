@@ -1,4 +1,5 @@
 import { getRecipe } from "@/actions/getRecipe";
+import { auth } from "@/auth";
 import { RecipePage } from "@/components/RecipePage/RecipePage";
 import { currentSession } from "@/lib/currentSession";
 import { notFound } from "next/navigation";
@@ -16,8 +17,7 @@ const recipe = async ({ params }: RecipeParams) => {
 
   if (!recipe) return notFound();
 
-  const user = await currentSession();
-  return <RecipePage recipe={recipe} user={user} />;
+  return <RecipePage recipe={recipe} />;
 };
 
 export default recipe;

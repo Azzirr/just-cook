@@ -3,14 +3,19 @@ import { RecipeIngredients } from "./RecipeIngredients";
 import { RecipeActions } from "./RecipeActions";
 import { useFormatShortDate } from "@/hooks/useFormatShortDate";
 import { Recipe, User, Ingredient } from "@prisma/client";
+import { auth } from "@/auth";
+import { getRecipeLists } from "@/actions/allFavouriteListActions";
 
 type RecipePageProps = {
   recipe: Recipe & { author: User; ingredients: Ingredient[] };
-  user: any;
 };
 
-export const RecipePage = ({ recipe, user }: RecipePageProps) => {
+export const RecipePage = async ({ recipe }: RecipePageProps) => {
   const formatDate = useFormatShortDate();
+  const session = await auth();
+  const userId = session?.user?.id;
+  const userLists = userId ? ((await getRecipeLists(userId, true)) ?? []) : [];
+
   return (
     <div className="mx-auto flex max-w-[80ch] flex-col gap-3 p-6">
       <section className="flex flex-col justify-between gap-3 sm:flex-row">
@@ -27,7 +32,7 @@ export const RecipePage = ({ recipe, user }: RecipePageProps) => {
           </p>
         </div>
       </section>
-      <RecipeActions user={user} />
+      <RecipeActions userId={userId} userLists={userLists} />
       <section>
         <p>{recipe.description}</p>
       </section>
