@@ -18,6 +18,7 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
   const { name, description, images } = recipe;
   const recipeImage = images[0];
 
+  //TODO: test line-clamp in all browsers if it works
   return (
     <Card className="w-64 cursor-pointer overflow-hidden rounded-2xl shadow-md">
       <div className="relative h-40 w-full">
