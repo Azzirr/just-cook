@@ -33,7 +33,7 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
         <CardTitle className="text-lg font-semibold">{name}</CardTitle>
       </CardHeader>
       <CardContent className="px-4 pb-4 text-sm text-gray-600">
-        {truncateText(description)}
+        <div className="line-clamp-3">{description}</div>
       </CardContent>
     </Card>
   );

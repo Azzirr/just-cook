@@ -13,14 +13,11 @@ import { Link } from "@/i18n/routing";
 type CreatedRecipesSectionProps = { recipes: Recipe[] };
 
 export const CreatedRecipesSection = ({
-  recipes = [],
+  recipes,
 }: CreatedRecipesSectionProps) => {
-  const hasRecipes = recipes.length > 0;
-
   return (
     <Section>
       <SectionTitle>Created Recipes</SectionTitle>
-
       <div className="flex justify-between">
         <SectionDescription>
           Recipes you've created for yourself or shared with the community
@@ -36,7 +33,7 @@ export const CreatedRecipesSection = ({
       <SectionContent>
         <ScrollArea>
           <div className="relative flex gap-3 py-3">
-            {hasRecipes ? (
+            {recipes.length > 0 ? (
               recipes.map((recipeData) => (
                 <RecipeCard key={recipeData.id} recipe={recipeData} />
               ))
