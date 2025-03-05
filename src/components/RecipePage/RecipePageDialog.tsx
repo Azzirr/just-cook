@@ -8,13 +8,7 @@ import {
 import { Button } from "../ui/button";
 import { PlusCircleIcon } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
-import {
-  Dispatch,
-  SetStateAction,
-  useActionState,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction } from "react";
 import { addRecipeToList } from "@/actions/allFavouriteListActions";
 import { LoadingSpinner } from "../ui-custom/LoadingSpinner";
 import { RecipeList } from "@prisma/client";
@@ -29,41 +23,39 @@ type RecipePageDialogProps = {
 export const RecipePageDialog = ({
   isOpen,
   setOpen,
-  userId,
   userLists,
 }: RecipePageDialogProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={setOpen}>
-      <DialogContent>
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Choose your list</DialogTitle>
         </DialogHeader>
-        <DialogDescription>
+        <DialogDescription className="text-center sm:text-left">
           Add recipe to list, using plus icon
         </DialogDescription>
-        {userLists.length === 0 ? (
-          <p>No lists found.</p>
-        ) : (
-          <ScrollArea>
-            {userLists.map((list) => (
-              <div key={list.id}>
-                <h4>{list.name}</h4>
+        <ScrollArea className="max-h-[70vh] py-5">
+          {userLists.length === 0 ? (
+            <p>No lists found.</p>
+          ) : (
+            userLists.map((list: RecipeList, index: number) => (
+              <div
+                key={index}
+                className="mr-5 flex items-center justify-between text-sm font-medium text-gray-700 hover:text-gray-900"
+              >
+                <h4 className="text-[16px]">{list.name}</h4>
                 <Button
-                  onClick={() => {
-                    if (!userId) {
-                      console.error("User ID is not available");
-                      return;
-                    }
-                    //TODO - change "3" to real recipe id
-                    addRecipeToList(userId, 1, list.id);
-                  }}
+                  variant="ghost"
+                  className="my-2 rounded-full border border-gray-300 p-2 hover:bg-gray-100"
+                  //TODO - change "1" to real recipe id
+                  onClick={() => addRecipeToList(1, list.id)}
                 >
-                  <PlusCircleIcon />
+                  <PlusCircleIcon className="text-gray-500" />
                 </Button>
               </div>
-            ))}
-          </ScrollArea>
-        )}
+            ))
+          )}
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );
