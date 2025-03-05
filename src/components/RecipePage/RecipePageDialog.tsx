@@ -9,7 +9,10 @@ import { Button } from "../ui/button";
 import { PlusCircleIcon } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 import { Dispatch, SetStateAction } from "react";
-import { addRecipeToList } from "@/actions/allFavouriteListActions";
+import {
+  addRecipeToList,
+  removeRecipeFromList,
+} from "@/actions/allFavouriteListActions";
 import { LoadingSpinner } from "../ui-custom/LoadingSpinner";
 import { RecipeList } from "@prisma/client";
 
@@ -56,6 +59,7 @@ export const RecipePageDialog = ({
             ))
           )}
         </ScrollArea>
+        <Button onClick={() => removeRecipeFromList(14, 1)}>Dupa</Button>
       </DialogContent>
     </Dialog>
   );
