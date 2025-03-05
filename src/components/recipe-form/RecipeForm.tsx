@@ -101,9 +101,7 @@ export const RecipeForm = ({ categories }: RecipeProps) => {
                   type="file"
                   onChange={(event) => {
                     const file = event.target.files?.[0];
-                    if (file) {
-                      onChange(file);
-                    }
+                    onChange(file);
                   }}
                 />
               </FormControl>
