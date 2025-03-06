@@ -3,6 +3,7 @@ import { RecipeIngredients } from "./RecipeIngredients";
 import { RecipeActions } from "./RecipeActions";
 import { useFormatShortDate } from "@/hooks/useFormatShortDate";
 import { Recipe, User, Ingredient } from "@prisma/client";
+import Image from "next/image";
 import { getRecipeLists } from "@/actions/allFavouriteListActions";
 
 type RecipePageProps = {
@@ -30,6 +31,16 @@ export const RecipePage = async ({ recipe }: RecipePageProps) => {
         </div>
       </section>
       <RecipeActions userLists={userLists} />
+      {recipe.images[0] && (
+        <div className="relative h-[400px] w-full">
+          <Image
+            className="rounded-md object-cover"
+            src={recipe.images[0]}
+            fill
+            alt={recipe.name}
+          ></Image>
+        </div>
+      )}
       <section>
         <p>{recipe.description}</p>
       </section>
