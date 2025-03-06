@@ -1,4 +1,4 @@
-import { getRecipe } from "@/actions/getRecipe";
+import { getRecipe } from "@/actions/recipes/getRecipe";
 import { auth } from "@/auth";
 import { RecipePage } from "@/components/RecipePage/RecipePage";
 import { currentSession } from "@/lib/currentSession";

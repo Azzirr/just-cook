@@ -25,7 +25,7 @@ import {
 
 import { recipeSchema, type Recipe } from "./schemas";
 import { useActionState } from "react";
-import { addNewRecipe } from "@/actions/addNewRecipe";
+import { addNewRecipe } from "@/actions/recipes/addNewRecipe";
 import { onSubmitUtil } from "@/utils/onSubmitUtil";
 import { RecipeCategory, Unit } from "@prisma/client";
 import { FormAlert } from "../FormAlert";
