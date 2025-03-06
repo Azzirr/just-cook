@@ -1,5 +1,7 @@
 import { getRecipe } from "@/actions/getRecipe";
+import { auth } from "@/auth";
 import { RecipePage } from "@/components/RecipePage/RecipePage";
+import { currentSession } from "@/lib/currentSession";
 import { notFound } from "next/navigation";
 
 type RecipeParams = {
