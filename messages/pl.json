@@ -24,5 +24,9 @@
   "Favourites": {
     "favourites": "Ulubione",
     "myMenu": "Moje menu"
+  },
+  "RecipePageDialog": {
+    "chooseYourList": "Wybierz listę",
+    "chooseYourListDescription": "Dodaj przepis klikając ikonę plusa"
   }
 }
