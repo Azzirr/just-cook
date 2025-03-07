@@ -1,25 +1,31 @@
 import { setRequestLocale } from "next-intl/server";
 
-import Category from "@/components/Category/Category";
+import { Link, type Locale } from "@/i18n/routing";
+import { Button } from "@/components/ui/button";
 
-import { Locale } from "@/i18n/routing";
-
-interface HomeProps {
-  params: Promise<{
-    locale: Locale;
-  }>;
+interface Props {
+  params: Promise<{ locale: Locale }>;
   searchParams: Promise<Record<string, string | undefined>>;
 }
 
-const Home = async ({ params, searchParams }: HomeProps) => {
+const HomePage = async ({ params, searchParams }: Props) => {
   const { locale } = await params;
-
-  const query = (await searchParams).query || "";
+  const { query } = await searchParams;
 
   // Enable static rendering
   setRequestLocale(locale);
 
-  return <Category query={query} />;
+  return (
+    <div className="mx-auto flex max-w-72 flex-col justify-center gap-3 p-4">
+      <h1 className="my-4 text-center">Welcome home</h1>
+      <Button asChild size="lg">
+        <Link href="/categories">Categories</Link>
+      </Button>
+      <Button asChild size="lg">
+        <Link href="/recipes">Recipes</Link>
+      </Button>
+    </div>
+  );
 };
 
-export default Home;
+export default HomePage;

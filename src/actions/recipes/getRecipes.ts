@@ -16,7 +16,7 @@ export const getRecipes = async ({ authorId, limit }: GetRecipes) => {
       ...(limit ? { take: limit } : {}),
     });
     return recipes;
-  } catch (e) {
+  } catch {
     return null;
   }
 };

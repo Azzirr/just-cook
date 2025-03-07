@@ -1,17 +1,19 @@
+import Image from "next/image";
+
+import { formatToShortDate } from "@/utils/formatToShortDate";
+import { getRecipeLists } from "@/actions/allFavouriteListActions";
+import type { Recipe, User, Ingredient } from "@prisma/client";
+
 import { RecipeSteps } from "./RecipeSteps";
 import { RecipeIngredients } from "./RecipeIngredients";
 import { RecipeActions } from "./RecipeActions";
-import { useFormatShortDate } from "@/hooks/useFormatShortDate";
-import { Recipe, User, Ingredient } from "@prisma/client";
-import Image from "next/image";
-import { getRecipeLists } from "@/actions/allFavouriteListActions";
 
 type RecipePageProps = {
   recipe: Recipe & { author: User; ingredients: Ingredient[] };
 };
 
-export const RecipePage = async ({ recipe }: RecipePageProps) => {
-  const formatDate = useFormatShortDate();
+export const RecipeDetails = async ({ recipe }: RecipePageProps) => {
+  const formatDate = await formatToShortDate();
   const userLists = await getRecipeLists(true);
 
   return (

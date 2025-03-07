@@ -1,16 +1,18 @@
 "use server";
 import { auth } from "@/auth";
 import { db } from "@/db";
+import { Recipe, RecipeList } from "@prisma/client";
 
-type QueryFiltersCriteria = {
-  id?: number;
-  name?: string;
-  userId?: string;
-  includeRecipes?: boolean;
-};
+type QueryFiltersCriteria = Partial<{
+  id: RecipeList["id"];
+  name: RecipeList["name"];
+  userId: RecipeList["userId"];
+  includeRecipes: boolean;
+}>;
+
 type ListWithRecipes = {
-  id: number;
-  recipes: { id: number }[];
+  id: RecipeList["id"];
+  recipes: { id: Recipe["id"] }[];
 };
 
 export async function getCurrentUserId() {
@@ -27,10 +29,10 @@ const recipeListExist = async (criteria: QueryFiltersCriteria) => {
 };
 
 const getListWithRecipes = async (
-  listId: number,
-  userId: string | undefined,
+  listId: RecipeList["id"],
+  userId: RecipeList["userId"] | undefined,
 ): Promise<ListWithRecipes | null> => {
-  return await db.recipeList.findFirst({
+  return db.recipeList.findFirst({
     where: { id: listId, userId },
     include: { recipes: true },
   });
@@ -58,7 +60,7 @@ export const getRecipeLists = async (excludeFavouritesList: boolean) => {
   }
 };
 
-export const createRecipeList = async (listName: string) => {
+export const createRecipeList = async (listName: RecipeList["name"]) => {
   try {
     const userId = await getCurrentUserId();
     if (!userId) {
@@ -88,7 +90,7 @@ export const createRecipeList = async (listName: string) => {
   }
 };
 
-export const deleteRecipeList = async (listId: number) => {
+export const deleteRecipeList = async (listId: RecipeList["id"]) => {
   try {
     const userId = await getCurrentUserId();
     if (!userId) {
@@ -111,7 +113,10 @@ export const deleteRecipeList = async (listId: number) => {
   }
 };
 
-export const addRecipeToList = async (recipeId: number, listId?: number) => {
+export const addRecipeToList = async (
+  recipeId: Recipe["id"],
+  listId?: RecipeList["id"],
+) => {
   try {
     const userId = await getCurrentUserId();
     if (!userId) {
@@ -162,8 +167,8 @@ export const addRecipeToList = async (recipeId: number, listId?: number) => {
 };
 
 export const removeRecipeFromList = async (
-  listId: number,
-  recipeId: number,
+  listId: RecipeList["id"],
+  recipeId: Recipe["id"],
 ) => {
   try {
     const userId = await getCurrentUserId();
@@ -193,7 +198,7 @@ export const removeRecipeFromList = async (
   }
 };
 
-export const getRecipesFromList = async (listId: number) => {
+export const getRecipesFromList = async (listId: RecipeList["id"]) => {
   try {
     const userId = await getCurrentUserId();
     if (!userId) {

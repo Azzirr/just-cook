@@ -6,16 +6,15 @@ import {
   SectionDescription,
 } from "@/components/ui-custom/Section";
 import { User } from "@prisma/client";
-import { useFormatter } from "next-intl";
 import { getUsernameInitials } from "@/utils/getUsernameInitials";
-import { useFormatShortDate } from "@/hooks/useFormatShortDate";
+import { formatToShortDate } from "@/utils/formatToShortDate";
 
 type UserProfileCardProps = {
   user: User;
 };
 
-const UserProfileCard = ({ user }: UserProfileCardProps) => {
-  const format = useFormatShortDate();
+const UserProfileCard = async ({ user }: UserProfileCardProps) => {
+  const format = await formatToShortDate();
   const joinDate = format(user.createdAt);
 
   return (

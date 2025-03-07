@@ -10,7 +10,7 @@ export async function getUserByUsername(username: string) {
       },
     });
     return user;
-  } catch (e) {
+  } catch {
     return null;
   }
 }

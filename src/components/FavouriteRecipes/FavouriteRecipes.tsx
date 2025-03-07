@@ -7,21 +7,11 @@ import { MyMenuElement } from "./MyMenuElement";
 
 //TODO - favourite recipes from database
 const favouriteRecipes = [
-  { id: 1, name: "Spaghetti Bolognese" },
-  { id: 2, name: "Chicken Caesar Salad" },
-  { id: 3, name: "Vegetarian Tacos" },
-  { id: 4, name: "Beef Stroganoff" },
-  { id: 5, name: "Lemon Cheesecake" },
-  { id: 1, name: "Spaghetti Bolognese" },
-  { id: 2, name: "Chicken Caesar Salad" },
-  { id: 3, name: "Vegetarian Tacos" },
-  { id: 4, name: "Beef Stroganoff" },
-  { id: 5, name: "Lemon Cheesecake" },
-  { id: 1, name: "Spaghetti Bolognese" },
-  { id: 2, name: "Chicken Caesar Salad" },
-  { id: 3, name: "Vegetarian Tacos" },
-  { id: 4, name: "Beef Stroganoff" },
-  { id: 5, name: "Lemon Cheesecake" },
+  { id: 1, name: "Spaghetti Bolognese", slug: "spaghetti-bolognese" },
+  { id: 2, name: "Chicken Caesar Salad", slug: "chicken-caesar-salad" },
+  { id: 3, name: "Vegetarian Tacos", slug: "vegetarian-tacos" },
+  { id: 4, name: "Beef Stroganoff", slug: "beef-stroganoff" },
+  { id: 5, name: "Lemon Cheesecake", slug: "lemon-cheesecake" },
 ];
 
 const FavouriteRecipes = () => {
@@ -49,8 +39,8 @@ const FavouriteRecipes = () => {
           <Separator />
           {favouriteRecipes.map((recipe, index) => (
             <Link
-              href={`/category/1/${recipe.name}`}
               key={recipe.id}
+              href={`/recipes/${recipe.id}/${recipe.slug}`}
               className="block w-full text-center"
             >
               <MyMenuElement recipe={recipe} index={index} />
