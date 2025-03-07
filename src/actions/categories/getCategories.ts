@@ -1,4 +1,5 @@
 "use server";
+
 import { db } from "@/db";
 import type { Recipe, RecipeCategory } from "@prisma/client";
 

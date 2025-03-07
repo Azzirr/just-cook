@@ -1,11 +1,11 @@
-import { getCategories } from "@/app/actions/actions";
+import { getCategories } from "@/actions/categories/getCategories";
 import { Button } from "@/components/ui/button";
-
 import { Link } from "@/i18n/routing";
 
 const CategoryList = async ({ query }: { query: string }) => {
   const categories = await getCategories();
 
+  // TODO Filter categories in database query
   const filteredCategories = categories.filter((category) =>
     category.name.toLowerCase().includes(query.toLocaleLowerCase()),
   );

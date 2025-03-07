@@ -6,20 +6,16 @@ import {
   SectionDescription,
 } from "@/components/ui-custom/Section";
 import { User } from "@prisma/client";
-import { useFormatter } from "next-intl";
 import { getUsernameInitials } from "@/utils/getUsernameInitials";
+import { formatToShortDate } from "@/utils/formatToShortDate";
 
 type UserProfileCardProps = {
   user: User;
 };
 
-const UserProfileCard = ({ user }: UserProfileCardProps) => {
-  const format = useFormatter();
-  const joinDate = format.dateTime(user.createdAt, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+const UserProfileCard = async ({ user }: UserProfileCardProps) => {
+  const format = await formatToShortDate();
+  const joinDate = format(user.createdAt);
 
   return (
     <div className="flex justify-between">

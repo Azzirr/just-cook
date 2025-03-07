@@ -1,16 +1,20 @@
+import Image from "next/image";
+
+import { formatToShortDate } from "@/utils/formatToShortDate";
+import { getRecipeLists } from "@/actions/allFavouriteListActions";
+import type { Recipe, User, Ingredient } from "@prisma/client";
+
 import { RecipeSteps } from "./RecipeSteps";
 import { RecipeIngredients } from "./RecipeIngredients";
 import { RecipeActions } from "./RecipeActions";
-
-import { useFormatShortDate } from "@/hooks/useFormatShortDate";
-import { Recipe, User, Ingredient } from "@prisma/client";
 
 type RecipePageProps = {
   recipe: Recipe & { author: User; ingredients: Ingredient[] };
 };
 
-export const RecipeDetail = ({ recipe }: RecipePageProps) => {
-  const formatDate = useFormatShortDate();
+export const RecipeDetails = async ({ recipe }: RecipePageProps) => {
+  const formatDate = await formatToShortDate();
+  const userLists = await getRecipeLists(true);
 
   return (
     <div className="mx-auto flex max-w-[80ch] flex-col gap-3 p-6">
@@ -28,7 +32,17 @@ export const RecipeDetail = ({ recipe }: RecipePageProps) => {
           </p>
         </div>
       </section>
-      <RecipeActions />
+      <RecipeActions userLists={userLists} />
+      {recipe.images[0] && (
+        <div className="relative h-[400px] w-full">
+          <Image
+            className="rounded-md object-cover"
+            src={recipe.images[0]}
+            fill
+            alt={recipe.name}
+          ></Image>
+        </div>
+      )}
       <section>
         <p>{recipe.description}</p>
       </section>

@@ -69,6 +69,7 @@ model User {
   verificationToken VerificationToken?
   shoppingList      ShoppingList?
   createdRecipes    Recipe[]
+  recipeLists       RecipeList[]
   accounts          Account[]
 }
 
@@ -104,7 +105,8 @@ model Recipe {
 
   tag         Tag[]
   ingredients Ingredient[]
-  categoryId  Int            @map("recipeCategoryId")
+  recipeLists RecipeList[]
+  categoryId  Int
   category    RecipeCategory @relation(fields: [categoryId], references: [id])
   authorId    String
   author      User           @relation(fields: [authorId], references: [id])
@@ -133,4 +135,14 @@ model ShoppingList {
 
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])
+}
+
+model RecipeList {
+  id        Int     @id @default(autoincrement())
+  name      String
+  isDefault Boolean @default(false)
+
+  recipes Recipe[]
+  userId  String
+  user    User     @relation(fields: [userId], references: [id])
 }

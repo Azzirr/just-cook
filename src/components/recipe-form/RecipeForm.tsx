@@ -25,7 +25,7 @@ import {
 
 import { recipeSchema, type Recipe } from "./schemas";
 import { useActionState } from "react";
-import { createRecipe } from "@/actions/createRecipe";
+import { addNewRecipe } from "@/actions/recipes/addNewRecipe";
 import { onSubmitUtil } from "@/utils/onSubmitUtil";
 import { RecipeCategory, Unit } from "@prisma/client";
 import { FormAlert } from "../FormAlert";
@@ -34,7 +34,7 @@ import { formatUnit, unitTuple } from "@/utils/ingredientUnits";
 type RecipeProps = { categories: RecipeCategory[] };
 
 export const RecipeForm = ({ categories }: RecipeProps) => {
-  const [state, action, isPending] = useActionState(createRecipe, {
+  const [state, action, isPending] = useActionState(addNewRecipe, {
     isSuccess: false,
   });
   const defaultIngredient = { name: "", quantity: 0, unit: Unit.GRAM };
@@ -85,6 +85,26 @@ export const RecipeForm = ({ categories }: RecipeProps) => {
                 <Input placeholder="Recipe name" {...field} />
               </FormControl>
 
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="image"
+          render={({ field: { onChange, value, ...fieldProps } }) => (
+            <FormItem>
+              <FormLabel>Image of dish</FormLabel>
+              <FormControl>
+                <Input
+                  {...fieldProps}
+                  type="file"
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    onChange(file);
+                  }}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}

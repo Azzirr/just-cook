@@ -10,8 +10,9 @@ import { redirect } from "@/i18n/routing";
 import { currentSession } from "@/lib/currentSession";
 import { formDataToNestedObject } from "@/utils/formDataToNestedObject";
 import type { FormState } from "@/types/formState";
+import { uploadImageToCloudinary } from "@/lib/uploadImageToCloudinary";
 
-export async function createRecipe(
+export async function addNewRecipe(
   prevState: FormState,
   data: FormData | z.infer<typeof recipeSchema>,
 ): Promise<FormState> {
@@ -41,7 +42,18 @@ export async function createRecipe(
     };
   }
 
-  const { name, category, description, ingredients, steps } = parsedData;
+  const {
+    name,
+    category: categoryId,
+    description,
+    ingredients,
+    steps,
+    image,
+  } = parsedData;
+
+  const uploadedImageUrl = image
+    ? (await uploadImageToCloudinary(image)).secure_url
+    : null;
 
   const newRecipe = await db.recipe.create({
     data: {
@@ -49,11 +61,12 @@ export async function createRecipe(
       name,
       description,
       slug: slugify(name),
+      images: uploadedImageUrl ? [uploadedImageUrl] : [],
       steps: steps.map(({ step }) => step),
       ingredients: {
         create: ingredients,
       },
-      categoryId: parseInt(category),
+      categoryId: parseInt(categoryId),
     },
   });
 

@@ -63,6 +63,12 @@ export async function register(
       password: hashedPassword,
       isActive: true,
       role: Role.USER,
+      recipeLists: {
+        create: {
+          name: "Favourites",
+          isDefault: true,
+        },
+      },
     },
   });
 

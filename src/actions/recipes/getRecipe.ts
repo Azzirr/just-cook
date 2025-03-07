@@ -12,7 +12,7 @@ export async function getRecipe(id: Recipe["id"]) {
         ingredients: true,
       },
     });
-  } catch (e) {
+  } catch {
     return null;
   }
 }
