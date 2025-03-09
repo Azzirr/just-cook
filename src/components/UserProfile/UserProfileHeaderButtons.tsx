@@ -1,28 +1,29 @@
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { FilePenLine } from "lucide-react";
+import { UserProfileModalForm } from "./UserProfileModalForm";
+import { User } from "@prisma/client";
+import { currentSession } from "@/lib/currentSession";
 
-export const UserProfileHeaderButtons = (props: { thisUser: boolean }) => {
-  return props.thisUser ? (
+type UserProfileHeaderButtonsProps = {
+  user: User;
+};
+
+export const UserProfileHeaderButtons = async ({
+  user,
+}: UserProfileHeaderButtonsProps) => {
+  const sessionUser = await currentSession();
+  const isViewingOwnProfile = sessionUser?.id === user.id;
+
+  return isViewingOwnProfile ? (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild className="cursor-pointer">
         <div className="flex w-14 flex-row items-center">
           <span className="text-[12px]">Edit profile</span>
           <FilePenLine strokeWidth={1.5} />
         </div>
       </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-        </DialogHeader>
-        <p>Pretend you see a form here</p>
-      </DialogContent>
+      <UserProfileModalForm user={user} />
     </Dialog>
   ) : (
     <Button>Follow</Button>

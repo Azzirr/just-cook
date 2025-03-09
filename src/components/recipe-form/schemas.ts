@@ -1,9 +1,13 @@
 import { z } from "zod";
 
+import { unitTuple } from "@/utils/ingredientUnits";
+import { imageSchema } from "@/schemas/imageSchema";
+
 export const recipeSchema = z.object({
   name: z.string().min(2, { message: "Recipe name is required" }).max(100, {
     message: "Recipe name must be less than 100 characters long",
   }),
+  image: imageSchema.optional(),
   category: z.string().min(1, { message: "Category is required" }),
   description: z.string().max(500, {
     message: "Description must be less than 500 characters long",
@@ -14,9 +18,10 @@ export const recipeSchema = z.object({
         name: z.string().min(1, {
           message: "Ingredient name is required",
         }),
-        quantity: z.string().min(1, {
-          message: "Quantity is required",
-        }),
+        quantity: z.coerce
+          .number()
+          .min(0.01, { message: "Quantity must be greater than 0" }),
+        unit: z.enum(unitTuple),
       }),
     )
     .min(1, { message: "At least one ingredient is required" }),

@@ -5,29 +5,34 @@ import {
   SectionTitle,
   SectionDescription,
 } from "@/components/ui-custom/Section";
+import { User } from "@prisma/client";
+import { getUsernameInitials } from "@/utils/getUsernameInitials";
+import { formatToShortDate } from "@/utils/formatToShortDate";
 
-const UserProfileCard = () => {
-  const data = {
-    username: "John Lemon",
-    joined: "March 2023",
-    avatarSrc: "/images/egg.png",
-  };
+type UserProfileCardProps = {
+  user: User;
+};
+
+const UserProfileCard = async ({ user }: UserProfileCardProps) => {
+  const format = await formatToShortDate();
+  const joinDate = format(user.createdAt);
+
   return (
     <div className="flex justify-between">
       <Section className="flex items-center gap-4">
         <Avatar className="h-20 w-20 bg-slate-50">
-          <AvatarImage src={data.avatarSrc} />
-          <AvatarFallback>JL</AvatarFallback>
+          <AvatarImage src={user.avatar ?? undefined} />
+          <AvatarFallback>{getUsernameInitials(user.username)}</AvatarFallback>
         </Avatar>
         <Section className="p-0">
-          <SectionTitle className="text-[18px]">{data.username}</SectionTitle>
+          <SectionTitle className="text-[18px]">{user.username}</SectionTitle>
           <SectionDescription className="text-[12px]">
-            Joined {data.joined}
+            Joined {joinDate}
           </SectionDescription>
         </Section>
       </Section>
       <Section className="flex items-center">
-        <UserProfileHeaderButtons thisUser />
+        <UserProfileHeaderButtons user={user} />
       </Section>
     </div>
   );

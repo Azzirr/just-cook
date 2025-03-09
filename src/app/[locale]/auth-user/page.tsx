@@ -3,7 +3,7 @@ import AuthUser from "@/components/Login/AuthUser";
 import { redirect } from "@/i18n/routing";
 import { getLocale } from "next-intl/server";
 
-const authUser = async () => {
+const AuthUserPage = async () => {
   const session = await auth();
   const locale = await getLocale();
 
@@ -15,4 +15,4 @@ const authUser = async () => {
     </>
   );
 };
-export default authUser;
+export default AuthUserPage;

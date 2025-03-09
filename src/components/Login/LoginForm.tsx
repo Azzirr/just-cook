@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { loginSchema } from "@/schemas/authSchemas";
 import { AuthFormProps } from "./types";
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect } from "react";
 import { login } from "@/actions/login";
 import { FormAlert } from "@/components/FormAlert";
 import { onSubmitUtil } from "@/utils/onSubmitUtil";
@@ -25,8 +25,6 @@ const LoginForm = ({ setShowLoginForm }: AuthFormProps) => {
     isSuccess: false,
   });
   const locale = useLocale();
-
-  const formRef = useRef<HTMLFormElement>(null);
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -52,9 +50,8 @@ const LoginForm = ({ setShowLoginForm }: AuthFormProps) => {
       <Form {...form}>
         <FormAlert message={state?.message} errors={state?.errors}></FormAlert>
         <form
-          ref={formRef}
           action={action}
-          onSubmit={onSubmitUtil({ action, formRef, form })}
+          onSubmit={onSubmitUtil(action, form)}
           className="space-y-5"
         >
           <FormField
