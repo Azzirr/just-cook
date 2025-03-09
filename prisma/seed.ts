@@ -1,10 +1,11 @@
 //TODO - add npx prisma db seed command to docs
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Unit } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-async function seedingDatabase() {
+async function seedDatabase() {
   console.log("Seeding database in progress...");
 
   const admin = await prisma.user.upsert({
@@ -13,8 +14,9 @@ async function seedingDatabase() {
     create: {
       email: "admin@admin.com",
       username: "admin",
-      password: "hashedpassword123",
+      password: await bcrypt.hash("hashedpassword123", 10),
       role: "ADMIN",
+      emailVerified: true,
     },
   });
 
@@ -24,24 +26,25 @@ async function seedingDatabase() {
     create: {
       email: "user@user.com",
       username: "user",
-      password: "hashedpassword123",
+      password: await bcrypt.hash("hashedpassword123", 10),
       role: "USER",
+      emailVerified: true,
     },
   });
 
   const categories = await prisma.recipeCategory.createMany({
     data: [
-      { id: 1, name: "Breakfast" },
-      { id: 2, name: "American Style" },
-      { id: 3, name: "Poland Classics" },
-      { id: 4, name: "Asian Style" },
-      { id: 5, name: "Italian Style" },
-      { id: 6, name: "Desserts" },
-      { id: 7, name: "Fast Food" },
-      { id: 8, name: "Drinks" },
-      { id: 9, name: "30 Minutes Recipes" },
-      { id: 10, name: "Fit Recipes" },
-      { id: 11, name: "Other" },
+      { id: 1, name: "Breakfast 🍳", slug: "breakfast" },
+      { id: 2, name: "American Style 🍔", slug: "american-style" },
+      { id: 3, name: "Poland Classics 🥟", slug: "poland-classics" },
+      { id: 4, name: "Asian Style 🍣", slug: "asian-style" },
+      { id: 5, name: "Italian Style 🍕", slug: "italian-style" },
+      { id: 6, name: "Desserts 🍰", slug: "desserts" },
+      { id: 7, name: "Fast Food 🍟", slug: "fast-food" },
+      { id: 8, name: "Drinks 🥤", slug: "drinks" },
+      { id: 9, name: "30 Minutes Recipes ⏱️", slug: "30-minutes-recipes" },
+      { id: 10, name: "Fit Recipes 💪", slug: "fit-recipes" },
+      { id: 11, name: "Other 📦", slug: "other" },
     ],
     skipDuplicates: true,
   });
@@ -76,6 +79,7 @@ async function seedingDatabase() {
   const koreanChicken = await prisma.recipe.create({
     data: {
       name: "Korean Chicken",
+      slug: "korean-chicken",
       description:
         "I really typed this recipe by myself. Try it, because it's the best chicken you can eat on earth.",
       steps: [
@@ -95,28 +99,30 @@ async function seedingDatabase() {
         "If you have a cold sauce, heat it up slightly. Then add the chicken and mix until all the chicken is covered in the sauce.",
         "You can sprinkle it with chopped nuts, sesame seeds, or even lightly drizzle with mayonnaise for decoration.",
       ],
-      images: ["https://example.com/korean-chicken.jpg"],
+      images: [
+        "https://www.alphafoodie.com/wp-content/uploads/2023/08/Korean-Fried-Chicken-square.jpeg",
+      ],
       visibility: "PUBLIC",
       authorId: admin.id,
-      recipeCategoryId: 4,
+      categoryId: 4,
       ingredients: {
         create: [
-          { name: "Chicken breasts or legs", quantity: "600g" },
-          { name: "Soy sauce", quantity: "3tbs" },
-          { name: "Garlic", quantity: "15g" },
-          { name: "Wheat flour", quantity: "150g" },
-          { name: "Corn flour", quantity: "150g" },
-          { name: "Salt", quantity: "0.5tbsp" },
-          { name: "Milk", quantity: "150ml" },
-          { name: "Honey", quantity: "100g" },
-          { name: "Ketchup", quantity: "110g" },
-          { name: "Gochujang Paste", quantity: "1tbs" },
-          { name: "Black powder", quantity: "0.5tbsp" },
-          { name: "Sunflower oil", quantity: "1l" },
+          { name: "Chicken breasts or legs", quantity: 600, unit: Unit.GRAM },
+          { name: "Soy sauce", quantity: 3, unit: Unit.TABLESPOON },
+          { name: "Garlic", quantity: 15, unit: Unit.GRAM },
+          { name: "Wheat flour", quantity: 150, unit: Unit.GRAM },
+          { name: "Corn flour", quantity: 150, unit: Unit.GRAM },
+          { name: "Salt", quantity: 0.5, unit: Unit.TABLESPOON },
+          { name: "Milk", quantity: 150, unit: Unit.MILLILITER },
+          { name: "Honey", quantity: 100, unit: Unit.GRAM },
+          { name: "Ketchup", quantity: 110, unit: Unit.GRAM },
+          { name: "Gochujang Paste", quantity: 1, unit: Unit.TABLESPOON },
+          { name: "Black powder", quantity: 0.5, unit: Unit.TABLESPOON },
+          { name: "Sunflower oil", quantity: 1, unit: Unit.LITER },
         ],
       },
       tag: {
-        connect: [{ id: 1 }, { id: 3 }],
+        connect: [{ name: "Dinner" }, { name: "Spicy" }],
       },
     },
   });
@@ -124,6 +130,7 @@ async function seedingDatabase() {
   const spaghettiCarbonara = await prisma.recipe.create({
     data: {
       name: "Spaghetti Carbonara",
+      slug: "spaghetti-carbonara",
       description:
         "Classic Italian pasta dish made with eggs, cheese, pancetta, and pepper. A comfort food staple.",
       steps: [
@@ -135,21 +142,23 @@ async function seedingDatabase() {
         "Remove from heat and stir in the egg mixture, adding more pasta water if necessary to create a creamy sauce.",
         "Serve with extra cheese and black pepper.",
       ],
-      images: ["https://example.com/spaghetti-carbonara.jpg"],
+      images: [
+        "https://www.allrecipes.com/thmb/Vg2cRidr2zcYhWGvPD8M18xM_WY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/11973-spaghetti-carbonara-ii-DDMFS-4x3-6edea51e421e4457ac0c3269f3be5157.jpg",
+      ],
       visibility: "PUBLIC",
       authorId: admin.id,
-      recipeCategoryId: 5,
+      categoryId: 5,
       ingredients: {
         create: [
-          { name: "Spaghetti", quantity: "200g" },
-          { name: "Pancetta or bacon", quantity: "100g" },
-          { name: "Eggs", quantity: "3" },
-          { name: "Parmesan cheese", quantity: "50g" },
-          { name: "Black pepper", quantity: "to taste" },
+          { name: "Spaghetti", quantity: 200, unit: Unit.GRAM },
+          { name: "Pancetta or bacon", quantity: 100, unit: Unit.GRAM },
+          { name: "Eggs", quantity: 3, unit: Unit.PIECE },
+          { name: "Parmesan cheese", quantity: 50, unit: Unit.GRAM },
+          { name: "Black pepper", quantity: 1, unit: Unit.PINCH },
         ],
       },
       tag: {
-        connect: [{ id: 2 }, { id: 5 }],
+        connect: [{ name: "Quick" }, { name: "Lunch" }],
       },
     },
   });
@@ -157,6 +166,7 @@ async function seedingDatabase() {
   const pancakes = await prisma.recipe.create({
     data: {
       name: "Pancakes",
+      slug: "pancakes",
       description:
         "Fluffy, golden-brown pancakes perfect for breakfast. Serve with syrup, fruits, or whipped cream!",
       steps: [
@@ -170,31 +180,69 @@ async function seedingDatabase() {
         "Flip and cook for another 1-2 minutes until golden brown.",
         "Serve with your favorite toppings, like maple syrup, fresh berries, or whipped cream.",
       ],
-      images: ["https://example.com/pancakes.jpg"],
+      images: [
+        "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/9767DACF-96E6-417B-9BE9-DA57EAC9462D/Derivates/2f26d615-1da2-43dd-a39e-6a54742c9299.jpg",
+      ],
       visibility: "PUBLIC",
       authorId: admin.id,
-      recipeCategoryId: 1,
+      categoryId: 1,
       ingredients: {
         create: [
-          { name: "Flour", quantity: "200g" },
-          { name: "Sugar", quantity: "2 tbsp" },
-          { name: "Baking powder", quantity: "2 tsp" },
-          { name: "Salt", quantity: "1/4 tsp" },
-          { name: "Milk", quantity: "250ml" },
-          { name: "Eggs", quantity: "2" },
-          { name: "Butter (melted)", quantity: "30g" },
+          { name: "Flour", quantity: 200, unit: Unit.GRAM },
+          { name: "Sugar", quantity: 2, unit: Unit.TABLESPOON },
+          { name: "Baking powder", quantity: 2, unit: Unit.TEASPOON },
+          { name: "Salt", quantity: 0.25, unit: Unit.TEASPOON },
+          { name: "Milk", quantity: 250, unit: Unit.MILLILITER },
+          { name: "Eggs", quantity: 2, unit: Unit.PIECE },
+          { name: "Butter (melted)", quantity: 30, unit: Unit.GRAM },
         ],
       },
       tag: {
-        connect: [{ id: 3 }, { id: 5 }],
+        connect: [{ name: "Breakfast" }, { name: "Quick" }],
       },
+    },
+  });
+
+  const adminFavorites = await prisma.recipeList.create({
+    data: {
+      name: "Favorites",
+      isSystem: true,
+      userId: admin.id,
+      recipes: {
+        connect: [{ id: koreanChicken.id }, { id: spaghettiCarbonara.id }],
+      },
+    },
+  });
+
+  const userFavorites = await prisma.recipeList.create({
+    data: {
+      name: "Favorites",
+      isSystem: true,
+      userId: user.id,
+      recipes: {
+        connect: [{ id: pancakes.id }],
+      },
+    },
+  });
+
+  await prisma.shoppingList.create({
+    data: {
+      ingredients: ["Eggs", "Milk", "Flour", "Sugar"],
+      userId: admin.id,
+    },
+  });
+
+  await prisma.shoppingList.create({
+    data: {
+      ingredients: ["Chicken", "Rice", "Soy sauce"],
+      userId: user.id,
     },
   });
 
   console.log("Seeding done! Happy coding my friend!");
 }
 
-seedingDatabase()
+seedDatabase()
   .catch((error) => {
     console.error(error);
     process.exit(1);
