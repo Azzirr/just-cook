@@ -49,7 +49,7 @@ export const getRecipeLists = async (excludeFavouritesList: boolean) => {
     const recipeLists = await db.recipeList.findMany({
       where: {
         userId,
-        NOT: excludeFavouritesList ? { isDefault: true } : undefined,
+        NOT: excludeFavouritesList ? { isSystem: true } : undefined,
       },
     });
 
@@ -129,7 +129,7 @@ export const addRecipeToList = async (
     // If there is no listId argument in function, we are looking for personal Favourites list
     if (!targetListId) {
       const favouritesList = await db.recipeList.findFirst({
-        where: { userId, isDefault: true },
+        where: { userId, isSystem: true },
       });
 
       targetListId = favouritesList!.id;

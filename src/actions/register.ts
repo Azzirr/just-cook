@@ -66,7 +66,7 @@ export async function register(
       recipeLists: {
         create: {
           name: "Favourites",
-          isDefault: true,
+          isSystem: true,
         },
       },
     },
