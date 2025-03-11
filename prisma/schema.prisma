@@ -67,7 +67,7 @@ model User {
   role          Role     @default(USER)
 
   verificationToken VerificationToken?
-  shoppingList      ShoppingList?
+  shoppingList      Ingredient[]
   createdRecipes    Recipe[]
   recipeLists       RecipeList[]
   accounts          Account[]
@@ -89,7 +89,9 @@ model Ingredient {
   unit     Unit
 
   recipeId String
-  Recipe   Recipe @relation(fields: [recipeId], references: [id])
+  Recipe   Recipe  @relation(fields: [recipeId], references: [id])
+  User     User?   @relation(fields: [userId], references: [id])
+  userId   String?
 }
 
 model Recipe {
@@ -127,14 +129,6 @@ model Tag {
   name String @unique
 
   recipes Recipe[]
-}
-
-model ShoppingList {
-  id          Int      @id @default(autoincrement())
-  ingredients String[]
-
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id])
 }
 
 model RecipeList {
