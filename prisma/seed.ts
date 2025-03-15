@@ -121,9 +121,7 @@ async function seedDatabase() {
           { name: "Sunflower oil", quantity: 1, unit: Unit.LITER },
         ],
       },
-      tag: {
-        connect: [{ name: "Dinner" }, { name: "Spicy" }],
-      },
+      tag: { connect: [{ name: "Dinner" }, { name: "Spicy" }] },
     },
   });
 
@@ -157,9 +155,7 @@ async function seedDatabase() {
           { name: "Black pepper", quantity: 1, unit: Unit.PINCH },
         ],
       },
-      tag: {
-        connect: [{ name: "Quick" }, { name: "Lunch" }],
-      },
+      tag: { connect: [{ name: "Quick" }, { name: "Lunch" }] },
     },
   });
 
@@ -197,9 +193,7 @@ async function seedDatabase() {
           { name: "Butter (melted)", quantity: 30, unit: Unit.GRAM },
         ],
       },
-      tag: {
-        connect: [{ name: "Breakfast" }, { name: "Quick" }],
-      },
+      tag: { connect: [{ name: "Breakfast" }, { name: "Quick" }] },
     },
   });
 
@@ -219,23 +213,75 @@ async function seedDatabase() {
       name: "Favorites",
       isSystem: true,
       userId: user.id,
-      recipes: {
-        connect: [{ id: pancakes.id }],
+      recipes: { connect: [{ id: pancakes.id }] },
+    },
+  });
+
+  await prisma.user.update({
+    where: { id: admin.id },
+    data: {
+      shoppingList: {
+        create: [
+          {
+            name: "Eggs",
+            quantity: 6,
+            unit: Unit.PIECE,
+            recipeId: pancakes.id,
+          },
+          {
+            name: "Milk",
+            quantity: 1,
+            unit: Unit.LITER,
+            recipeId: pancakes.id,
+          },
+          {
+            name: "Flour",
+            quantity: 500,
+            unit: Unit.GRAM,
+            recipeId: pancakes.id,
+          },
+          {
+            name: "Sugar",
+            quantity: 1,
+            unit: Unit.KILOGRAM,
+            recipeId: pancakes.id,
+          },
+        ],
       },
     },
   });
 
-  await prisma.shoppingList.create({
+  await prisma.user.update({
+    where: { id: user.id },
     data: {
-      ingredients: ["Eggs", "Milk", "Flour", "Sugar"],
-      userId: admin.id,
-    },
-  });
-
-  await prisma.shoppingList.create({
-    data: {
-      ingredients: ["Chicken", "Rice", "Soy sauce"],
-      userId: user.id,
+      shoppingList: {
+        create: [
+          {
+            name: "Eggs",
+            quantity: 6,
+            unit: Unit.PIECE,
+            recipeId: pancakes.id,
+          },
+          {
+            name: "Milk",
+            quantity: 1,
+            unit: Unit.LITER,
+            recipeId: pancakes.id,
+          },
+          {
+            name: "Flour",
+            quantity: 500,
+            unit: Unit.GRAM,
+            recipeId: pancakes.id,
+          },
+          {
+            name: "Sugar",
+            quantity: 1,
+            unit: Unit.KILOGRAM,
+            recipeId: pancakes.id,
+          },
+        ],
+      },
     },
   });
 

@@ -1,21 +1,17 @@
 "use server";
 
 import { db } from "@/db";
-import type { Ingredient, ShoppingList } from "@prisma/client";
+import type { Ingredient } from "@prisma/client";
 
-type GetShoppingList = {
-  userId: string;
-};
+type GetShoppingList = { userId: string };
 
 export const getShoppingList = async ({
   userId,
 }: GetShoppingList): Promise<Ingredient[]> => {
   try {
-    const userShoppingList = await db.shoppingList.findFirst({
-      where: {
-        userId,
-      },
-    });
+    const userShoppingList = await db.user
+      .findFirst({ where: { id: userId } })
+      .shoppingList();
 
     if (!userShoppingList) {
       throw new Error("Shopping list not found");
