@@ -217,70 +217,32 @@ async function seedDatabase() {
     },
   });
 
+  const pancakesIngredients = await prisma.ingredient.findMany({
+    where: { recipeId: pancakes.id },
+  });
+
   await prisma.user.update({
     where: { id: admin.id },
     data: {
       shoppingList: {
-        create: [
-          {
-            name: "Eggs",
-            quantity: 6,
-            unit: Unit.PIECE,
-            recipeId: pancakes.id,
-          },
-          {
-            name: "Milk",
-            quantity: 1,
-            unit: Unit.LITER,
-            recipeId: pancakes.id,
-          },
-          {
-            name: "Flour",
-            quantity: 500,
-            unit: Unit.GRAM,
-            recipeId: pancakes.id,
-          },
-          {
-            name: "Sugar",
-            quantity: 1,
-            unit: Unit.KILOGRAM,
-            recipeId: pancakes.id,
-          },
-        ],
+        connect: pancakesIngredients.map((ingredient) => ({
+          id: ingredient.id,
+        })),
       },
     },
+  });
+
+  const carbonaraIngredients = await prisma.ingredient.findMany({
+    where: { recipeId: spaghettiCarbonara.id },
   });
 
   await prisma.user.update({
     where: { id: user.id },
     data: {
       shoppingList: {
-        create: [
-          {
-            name: "Eggs",
-            quantity: 6,
-            unit: Unit.PIECE,
-            recipeId: pancakes.id,
-          },
-          {
-            name: "Milk",
-            quantity: 1,
-            unit: Unit.LITER,
-            recipeId: pancakes.id,
-          },
-          {
-            name: "Flour",
-            quantity: 500,
-            unit: Unit.GRAM,
-            recipeId: pancakes.id,
-          },
-          {
-            name: "Sugar",
-            quantity: 1,
-            unit: Unit.KILOGRAM,
-            recipeId: pancakes.id,
-          },
-        ],
+        connect: carbonaraIngredients.map((ingredient) => ({
+          id: ingredient.id,
+        })),
       },
     },
   });
