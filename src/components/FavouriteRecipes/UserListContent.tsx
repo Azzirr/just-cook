@@ -4,7 +4,7 @@ import { Link } from "@/i18n/routing";
 import { Undo2 } from "lucide-react";
 import { Card } from "../ui/card";
 
-const MyMenuContent = ({ userListContent }: any) => {
+const UserListContent = ({ userListContent }: any) => {
   const router = useRouter();
 
   return (
@@ -35,4 +35,4 @@ const MyMenuContent = ({ userListContent }: any) => {
     </>
   );
 };
-export { MyMenuContent };
+export { UserListContent };

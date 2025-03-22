@@ -2,7 +2,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
-import { UserList } from "./userList";
+import { UserList } from "./UserList";
+import { ListPlusIcon } from "lucide-react";
+import { Button } from "../ui/button";
+import { CreateNewList } from "./CreateNewList";
 
 const FavouriteRecipes = ({ favouriteRecipes, userLists }: any) => {
   const t = useTranslations("Favourites");
@@ -41,6 +44,7 @@ const FavouriteRecipes = ({ favouriteRecipes, userLists }: any) => {
           value="myMenu"
           className="mt-5 w-full max-w-md lg:max-w-lg"
         >
+          <CreateNewList />
           <Separator />
           {userLists.map((menu: any, index: any) => (
             <Link href={`/favourite-recipes/${menu.id}`} key={menu.id}>

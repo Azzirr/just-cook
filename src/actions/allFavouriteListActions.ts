@@ -224,7 +224,7 @@ export const getRecipesFromList = async (listId?: RecipeList["id"]) => {
       return null;
     }
 
-    console.log(recipeList.recipes);
+    // console.log(recipeList.recipes);
     return recipeList.recipes;
   } catch (error) {
     console.log("Error with reading the list", error);
