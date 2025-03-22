@@ -1,9 +1,12 @@
+import { getRecipesFromList } from "@/actions/allFavouriteListActions";
 import { MyMenuContent } from "@/components/FavouriteRecipes/MyMenuContent";
 
-const myMenu = () => {
+const myMenu = async () => {
+  const userListContent = await getRecipesFromList(3);
+
   return (
     <>
-      <MyMenuContent />
+      <MyMenuContent userListContent={userListContent} />
     </>
   );
 };

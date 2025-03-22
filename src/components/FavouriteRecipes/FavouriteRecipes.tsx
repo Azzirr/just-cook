@@ -2,21 +2,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
-import { MyMenu } from "./MyMenu";
-import { MyMenuElement } from "./MyMenuElement";
+import { UserList } from "./userList";
 
-//TODO - favourite recipes from database
-const favouriteRecipes = [
-  { id: 1, name: "Spaghetti Bolognese", slug: "spaghetti-bolognese" },
-  { id: 2, name: "Chicken Caesar Salad", slug: "chicken-caesar-salad" },
-  { id: 3, name: "Vegetarian Tacos", slug: "vegetarian-tacos" },
-  { id: 4, name: "Beef Stroganoff", slug: "beef-stroganoff" },
-  { id: 5, name: "Lemon Cheesecake", slug: "lemon-cheesecake" },
-];
-
-const FavouriteRecipes = () => {
+const FavouriteRecipes = ({ favouriteRecipes, userLists }: any) => {
   const t = useTranslations("Favourites");
-
   return (
     <>
       <Tabs
@@ -31,19 +20,18 @@ const FavouriteRecipes = () => {
             {t("myMenu")}
           </TabsTrigger>
         </TabsList>
-
         <TabsContent
           value="favourites"
           className="mt-5 w-full max-w-md lg:max-w-lg"
         >
           <Separator />
-          {favouriteRecipes.map((recipe, index) => (
+          {favouriteRecipes?.map((recipe: any, index: number) => (
             <Link
               key={recipe.id}
               href={`/recipes/${recipe.id}/${recipe.slug}`}
               className="block w-full text-center"
             >
-              <MyMenuElement recipe={recipe} index={index} />
+              <UserList recipe={recipe} index={index} />
             </Link>
           ))}
           <Separator />
@@ -54,8 +42,11 @@ const FavouriteRecipes = () => {
           className="mt-5 w-full max-w-md lg:max-w-lg"
         >
           <Separator />
-          <MyMenu />
-          <Separator />
+          {userLists.map((menu: any, index: any) => (
+            <Link href={`/favourite-recipes/${menu.id}`} key={menu.id}>
+              <UserList recipe={menu} index={index} />
+            </Link>
+          ))}
         </TabsContent>
       </Tabs>
     </>

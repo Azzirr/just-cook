@@ -198,7 +198,7 @@ export const removeRecipeFromList = async (
   }
 };
 
-export const getRecipesFromList = async (listId: RecipeList["id"]) => {
+export const getRecipesFromList = async (listId?: RecipeList["id"]) => {
   try {
     const userId = await getCurrentUserId();
     if (!userId) {
@@ -206,14 +206,26 @@ export const getRecipesFromList = async (listId: RecipeList["id"]) => {
       return null;
     }
 
-    const recipeList = await getListWithRecipes(listId, userId);
+    let recipeList;
+    if (listId) {
+      recipeList = await getListWithRecipes(listId, userId);
+    } else {
+      recipeList = await db.recipeList.findFirst({
+        where: {
+          userId,
+          isSystem: true,
+        },
+        include: { recipes: true },
+      });
+    }
 
     if (!recipeList) {
-      console.log("List not found or list not belong to user");
+      console.log("List not found or list does not belong to the user");
       return null;
     }
 
-    return recipeList;
+    console.log(recipeList.recipes);
+    return recipeList.recipes;
   } catch (error) {
     console.log("Error with reading the list", error);
     return null;
