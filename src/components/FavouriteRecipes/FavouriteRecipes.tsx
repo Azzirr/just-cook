@@ -3,12 +3,20 @@ import { Separator } from "@/components/ui/separator";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { UserList } from "./UserList";
-import { ListPlusIcon } from "lucide-react";
-import { Button } from "../ui/button";
 import { CreateNewList } from "./CreateNewList";
+import { Recipe, RecipeList } from "@prisma/client";
 
-const FavouriteRecipes = ({ favouriteRecipes, userLists }: any) => {
+interface FavouriteRecipesProps {
+  favouriteRecipes: Recipe[] | null;
+  userLists: RecipeList[];
+}
+
+const FavouriteRecipes = ({
+  favouriteRecipes,
+  userLists,
+}: FavouriteRecipesProps) => {
   const t = useTranslations("Favourites");
+  console.log(userLists);
   return (
     <>
       <Tabs
@@ -28,7 +36,7 @@ const FavouriteRecipes = ({ favouriteRecipes, userLists }: any) => {
           className="mt-5 w-full max-w-md lg:max-w-lg"
         >
           <Separator />
-          {favouriteRecipes?.map((recipe: any, index: number) => (
+          {favouriteRecipes?.map((recipe, index) => (
             <Link
               key={recipe.id}
               href={`/recipes/${recipe.id}/${recipe.slug}`}
@@ -46,9 +54,9 @@ const FavouriteRecipes = ({ favouriteRecipes, userLists }: any) => {
         >
           <CreateNewList />
           <Separator />
-          {userLists.map((menu: any, index: any) => (
-            <Link href={`/favourite-recipes/${menu.id}`} key={menu.id}>
-              <UserList recipe={menu} index={index} />
+          {userLists.map((recipe, index) => (
+            <Link href={`/favourite-recipes/${recipe.id}`} key={recipe.id}>
+              <UserList recipe={recipe} index={index} />
             </Link>
           ))}
         </TabsContent>

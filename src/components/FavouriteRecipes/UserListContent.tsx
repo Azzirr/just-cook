@@ -3,10 +3,15 @@ import { useRouter } from "next/navigation";
 import { Link } from "@/i18n/routing";
 import { Undo2 } from "lucide-react";
 import { Card } from "../ui/card";
+import { Recipe } from "@prisma/client";
 
-const UserListContent = ({ userListContent }: any) => {
+interface userListContentProps {
+  userListContent: Recipe[];
+}
+
+const UserListContent = ({ userListContent }: userListContentProps) => {
   const router = useRouter();
-
+  console.log(userListContent);
   return (
     <>
       <div className="flex flex-row items-center justify-center">
@@ -17,12 +22,9 @@ const UserListContent = ({ userListContent }: any) => {
         >
           Go back
         </Undo2>
-        <div className="w-[90vw] items-center justify-center">
-          {userListContent.name}
-        </div>
       </div>
 
-      {userListContent.map((recipe: any, index: number) => (
+      {userListContent.map((recipe, index) => (
         <Card
           className={index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}
           key={index}

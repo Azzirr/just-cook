@@ -12,7 +12,7 @@ type QueryFiltersCriteria = Partial<{
 
 type ListWithRecipes = {
   id: RecipeList["id"];
-  recipes: { id: Recipe["id"] }[];
+  recipes: Recipe[];
 };
 
 export async function getCurrentUserId() {
@@ -221,13 +221,13 @@ export const getRecipesFromList = async (listId?: RecipeList["id"]) => {
 
     if (!recipeList) {
       console.log("List not found or list does not belong to the user");
-      return null;
+      return [];
     }
 
     // console.log(recipeList.recipes);
-    return recipeList.recipes;
+    return recipeList.recipes ?? [];
   } catch (error) {
     console.log("Error with reading the list", error);
-    return null;
+    return [];
   }
 };
