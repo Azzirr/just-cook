@@ -47,6 +47,7 @@
             "position": "after"
           }
         ],
+        "newlines-between": "always",
         "alphabetize": { "order": "asc", "caseInsensitive": true }
       }
     ],
