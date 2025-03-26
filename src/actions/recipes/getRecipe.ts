@@ -10,6 +10,7 @@ export async function getRecipe(id: Recipe["id"]) {
       include: {
         author: true,
         ingredients: true,
+        category: true,
       },
     });
   } catch {
