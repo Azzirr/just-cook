@@ -29,7 +29,8 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 
-import type { Ingredient } from "@/components/ShoppingBag/types";
+import { Ingredient } from "@prisma/client";
+import { formatUnit } from "@/utils/ingredientUnits";
 
 const FormSchema = z.object({
   ingredientIds: z.array(z.number()),
@@ -121,10 +122,12 @@ export const RecipeIngredients = ({ ingredients }: Props) => {
                           }
                         />
                       </FormControl>
-                      <FormLabel className="cursor-pointer text-base">
-                        <span className="font-semibold">{ingredient.name}</span>{" "}
-                        - {ingredient.quantity}{" "}
-                        {ingredient.notes && `(${ingredient.notes})`}
+                      <FormLabel className="cursor-pointer space-x-3 text-base">
+                        <span className="font-semibold">{ingredient.name}</span>
+                        <span className="text-muted-foreground">
+                          {ingredient.quantity}
+                          {formatUnit(ingredient.unit, "short")}
+                        </span>
                       </FormLabel>
                     </FormItem>
                   )}
