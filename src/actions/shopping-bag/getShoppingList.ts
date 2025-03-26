@@ -10,7 +10,7 @@ export const getShoppingList = async ({
 }: GetShoppingList): Promise<Ingredient[]> => {
   try {
     const userShoppingList = await db.user
-      .findFirst({ where: { id: userId } })
+      .findUnique({ where: { id: userId } })
       .shoppingList();
 
     if (!userShoppingList) {
