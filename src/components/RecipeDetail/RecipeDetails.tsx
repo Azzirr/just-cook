@@ -2,14 +2,19 @@ import Image from "next/image";
 
 import { formatToShortDate } from "@/utils/formatToShortDate";
 import { getRecipeLists } from "@/actions/allFavouriteListActions";
-import type { Recipe, User, Ingredient } from "@prisma/client";
+import type { Recipe, User, Ingredient, RecipeCategory } from "@prisma/client";
 
 import { RecipeSteps } from "./RecipeSteps";
 import { RecipeIngredients } from "./RecipeIngredients";
 import { RecipeActions } from "./RecipeActions";
+import { RecipeBreadcrumbs } from "./RecipeBreadcrumbs";
 
 type RecipePageProps = {
-  recipe: Recipe & { author: User; ingredients: Ingredient[] };
+  recipe: Recipe & {
+    author: User;
+    ingredients: Ingredient[];
+    category: RecipeCategory;
+  };
 };
 
 export const RecipeDetails = async ({ recipe }: RecipePageProps) => {
@@ -18,6 +23,7 @@ export const RecipeDetails = async ({ recipe }: RecipePageProps) => {
 
   return (
     <div className="mx-auto flex max-w-[80ch] flex-col gap-3 p-6">
+      <RecipeBreadcrumbs recipe={recipe} />
       <section className="flex flex-col justify-between gap-3 sm:flex-row">
         <div>
           <h1>{recipe.name}</h1>
