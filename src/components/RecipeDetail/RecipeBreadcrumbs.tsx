@@ -7,7 +7,7 @@ import {
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
 import { Link } from "@/i18n/routing";
-import { Recipe, RecipeCategory } from "@prisma/client";
+import type { Recipe, RecipeCategory } from "@prisma/client";
 
 type Props = {
   recipe: Recipe & {

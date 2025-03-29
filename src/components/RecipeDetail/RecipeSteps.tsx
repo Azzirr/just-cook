@@ -1,5 +1,7 @@
+import type { Recipe } from "@prisma/client";
+
 type Props = {
-  steps: string[];
+  steps: Recipe["steps"];
 };
 
 export const RecipeSteps = ({ steps }: Props) => {

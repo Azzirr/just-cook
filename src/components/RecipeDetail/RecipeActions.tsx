@@ -1,11 +1,11 @@
 "use client";
-import { Heart, PlusCircleIcon } from "lucide-react";
 
+import { Heart, PlusCircleIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { addRecipeToList } from "@/actions/allFavouriteListActions";
 import { useState } from "react";
 import { RecipePageDialog } from "./RecipePageDialog";
-import { RecipeList } from "@prisma/client";
+import type { RecipeList } from "@prisma/client";
 
 type RecipeActionsProps = {
   userLists: RecipeList[];
