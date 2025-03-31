@@ -2,9 +2,9 @@
 
 import { ShoppingBagIcon } from "lucide-react";
 
+import type { Ingredient } from "@prisma/client";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ShoppingListItem } from "@/components/ShoppingBag/ShoppingListItem";
-import type { Ingredient } from "./types";
 
 // TODO: Fetch actual data from db and bring back ssr and translations
 export const ShoppingBag = () => {
@@ -29,7 +29,7 @@ export const ShoppingBag = () => {
         <ScrollArea className="px-2 py-1">
           <div className="flex flex-col gap-2">
             {shoppingBagItems.map((item, index) => (
-              <ShoppingListItem key={index} {...item} />
+              <ShoppingListItem key={index} ingredient={item} />
             ))}
           </div>
         </ScrollArea>
