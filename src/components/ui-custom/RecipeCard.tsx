@@ -15,7 +15,7 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
   //TODO: test line-clamp in all browsers if it works
   return (
     <Card className="w-64 cursor-pointer overflow-hidden rounded-2xl shadow-md">
-      <Link className="" href={`/recipes/${recipe.id}/${recipe.slug}`}>
+      <Link href={`/recipes/${recipe.id}/${recipe.slug}`}>
         <div className="relative h-40 w-full">
           {recipeImage ? (
             <Image src={recipeImage} alt={name} fill className="object-cover" />
