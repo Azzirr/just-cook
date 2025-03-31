@@ -7,8 +7,8 @@ const RecipesPage = async () => {
   return (
     <div className="m-4 grid grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] gap-4">
       {recipes?.map((recipe) => (
-        <div className="flex justify-center">
-          <RecipeCard key={recipe.id} recipe={recipe}></RecipeCard>
+        <div key={recipe.id} className="flex justify-center">
+          <RecipeCard recipe={recipe}></RecipeCard>
         </div>
       ))}
     </div>
