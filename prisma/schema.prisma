@@ -140,7 +140,7 @@ model ShoppingList {
 model RecipeList {
   id        Int     @id @default(autoincrement())
   name      String
-  isDefault Boolean @default(false)
+  isSystem Boolean @default(false)
 
   recipes Recipe[]
   userId  String
