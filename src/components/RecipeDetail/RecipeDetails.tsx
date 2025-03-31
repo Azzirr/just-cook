@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { RecipeSteps } from "./RecipeSteps";
 import { RecipeIngredients } from "./RecipeIngredients";
 import { RecipeActions } from "./RecipeActions";
+import { RecipeBreadcrumbs } from "./RecipeBreadcrumbs";
 
 type RecipePageProps = {
   recipe: Recipe & {
@@ -23,7 +24,8 @@ export const RecipeDetails = async ({ recipe }: RecipePageProps) => {
   const userLists = await getRecipeLists(true);
 
   return (
-    <article className="mx-auto mb-4 w-full max-w-[80ch] space-y-8 p-4">
+    <article className="mx-auto mb-4 w-full max-w-[80ch] space-y-8 p-5">
+      <RecipeBreadcrumbs recipe={recipe} />
       <section className="space-y-4">
         <div className="flex flex-col justify-between gap-5 sm:flex-row">
           <div>
