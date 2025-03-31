@@ -100,7 +100,7 @@ export const RecipeIngredients = ({ ingredients }: Props) => {
   }
 
   return (
-    <section className="mt-4">
+    <>
       <h2 className="mb-3">Ingredients</h2>
       <Form {...form}>
         <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
@@ -171,6 +171,6 @@ export const RecipeIngredients = ({ ingredients }: Props) => {
           </div>
         </form>
       </Form>
-    </section>
+    </>
   );
 };

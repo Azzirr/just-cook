@@ -4,7 +4,7 @@ type Props = {
 
 export const RecipeSteps = ({ steps }: Props) => {
   return (
-    <section className="mt-4">
+    <>
       <h2 className="mb-3">Steps</h2>
       <ol className="list-inside list-decimal marker:text-lg marker:font-bold">
         {steps.map((step, index) => (
@@ -13,6 +13,6 @@ export const RecipeSteps = ({ steps }: Props) => {
           </li>
         ))}
       </ol>
-    </section>
+    </>
   );
 };
