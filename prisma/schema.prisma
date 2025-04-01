@@ -132,8 +132,8 @@ model Tag {
 }
 
 model RecipeList {
-  id        Int     @id @default(autoincrement())
-  name      String
+  id       Int     @id @default(autoincrement())
+  name     String
   isSystem Boolean @default(false)
 
   recipes Recipe[]

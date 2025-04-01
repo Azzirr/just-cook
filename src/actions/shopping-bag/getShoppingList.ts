@@ -1,7 +1,7 @@
 "use server";
 
-import { db } from "@/db";
 import type { Ingredient } from "@prisma/client";
+import { db } from "@/db";
 
 type GetShoppingList = { userId: string };
 
