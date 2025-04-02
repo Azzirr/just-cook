@@ -3,18 +3,12 @@
 import { db } from "@/db";
 
 type GetRecipes = {
-  authorId: string;
   limit?: number;
 };
 
-export const getRecipes = async ({ authorId, limit }: GetRecipes) => {
+export const getRecipes = async ({ limit = 10 }: GetRecipes = {}) => {
   try {
-    const recipes = await db.recipe.findMany({
-      where: {
-        authorId,
-      },
-      ...(limit ? { take: limit } : {}),
-    });
+    const recipes = await db.recipe.findMany({ take: limit });
     return recipes;
   } catch {
     return null;
