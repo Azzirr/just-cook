@@ -25,7 +25,7 @@ export const BaseLayout = ({ children, locale }: Props) => {
         className={`antialiased ${roboto.className} flex min-h-screen flex-col bg-[#f8f8f8]`}
       >
         <TopNavigation />
-        <div className="mx-auto flex w-full max-w-[1300px] grow flex-col">
+        <div className="mx-auto flex w-full max-w-screen-xl grow flex-col">
           {children}
         </div>
         <BottomNavigation />

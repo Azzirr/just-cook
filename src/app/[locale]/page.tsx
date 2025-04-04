@@ -1,11 +1,10 @@
 import { setRequestLocale } from "next-intl/server";
-
-import { type Locale } from "@/i18n/routing";
 import { getCategories } from "@/actions/categories/getCategories";
 import SearchBar from "@/components/ui-custom/SearchBar";
 import { CategoriesPreviewCard } from "@/components/Home/CategoriesPreviewCard";
 import { RecipeCarousel } from "@/components/Home/RecipeCarousel";
 import { getRecipes } from "@/actions/recipes/getRecipes";
+import { type Locale } from "@/i18n/routing";
 
 interface Props {
   params: Promise<{ locale: Locale }>;
@@ -23,13 +22,13 @@ const HomePage = async ({ params, searchParams }: Props) => {
   return (
     <div className="flex flex-col gap-8 p-4">
       <h1 className="mt-3 text-2xl">What do you want to cook today?</h1>
-      <div className="max-w-[400px]">
-        <SearchBar></SearchBar>
+      <div className="max-w-sm">
+        <SearchBar />
       </div>
-      <CategoriesPreviewCard categories={categories}></CategoriesPreviewCard>
+      <CategoriesPreviewCard categories={categories} />
       <div className="pt-[40px]">
         <p className="pb-[20px] text-xl">Recently added recipes</p>
-        <RecipeCarousel recipes={recipes}></RecipeCarousel>
+        <RecipeCarousel recipes={recipes} />
       </div>
     </div>
   );
