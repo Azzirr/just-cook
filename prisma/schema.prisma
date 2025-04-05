@@ -115,9 +115,10 @@ model Recipe {
 }
 
 model RecipeCategory {
-  id   Int    @id @default(autoincrement())
+  id   Int     @id @default(autoincrement())
   name String
-  slug String @unique
+  icon String?
+  slug String  @unique
 
   recipes Recipe[]
 }
@@ -138,8 +139,8 @@ model ShoppingList {
 }
 
 model RecipeList {
-  id        Int     @id @default(autoincrement())
-  name      String
+  id       Int     @id @default(autoincrement())
+  name     String
   isSystem Boolean @default(false)
 
   recipes Recipe[]
