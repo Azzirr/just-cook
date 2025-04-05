@@ -2,6 +2,7 @@
 import { auth } from "@/auth";
 import { db } from "@/db";
 import { Recipe, RecipeList } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 type QueryFiltersCriteria = Partial<{
   id: RecipeList["id"];
@@ -83,6 +84,7 @@ export const createRecipeList = async (listName: RecipeList["name"]) => {
     });
 
     console.log("New list created:", newList);
+    revalidatePath("/favourite-recipes");
     return newList;
   } catch (error) {
     console.log(error);
@@ -224,7 +226,6 @@ export const getRecipesFromList = async (listId?: RecipeList["id"]) => {
       return [];
     }
 
-    // console.log(recipeList.recipes);
     return recipeList.recipes ?? [];
   } catch (error) {
     console.log("Error with reading the list", error);

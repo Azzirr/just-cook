@@ -14,51 +14,63 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { ListPlusIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useActionState } from "react";
 import { toast } from "sonner";
+import { LoadingSpinner } from "../ui-custom/LoadingSpinner";
+
+async function handleCreateList(prevState: any, formData: FormData) {
+  const name = formData.get("name") as string;
+  if (!name) return;
+
+  const result = await createRecipeList(name);
+  if (result) {
+    toast(`${name} was created!`);
+  }
+
+  return;
+}
 
 export const CreateNewList = () => {
-  const router = useRouter();
-  const [listName, setListName] = useState<string>("");
-  const createNewList = async () => {
-    const result = await createRecipeList(listName);
-    if (result) {
-      router.refresh();
-      toast(`${listName} was created!`);
-    }
-  };
+  const [state, formAction, isPending] = useActionState(handleCreateList, null);
+
   return (
     <Dialog>
       <DialogTrigger asChild>
         <div className="flex justify-end">
-          <ListPlusIcon className="mb-4 mr-5 size-8" />
+          <ListPlusIcon className="mb-4 mr-5 size-8 cursor-pointer" />
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Create new list</DialogTitle>
-          <DialogDescription className="hidden" />
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input
-              id="name"
-              className="col-span-3"
-              onChange={(event) => setListName(event.target.value)}
-            />
+        <form action={formAction}>
+          <DialogHeader>
+            <DialogTitle>Create new list</DialogTitle>
+            <DialogDescription className="hidden" />
+          </DialogHeader>
+
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Name
+              </Label>
+              <Input id="name" name="name" className="col-span-3" />
+            </div>
           </div>
-        </div>
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button type="submit" onClick={createNewList}>
-              Save
-            </Button>
-          </DialogClose>
-        </DialogFooter>
+
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="submit" disabled={isPending}>
+                {isPending ? (
+                  <>
+                    <LoadingSpinner size={16} className="mr-2" />
+                    Saving...
+                  </>
+                ) : (
+                  "Save"
+                )}
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

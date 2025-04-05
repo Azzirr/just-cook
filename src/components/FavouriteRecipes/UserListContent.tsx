@@ -5,13 +5,13 @@ import { Undo2 } from "lucide-react";
 import { Card } from "../ui/card";
 import { Recipe } from "@prisma/client";
 
-interface userListContentProps {
+interface UserListContentProps {
   userListContent: Recipe[];
 }
 
-const UserListContent = ({ userListContent }: userListContentProps) => {
+const UserListContent = ({ userListContent }: UserListContentProps) => {
   const router = useRouter();
-  console.log(userListContent);
+
   return (
     <>
       <div className="flex flex-row items-center justify-center">
@@ -24,11 +24,8 @@ const UserListContent = ({ userListContent }: userListContentProps) => {
         </Undo2>
       </div>
 
-      {userListContent.map((recipe, index) => (
-        <Card
-          className={index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}
-          key={index}
-        >
+      {userListContent.map((recipe) => (
+        <Card className="odd:bg-gray-100 even:bg-gray-200" key={recipe.id}>
           <Link href={`/recipes/${recipe.id}/${recipe.slug}`}>
             {recipe.name}
           </Link>

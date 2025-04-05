@@ -4,7 +4,7 @@ import {
 } from "@/actions/allFavouriteListActions";
 import { FavouriteRecipes } from "@/components/FavouriteRecipes/FavouriteRecipes";
 
-const favouriteRecipes = async () => {
+const FavouriteRecipesPage = async () => {
   const favouriteRecipes = await getRecipesFromList();
   const userLists = await getRecipeLists(true);
 
@@ -18,4 +18,4 @@ const favouriteRecipes = async () => {
   );
 };
 
-export default favouriteRecipes;
+export default FavouriteRecipesPage;

@@ -16,7 +16,7 @@ const FavouriteRecipes = ({
   userLists,
 }: FavouriteRecipesProps) => {
   const t = useTranslations("Favourites");
-  console.log(userLists);
+
   return (
     <>
       <Tabs
