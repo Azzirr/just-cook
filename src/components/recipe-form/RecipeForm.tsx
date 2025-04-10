@@ -26,29 +26,48 @@ import {
 import { recipeSchema, type Recipe } from "./schemas";
 import { useActionState } from "react";
 import { addNewRecipe } from "@/actions/recipes/addNewRecipe";
+import { editRecipe } from "@/actions/recipes/editRecipe";
 import { onSubmitUtil } from "@/utils/onSubmitUtil";
-import { RecipeCategory, Unit } from "@prisma/client";
+import {
+  type RecipeCategory,
+  Unit,
+  type Recipe as PrismaRecipe,
+  Ingredient,
+} from "@prisma/client";
 import { FormAlert } from "../FormAlert";
 import { formatUnit, unitTuple } from "@/utils/ingredientUnits";
 
-type RecipeProps = { categories: RecipeCategory[] };
+type RecipeProps = {
+  categories: RecipeCategory[];
+  isEdit?: boolean;
+  recipe?: PrismaRecipe & { ingredients: Ingredient[] };
+};
 
-export const RecipeForm = ({ categories }: RecipeProps) => {
-  const [state, action, isPending] = useActionState(addNewRecipe, {
+export const RecipeForm = ({
+  categories,
+  isEdit = false,
+  recipe,
+}: RecipeProps) => {
+  const submitAction = isEdit ? editRecipe : addNewRecipe;
+  const [state, action, isPending] = useActionState(submitAction, {
     isSuccess: false,
   });
+
   const defaultIngredient = { name: "", quantity: 0, unit: Unit.GRAM };
 
   const form = useForm<Recipe>({
     resolver: zodResolver(recipeSchema),
     defaultValues: {
-      name: "",
-      category: "",
-      description: "",
-      ingredients: [defaultIngredient],
-      steps: [{ step: "" }],
+      id: recipe?.id || "",
+      name: recipe?.name || "",
+      category: String(recipe?.categoryId) || "",
+      description: recipe?.description || "",
+      ingredients: recipe?.ingredients || [defaultIngredient],
+      steps: recipe?.steps.map((step) => ({ step: step })) || [{ step: "" }],
     },
   });
+
+  form.getValues("ingredients");
 
   const {
     fields: steps,

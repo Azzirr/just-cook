@@ -1,7 +1,10 @@
 import Image from "next/image";
 
 import { formatToShortDate } from "@/utils/formatToShortDate";
-import { getRecipeLists } from "@/actions/allFavouriteListActions";
+import {
+  getCurrentUserId,
+  getRecipeLists,
+} from "@/actions/allFavouriteListActions";
 import { Link } from "@/i18n/routing";
 import type { Recipe, User, Ingredient, RecipeCategory } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";
@@ -22,6 +25,14 @@ type RecipePageProps = {
 export const RecipeDetails = async ({ recipe }: RecipePageProps) => {
   const formatDate = await formatToShortDate();
   const userLists = await getRecipeLists(true);
+  const userId = await getCurrentUserId();
+
+  const hasUserCreatedRecipe = (
+    userId: User["id"] | undefined,
+    authorId: Recipe["authorId"],
+  ) => {
+    return userId !== undefined && userId === authorId;
+  };
 
   return (
     <article className="mx-auto mb-4 w-full max-w-[80ch] space-y-8 p-5">
@@ -45,7 +56,11 @@ export const RecipeDetails = async ({ recipe }: RecipePageProps) => {
           <Link href={`/categories/${recipe.category.slug}`}>
             <Badge className="text-sm">{recipe.category.name}</Badge>
           </Link>
-          <RecipeActions userLists={userLists} />
+          <RecipeActions
+            userLists={userLists}
+            recipe={recipe}
+            isCreator={hasUserCreatedRecipe(userId, recipe.authorId)}
+          />
         </div>
       </section>
       {recipe.images[0] && (

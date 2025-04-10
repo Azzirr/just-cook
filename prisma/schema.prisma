@@ -89,7 +89,7 @@ model Ingredient {
   unit     Unit
 
   recipeId String
-  Recipe   Recipe @relation(fields: [recipeId], references: [id])
+  recipe   Recipe @relation(fields: [recipeId], references: [id])
 }
 
 model Recipe {
