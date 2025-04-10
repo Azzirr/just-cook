@@ -2,6 +2,7 @@
 import { auth } from "@/auth";
 import { db } from "@/db";
 import { Recipe, RecipeList } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 type QueryFiltersCriteria = Partial<{
   id: RecipeList["id"];
@@ -12,7 +13,7 @@ type QueryFiltersCriteria = Partial<{
 
 type ListWithRecipes = {
   id: RecipeList["id"];
-  recipes: { id: Recipe["id"] }[];
+  recipes: Recipe[];
 };
 
 export async function getCurrentUserId() {
@@ -83,6 +84,7 @@ export const createRecipeList = async (listName: RecipeList["name"]) => {
     });
 
     console.log("New list created:", newList);
+    revalidatePath("/favourite-recipes");
     return newList;
   } catch (error) {
     console.log(error);
@@ -198,7 +200,7 @@ export const removeRecipeFromList = async (
   }
 };
 
-export const getRecipesFromList = async (listId: RecipeList["id"]) => {
+export const getRecipesFromList = async (listId?: RecipeList["id"]) => {
   try {
     const userId = await getCurrentUserId();
     if (!userId) {
@@ -206,16 +208,27 @@ export const getRecipesFromList = async (listId: RecipeList["id"]) => {
       return null;
     }
 
-    const recipeList = await getListWithRecipes(listId, userId);
-
-    if (!recipeList) {
-      console.log("List not found or list not belong to user");
-      return null;
+    let recipeList;
+    if (listId) {
+      recipeList = await getListWithRecipes(listId, userId);
+    } else {
+      recipeList = await db.recipeList.findFirst({
+        where: {
+          userId,
+          isSystem: true,
+        },
+        include: { recipes: true },
+      });
     }
 
-    return recipeList;
+    if (!recipeList) {
+      console.log("List not found or list does not belong to the user");
+      return [];
+    }
+
+    return recipeList.recipes ?? [];
   } catch (error) {
     console.log("Error with reading the list", error);
-    return null;
+    return [];
   }
 };
