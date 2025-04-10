@@ -31,7 +31,7 @@ import { onSubmitUtil } from "@/utils/onSubmitUtil";
 import {
   type RecipeCategory,
   Unit,
-  type Recipe as PrismaRecipe,
+  type Recipe as RecipeType,
   Ingredient,
 } from "@prisma/client";
 import { FormAlert } from "../FormAlert";
@@ -40,7 +40,7 @@ import { formatUnit, unitTuple } from "@/utils/ingredientUnits";
 type RecipeProps = {
   categories: RecipeCategory[];
   isEdit?: boolean;
-  recipe?: PrismaRecipe & { ingredients: Ingredient[] };
+  recipe?: RecipeType & { ingredients: Ingredient[] };
 };
 
 export const RecipeForm = ({
