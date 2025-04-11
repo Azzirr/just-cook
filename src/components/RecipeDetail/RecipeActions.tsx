@@ -2,10 +2,10 @@
 
 import { Heart, PlusCircleIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { addRecipeToList } from "@/actions/allFavouriteListActions";
 import { useState } from "react";
 import { RecipePageDialog } from "./RecipePageDialog";
 import type { RecipeList } from "@prisma/client";
+import { addRecipeToFavouriteList } from "@/actions/favourite-list-actions/recipe-operations";
 
 type RecipeActionsProps = {
   userLists: RecipeList[];
@@ -19,7 +19,7 @@ export const RecipeActions = ({ userLists }: RecipeActionsProps) => {
       icon: Heart,
       //There is no 3rd argument, so we are adding recipe to Favourites list
       action: () => {
-        addRecipeToList(1); //TODO - change "1" to real id
+        addRecipeToFavouriteList("d107bya0s4hfp3z4dmh1vl7k"); //TODO - change "1" to real id
       },
       screenReadersOnlyText: "Add recipe to favorites",
     },

@@ -1,7 +1,7 @@
 import {
   getRecipeLists,
   getRecipesFromList,
-} from "@/actions/allFavouriteListActions";
+} from "@/actions/favourite-list-actions/queries";
 import { FavouriteRecipes } from "@/components/FavouriteRecipes/FavouriteRecipes";
 
 const FavouriteRecipesPage = async () => {

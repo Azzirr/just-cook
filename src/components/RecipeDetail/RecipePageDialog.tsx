@@ -9,8 +9,8 @@ import { Button } from "../ui/button";
 import { PlusCircleIcon } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 import { Dispatch, SetStateAction } from "react";
-import { addRecipeToList } from "@/actions/allFavouriteListActions";
 import type { RecipeList } from "@prisma/client";
+import { addRecipeToList } from "@/actions/favourite-list-actions/recipe-operations";
 
 type RecipePageDialogProps = {
   isOpen: boolean;
@@ -47,7 +47,7 @@ export const RecipePageDialog = ({
                   variant="ghost"
                   className="my-2 rounded-full border border-gray-300 p-2 hover:bg-gray-100"
                   //TODO - change "1" to real recipe id
-                  onClick={() => addRecipeToList(1, list.id)}
+                  onClick={() => addRecipeToList("1", list.id)}
                 >
                   <PlusCircleIcon className="text-gray-500" />
                 </Button>

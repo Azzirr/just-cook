@@ -1,4 +1,4 @@
-import { getRecipesFromList } from "@/actions/allFavouriteListActions";
+import { getRecipesFromList } from "@/actions/favourite-list-actions/queries";
 import { UserListContent } from "@/components/FavouriteRecipes/UserListContent";
 
 const UserListsPage = async ({
