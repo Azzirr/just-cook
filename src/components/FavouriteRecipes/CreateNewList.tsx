@@ -1,5 +1,4 @@
 "use client";
-import { createRecipeList } from "@/actions/allFavouriteListActions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,6 +16,7 @@ import { ListPlusIcon } from "lucide-react";
 import { useActionState } from "react";
 import { toast } from "sonner";
 import { LoadingSpinner } from "../ui-custom/LoadingSpinner";
+import { createRecipeList } from "@/actions/favourite-list-actions/mutations";
 
 async function handleCreateList(prevState: any, formData: FormData) {
   const name = formData.get("name") as string;
