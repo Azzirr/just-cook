@@ -10,7 +10,7 @@ const RecipesPage = async ({ searchParams }: Props) => {
   const { searchPhrase } = await searchParams;
 
   const recipes = searchPhrase
-    ? await getRecipesByPhrase({ searchPhrase })
+    ? await getRecipesByPhrase({ phrase: searchPhrase })
     : await getRecipes({ limit: 25 });
 
   return (
