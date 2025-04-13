@@ -22,7 +22,7 @@ export const SearchRecipesWithSuggestions = () => {
   const [handleSearch] = useDebouncedCallback(async (term) => {
     if (term.length === 0) return setResults([]);
 
-    const data = await getRecipesByPhrase({ searchPhrase: term });
+    const data = await getRecipesByPhrase({ phrase: term });
     setResults(data);
   }, 300);
 
