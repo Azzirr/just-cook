@@ -3,18 +3,18 @@
 import { db } from "@/db";
 
 type GetRecipesByPhrase = {
-  searchPhrase: string;
+  phrase: string;
   limit?: number;
 };
 
 export const getRecipesByPhrase = async ({
-  searchPhrase,
+  phrase,
   limit = 10,
 }: GetRecipesByPhrase) => {
   const result = await db.recipe.findMany({
     where: {
       name: {
-        contains: searchPhrase.trim(),
+        contains: phrase.trim(),
         mode: "insensitive",
       },
     },
