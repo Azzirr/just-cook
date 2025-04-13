@@ -7,10 +7,6 @@ type GetRecipes = {
 };
 
 export const getRecipes = async ({ limit = 10 }: GetRecipes = {}) => {
-  try {
-    const recipes = await db.recipe.findMany({ take: limit });
-    return recipes;
-  } catch {
-    return null;
-  }
+  const recipes = await db.recipe.findMany({ take: limit });
+  return recipes || [];
 };
