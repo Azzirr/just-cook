@@ -1,7 +1,8 @@
 "use server";
 
-import { db } from "@/db";
 import type { Recipe } from "@prisma/client";
+
+import { db } from "@/db";
 
 export async function getRecipe(id: Recipe["id"]) {
   try {

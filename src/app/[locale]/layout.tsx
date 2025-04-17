@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { ReactNode } from "react";
 
 import { BaseLayout } from "@/components/BaseLayout";
-
 import { isExistingLocale, routing } from "@/i18n/routing";
 
 type Props = {

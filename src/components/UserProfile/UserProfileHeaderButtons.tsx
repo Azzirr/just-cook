@@ -1,9 +1,13 @@
+import { User } from "@prisma/client";
+import { FilePenLine } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { FilePenLine } from "lucide-react";
-import { UserProfileModalForm } from "./UserProfileModalForm";
-import { User } from "@prisma/client";
 import { currentSession } from "@/lib/currentSession";
+
+import { UserProfileModalForm } from "./UserProfileModalForm";
+
+
 
 type UserProfileHeaderButtonsProps = {
   user: User;

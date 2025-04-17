@@ -1,10 +1,13 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Separator } from "@/components/ui/separator";
-import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
-import { UserList } from "./UserList";
-import { CreateNewList } from "./CreateNewList";
 import { Recipe, RecipeList } from "@prisma/client";
+import { useTranslations } from "next-intl";
+
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Link } from "@/i18n/routing";
+
+import { CreateNewList } from "./CreateNewList";
+import { UserList } from "./UserList";
+
 
 interface FavouriteRecipesProps {
   favouriteRecipes: Recipe[] | null;

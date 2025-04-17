@@ -1,7 +1,8 @@
 "use client";
 import clsx from "clsx";
-import { Input } from "@/components/ui/input";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
+
+import { Input } from "@/components/ui/input";
 import { useDebouncedCallback } from "@/hooks/useDebouncedCallback";
 
 const SearchBar = ({ className }: { className?: string }) => {

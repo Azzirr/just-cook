@@ -1,13 +1,14 @@
 "use server";
 
-import { FormState } from "@/types/formState";
-import { profileSchema } from "@/schemas/profileSchema";
-import { currentSession } from "@/lib/currentSession";
-import { db } from "@/db";
-import { redirect } from "@/i18n/routing";
 import { getLocale } from "next-intl/server";
 import { z } from "zod";
+
+import { db } from "@/db";
+import { redirect } from "@/i18n/routing";
+import { currentSession } from "@/lib/currentSession";
 import { uploadImageToCloudinary } from "@/lib/uploadImageToCloudinary";
+import { profileSchema } from "@/schemas/profileSchema";
+import { FormState } from "@/types/formState";
 
 export const editUserData = async (
   prevState: FormState,

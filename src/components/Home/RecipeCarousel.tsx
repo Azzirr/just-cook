@@ -1,3 +1,5 @@
+import { Recipe } from "@prisma/client";
+
 import {
   Carousel,
   CarouselContent,
@@ -5,7 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Recipe } from "@prisma/client";
+
 import { RecipeCard } from "../ui-custom/RecipeCard";
 
 type RecipeCarouselProps = {
@@ -21,7 +23,7 @@ export const RecipeCarousel = ({ recipes }: RecipeCarouselProps) => {
             key={recipe.id}
             className="flex items-center justify-center sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
           >
-            <RecipeCard recipe={recipe}></RecipeCard>
+            <RecipeCard recipe={recipe} />
           </CarouselItem>
         ))}
       </CarouselContent>
