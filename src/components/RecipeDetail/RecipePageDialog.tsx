@@ -10,8 +10,7 @@ import { PlusCircleIcon } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 import { Dispatch, SetStateAction } from "react";
 import { addRecipeToList } from "@/actions/allFavouriteListActions";
-import { LoadingSpinner } from "../ui-custom/LoadingSpinner";
-import { RecipeList } from "@prisma/client";
+import type { RecipeList } from "@prisma/client";
 
 type RecipePageDialogProps = {
   isOpen: boolean;

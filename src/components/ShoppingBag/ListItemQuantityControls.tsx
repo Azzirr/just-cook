@@ -2,15 +2,18 @@ import { Plus, Minus, Trash2 } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
-import type { Ingredient } from "./types";
+import { Ingredient } from "@prisma/client";
 
 /*
 Read about the accessibility approach here
 https://lucide.dev/guide/advanced/accessibility#on-icon-buttons
 */
 
-export const ListItemQuantityControls = ({ quantity }: Ingredient) => {
+type Props = {
+  quantity: Ingredient["quantity"];
+};
+
+export const ListItemQuantityControls = ({ quantity }: Props) => {
   const buttonClass = "[&_svg]:size-5";
   return (
     <div className="flex gap-2">
