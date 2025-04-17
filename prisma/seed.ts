@@ -34,17 +34,47 @@ async function seedDatabase() {
 
   const categories = await prisma.recipeCategory.createMany({
     data: [
-      { id: 1, name: "Breakfast 🍳", slug: "breakfast" },
-      { id: 2, name: "American Style 🍔", slug: "american-style" },
-      { id: 3, name: "Polish Classics 🥟", slug: "polish-classics" },
-      { id: 4, name: "Asian Style 🍣", slug: "asian-style" },
-      { id: 5, name: "Italian Style 🍕", slug: "italian-style" },
+      {
+        id: 1,
+        name: "Breakfast 🍳",
+        slug: "breakfast",
+        icon: "https://res.cloudinary.com/dqpm8hjgz/image/upload/c_thumb,w_200,g_face/v1743662796/breakfast_dmjoom.png",
+      },
+      {
+        id: 2,
+        name: "American Style 🍔",
+        slug: "american-style",
+        icon: "https://res.cloudinary.com/dqpm8hjgz/image/upload/c_thumb,w_200,g_face/v1743662796/burger_hf7ydj.png",
+      },
+      {
+        id: 3,
+        name: "Polish Classics 🥟",
+        slug: "polish-classics",
+        icon: "https://res.cloudinary.com/dqpm8hjgz/image/upload/c_thumb,w_200,g_face/v1743662866/republic-of-poland_ujnjgz.png",
+      },
+      {
+        id: 4,
+        name: "Asian Style 🍣",
+        slug: "asian-style",
+        icon: "https://res.cloudinary.com/dqpm8hjgz/image/upload/c_thumb,w_200,g_face/v1743662796/nigiri_pgwfva.png",
+      },
+      {
+        id: 5,
+        name: "Italian Style 🍕",
+        slug: "italian-style",
+        icon: "https://res.cloudinary.com/dqpm8hjgz/image/upload/c_thumb,w_200,g_face/v1743662796/nigiri_pgwfva.png",
+      },
       { id: 6, name: "Desserts 🍰", slug: "desserts" },
       { id: 7, name: "Fast Food 🍟", slug: "fast-food" },
       { id: 8, name: "Drinks 🥤", slug: "drinks" },
-      { id: 9, name: "30 Minute Recipes ⏱️", slug: "30-minutes-recipes" },
-      { id: 10, name: "Fit Recipes 💪", slug: "fit-recipes" },
-      { id: 11, name: "Other 📦", slug: "other" },
+      {
+        id: 9,
+        name: "30 Minute Recipes ⏱️",
+        slug: "30-minutes-recipes",
+        icon: "",
+      },
+      { id: 10, name: "Fit Recipes 💪", slug: "fit-recipes", icon: "" },
+      { id: 11, name: "Other 📦", slug: "other", icon: "" },
     ],
     skipDuplicates: true,
   });

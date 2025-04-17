@@ -1,8 +1,11 @@
 import { Checkbox } from "@/components/ui/checkbox";
+import { Ingredient } from "@prisma/client";
 
-import { Ingredient } from "./types";
+type Props = {
+  name: Ingredient["name"];
+};
 
-export const ListItemHead = ({ name }: Ingredient) => {
+export const ListItemHead = ({ name }: Props) => {
   return (
     <label className="flex grow cursor-pointer items-center gap-2">
       <Checkbox className="peer size-5" />
