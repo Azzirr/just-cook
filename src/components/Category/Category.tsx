@@ -1,5 +1,7 @@
 import { useTranslations } from "next-intl";
+
 import SearchBar from "../ui-custom/SearchBar";
+
 import CategoryList from "./CategoryList";
 
 const Category = ({ query = "" }: { query?: string }) => {

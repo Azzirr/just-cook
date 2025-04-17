@@ -1,5 +1,6 @@
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Recipe } from "@prisma/client";
 
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { RecipeCard } from "@/components/ui-custom/RecipeCard";
 import {
   Section,
@@ -7,7 +8,6 @@ import {
   SectionDescription,
   SectionTitle,
 } from "@/components/ui-custom/Section";
-import { Recipe } from "@prisma/client";
 import { Link } from "@/i18n/routing";
 
 type CreatedRecipesSectionProps = { recipes: Recipe[] };

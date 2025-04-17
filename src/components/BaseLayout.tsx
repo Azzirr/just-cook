@@ -1,11 +1,9 @@
-import { ReactNode } from "react";
 import { Roboto } from "next/font/google";
+import { ReactNode } from "react";
 
-import { Toaster } from "@/components/ui/sonner";
-
-import { TopNavigation } from "@/components/TopNavigation/TopNavigation";
 import { BottomNavigation } from "@/components/BottomNavigation/BottomNavigation";
-
+import { TopNavigation } from "@/components/TopNavigation/TopNavigation";
+import { Toaster } from "@/components/ui/sonner";
 import { Locale } from "@/i18n/routing";
 
 type Props = {

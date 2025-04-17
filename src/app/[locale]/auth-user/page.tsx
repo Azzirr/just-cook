@@ -1,7 +1,8 @@
+import { getLocale } from "next-intl/server";
+
 import { auth } from "@/auth";
 import AuthUser from "@/components/Login/AuthUser";
 import { redirect } from "@/i18n/routing";
-import { getLocale } from "next-intl/server";
 
 const AuthUserPage = async () => {
   const session = await auth();

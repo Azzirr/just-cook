@@ -1,19 +1,13 @@
 "use client";
 
-import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { RecipeCategory, Unit } from "@prisma/client";
 import { Plus, Trash2 } from "lucide-react";
+import { useActionState } from "react";
+import { useFieldArray, useForm } from "react-hook-form";
 
+import { addNewRecipe } from "@/actions/recipes/addNewRecipe";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Form,
   FormControl,
@@ -22,14 +16,24 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { formatUnit, unitTuple } from "@/utils/ingredientUnits";
+import { onSubmitUtil } from "@/utils/onSubmitUtil";
+
+import { FormAlert } from "../FormAlert";
 
 import { recipeSchema, type Recipe } from "./schemas";
-import { useActionState } from "react";
-import { addNewRecipe } from "@/actions/recipes/addNewRecipe";
-import { onSubmitUtil } from "@/utils/onSubmitUtil";
-import { RecipeCategory, Unit } from "@prisma/client";
-import { FormAlert } from "../FormAlert";
-import { formatUnit, unitTuple } from "@/utils/ingredientUnits";
+
+
+
 
 type RecipeProps = { categories: RecipeCategory[] };
 
@@ -275,7 +279,7 @@ export const RecipeForm = ({ categories }: RecipeProps) => {
         >
           <Plus />
         </Button>
-        <FormAlert errors={state.errors} message={state.message}></FormAlert>
+        <FormAlert errors={state.errors} message={state.message} />
         <Button isPending={isPending} type="submit">
           Submit
         </Button>

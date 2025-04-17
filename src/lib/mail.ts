@@ -1,7 +1,8 @@
-import { EmailVerification } from "@/components/EmailTemplates/EmailVerification";
 import { getLocale } from "next-intl/server";
 import { createElement } from "react";
 import { Resend } from "resend";
+
+import { EmailVerification } from "@/components/EmailTemplates/EmailVerification";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 

@@ -1,4 +1,5 @@
 import { RecipeCategory } from "@prisma/client";
+
 import { CategoriesPreviewElement } from "./CategoriesPreviewElement";
 
 type CategoriesPreviewCardProps = { categories: RecipeCategory[] };
@@ -17,13 +18,13 @@ export const CategoriesPreviewCard = ({
           label={category.name}
           href={`/categories/${category.slug}`}
           icon={category.icon}
-        ></CategoriesPreviewElement>
+         />
       ))}
       <CategoriesPreviewElement
         label={"See more"}
         href={`/categories`}
         icon={SEE_MORE_ICON}
-      ></CategoriesPreviewElement>
+       />
     </div>
   );
 };

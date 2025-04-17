@@ -1,8 +1,9 @@
 "use server";
-import { auth } from "@/auth";
-import { db } from "@/db";
 import { Recipe, RecipeList } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+
+import { auth } from "@/auth";
+import { db } from "@/db";
 
 type QueryFiltersCriteria = Partial<{
   id: RecipeList["id"];

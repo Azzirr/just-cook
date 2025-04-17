@@ -1,3 +1,11 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useActionState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
+
+import { register } from "@/actions/register";
+import { FormAlert } from "@/components/FormAlert";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -7,17 +15,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { toast } from "sonner";
-import { Input } from "../ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { AuthFormProps } from "./types";
-import { useActionState, useEffect } from "react";
-import { register } from "@/actions/register";
-import { onSubmitUtil } from "@/utils/onSubmitUtil";
-import { FormAlert } from "@/components/FormAlert";
 import { registerSchema } from "@/schemas/authSchemas";
+import { onSubmitUtil } from "@/utils/onSubmitUtil";
+
+import { Input } from "../ui/input";
+
+import { AuthFormProps } from "./types";
 
 const RegisterForm = ({ setShowLoginForm }: AuthFormProps) => {
   const [state, action, isPending] = useActionState(register, {
@@ -61,7 +64,7 @@ const RegisterForm = ({ setShowLoginForm }: AuthFormProps) => {
             <FormAlert
               message={state.message}
               errors={state.errors}
-            ></FormAlert>
+             />
             <FormField
               control={form.control}
               name="username"

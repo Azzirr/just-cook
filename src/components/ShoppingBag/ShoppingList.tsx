@@ -1,11 +1,11 @@
 // "use client";
 
+import type { Ingredient } from "@prisma/client";
 import { ShoppingBagIcon } from "lucide-react";
 
-import type { Ingredient } from "@prisma/client";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { ShoppingListItem } from "@/components/ShoppingBag/ShoppingListItem";
 import { getShoppingList } from "@/actions/shopping-bag/getShoppingList";
+import { ShoppingListItem } from "@/components/ShoppingBag/ShoppingListItem";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { currentSession } from "@/lib/currentSession";
 
 export const ShoppingBag = async () => {

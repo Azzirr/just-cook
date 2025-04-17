@@ -1,5 +1,5 @@
-import { RecipeForm } from "@/components/recipe-form/RecipeForm";
 import { getCategories } from "@/actions/categories/getCategories";
+import { RecipeForm } from "@/components/recipe-form/RecipeForm";
 
 const NewRecipePage = async () => {
   const categories = await getCategories();

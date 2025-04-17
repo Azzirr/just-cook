@@ -1,7 +1,8 @@
 "use server";
 
-import { db } from "@/db";
 import type { Recipe, RecipeCategory } from "@prisma/client";
+
+import { db } from "@/db";
 
 export const getCategories = async (): Promise<RecipeCategory[]> => {
   try {
