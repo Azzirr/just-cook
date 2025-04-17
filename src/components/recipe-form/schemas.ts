@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { unitTuple } from "@/utils/ingredientUnits";
 import { imageSchema } from "@/schemas/imageSchema";
+import { unitTuple } from "@/utils/ingredientUnits";
 
 export const recipeSchema = z.object({
   name: z.string().min(2, { message: "Recipe name is required" }).max(100, {

@@ -1,4 +1,3 @@
-// TODO FIX CONFIG
 {
   "env": {
     "browser": true,
@@ -15,7 +14,7 @@
   ],
   "plugins": ["react", "@typescript-eslint", "import"],
   "rules": {
-    "no-unused-vars": "warn",
+    "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
@@ -25,10 +24,13 @@
         "argsIgnorePattern": "^_"
       }
     ],
-    "react/react-in-jsx-scope": "off",
-    "react/jsx-uses-react": "off",
-    "react/prop-types": "off",
-    "@typescript-eslint/no-explicit-any": "warn",
+    "react/self-closing-comp": [
+      "warn",
+      {
+        "component": true,
+        "html": true
+      }
+    ],
     "import/order": [
       "warn",
       {
@@ -47,12 +49,10 @@
             "position": "after"
           }
         ],
+        "newlines-between": "always",
         "alphabetize": { "order": "asc", "caseInsensitive": true }
       }
-    ],
-    "jsx-quotes": ["error", "prefer-double"],
-    "react-hooks/exhaustive-deps": "warn",
-    "react/display-name": "off"
+    ]
   },
   "settings": {
     "react": {

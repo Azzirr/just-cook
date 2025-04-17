@@ -1,14 +1,14 @@
 "use server";
 
-import { z } from "zod";
 import { AuthError } from "next-auth";
+import { z } from "zod";
 
 import { signIn } from "@/auth";
+import { createVerificationToken } from "@/data/createVerificationToken";
+import { db } from "@/db";
+import { sendVerificationEmail } from "@/lib/mail";
 import { loginSchema } from "@/schemas/authSchemas";
 import { FormState } from "@/types/formState";
-import { db } from "@/db";
-import { createVerificationToken } from "@/data/createVerificationToken";
-import { sendVerificationEmail } from "@/lib/mail";
 
 export async function login(
   prevState: FormState,

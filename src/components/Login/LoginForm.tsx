@@ -1,3 +1,11 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useLocale } from "next-intl";
+import { useActionState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { login } from "@/actions/login";
+import { FormAlert } from "@/components/FormAlert";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -8,17 +16,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { loginSchema } from "@/schemas/authSchemas";
-import { AuthFormProps } from "./types";
-import { useActionState, useEffect } from "react";
-import { login } from "@/actions/login";
-import { FormAlert } from "@/components/FormAlert";
-import { onSubmitUtil } from "@/utils/onSubmitUtil";
 import { redirect } from "@/i18n/routing";
-import { useLocale } from "next-intl";
+import { loginSchema } from "@/schemas/authSchemas";
+import { onSubmitUtil } from "@/utils/onSubmitUtil";
+
+import { AuthFormProps } from "./types";
+
+
+
 
 const LoginForm = ({ setShowLoginForm }: AuthFormProps) => {
   const [state, action, isPending] = useActionState(login, {
@@ -48,7 +53,7 @@ const LoginForm = ({ setShowLoginForm }: AuthFormProps) => {
       </div>
 
       <Form {...form}>
-        <FormAlert message={state?.message} errors={state?.errors}></FormAlert>
+        <FormAlert message={state?.message} errors={state?.errors} />
         <form
           action={action}
           onSubmit={onSubmitUtil(action, form)}

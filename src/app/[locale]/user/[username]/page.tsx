@@ -1,7 +1,6 @@
 import { getUserByUsername } from "@/actions/getUserByUsername";
 import { getUserRecipes } from "@/actions/recipes/getUserRecipes";
 import { Separator } from "@/components/ui/separator";
-
 import { CreatedRecipesSection } from "@/components/UserProfile/CreatedRecipesSection";
 import { RecentActivity } from "@/components/UserProfile/RecentActivity";
 import { UserProfileCard } from "@/components/UserProfile/UserProfileCard";

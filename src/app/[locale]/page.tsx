@@ -1,9 +1,10 @@
 import { setRequestLocale } from "next-intl/server";
+
 import { getCategories } from "@/actions/categories/getCategories";
-import SearchBar from "@/components/ui-custom/SearchBar";
+import { getRecipes } from "@/actions/recipes/getRecipes";
 import { CategoriesPreviewCard } from "@/components/Home/CategoriesPreviewCard";
 import { RecipeCarousel } from "@/components/Home/RecipeCarousel";
-import { getRecipes } from "@/actions/recipes/getRecipes";
+import SearchBar from "@/components/ui-custom/SearchBar";
 import { type Locale } from "@/i18n/routing";
 
 interface Props {

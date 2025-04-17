@@ -1,11 +1,11 @@
 "use client";
 
+import { LogOut } from "lucide-react";
 import { useTransition } from "react";
 import { toast } from "sonner";
-import { LogOut } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { logOut } from "@/actions/logout";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/routing";
 
 export function LogoutButton() {

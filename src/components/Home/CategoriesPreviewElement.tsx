@@ -1,5 +1,6 @@
-import { Link } from "@/i18n/routing";
 import Image from "next/image";
+
+import { Link } from "@/i18n/routing";
 
 type CategoriesPreviewElementProps = {
   label: string;
@@ -26,7 +27,7 @@ export const CategoriesPreviewElement = ({
           className="rounded-md object-cover"
           fill
           src={icon || DEFAULT_ICON}
-        ></Image>
+         />
       </div>
       {label}
     </Link>

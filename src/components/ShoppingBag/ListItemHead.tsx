@@ -1,5 +1,6 @@
-import { Checkbox } from "@/components/ui/checkbox";
 import { Ingredient } from "@prisma/client";
+
+import { Checkbox } from "@/components/ui/checkbox";
 
 type Props = {
   name: Ingredient["name"];

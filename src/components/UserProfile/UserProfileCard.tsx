@@ -1,13 +1,14 @@
+import { User } from "@prisma/client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { UserProfileHeaderButtons } from "@/components/UserProfile/UserProfileHeaderButtons";
 import {
   Section,
   SectionTitle,
   SectionDescription,
 } from "@/components/ui-custom/Section";
-import { User } from "@prisma/client";
-import { getUsernameInitials } from "@/utils/getUsernameInitials";
+import { UserProfileHeaderButtons } from "@/components/UserProfile/UserProfileHeaderButtons";
 import { formatToShortDate } from "@/utils/formatToShortDate";
+import { getUsernameInitials } from "@/utils/getUsernameInitials";
 
 type UserProfileCardProps = {
   user: User;
