@@ -7,6 +7,11 @@ type GetRecipes = {
 };
 
 export const getRecipes = async ({ limit = 10 }: GetRecipes = {}) => {
-  const recipes = await db.recipe.findMany({ take: limit });
-  return recipes || [];
+  try {
+    const recipes = await db.recipe.findMany({ take: limit });
+    return recipes || [];
+  } catch (error) {
+    console.error("Failed to fetch recipes:", error);
+    return []; // or throw error if you want it to propagate
+  }
 };
