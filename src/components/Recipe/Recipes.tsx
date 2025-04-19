@@ -1,9 +1,9 @@
+import type { Recipe } from "@prisma/client";
 import { useTranslations } from "next-intl";
 
-import SearchBar from "@/components/ui-custom/SearchBar";
 import { Button } from "@/components/ui/button";
+import SearchBar from "@/components/ui-custom/SearchBar";
 import { Link } from "@/i18n/routing";
-import type { Recipe } from "@prisma/client";
 
 interface RecipesProps {
   recipes: Recipe[];

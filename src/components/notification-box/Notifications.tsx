@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 
-import { Separator } from "@/components/ui/separator";
 import { Notification } from "@/components/notification-box/Notification";
 import type { Notification as NotificationType } from "@/components/notification-box/types";
+import { Separator } from "@/components/ui/separator";
 
 type Props = {
   notifications: NotificationType[];

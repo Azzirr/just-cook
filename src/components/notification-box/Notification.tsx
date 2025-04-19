@@ -1,4 +1,5 @@
 import { Link } from "@/i18n/routing";
+
 import type { Notification as NotificationType } from "./types";
 
 type Props = NotificationType;

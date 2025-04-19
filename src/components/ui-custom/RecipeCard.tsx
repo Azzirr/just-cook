@@ -1,8 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Link } from "@/i18n/routing";
 import { Recipe } from "@prisma/client";
 import { Utensils } from "lucide-react";
 import Image from "next/image";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Link } from "@/i18n/routing";
 
 export type RecipeCardProps = {
   recipe: Recipe;

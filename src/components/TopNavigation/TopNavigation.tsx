@@ -1,11 +1,11 @@
-import Image from "next/image";
 import { CircleUserRound, ShoppingBag } from "lucide-react";
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
-import Logo from "@/public/images/logo-transparent.png";
+import { getUserById } from "@/data/user";
 import { Link } from "@/i18n/routing";
 import { currentSession } from "@/lib/currentSession";
-import { getUserById } from "@/data/user";
+import Logo from "@/public/images/logo-transparent.png";
 
 export const TopNavigation = async () => {
   const t = await getTranslations("TopNavigation");

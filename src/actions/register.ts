@@ -1,14 +1,14 @@
 "use server";
 
+import { Role } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 
-import { Role } from "@prisma/client";
+import { createVerificationToken } from "@/data/createVerificationToken";
 import { db } from "@/db";
+import { sendVerificationEmail } from "@/lib/mail";
 import { registerSchema } from "@/schemas/authSchemas";
 import { FormState } from "@/types/formState";
-import { sendVerificationEmail } from "@/lib/mail";
-import { createVerificationToken } from "@/data/createVerificationToken";
 
 export async function register(
   prevState: FormState,
