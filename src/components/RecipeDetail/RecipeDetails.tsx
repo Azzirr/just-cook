@@ -1,18 +1,18 @@
+import type { Recipe, User, Ingredient, RecipeCategory } from "@prisma/client";
 import Image from "next/image";
 
-import { formatToShortDate } from "@/utils/formatToShortDate";
 import {
   getCurrentUserId,
   getRecipeLists,
 } from "@/actions/allFavouriteListActions";
-import { Link } from "@/i18n/routing";
-import type { Recipe, User, Ingredient, RecipeCategory } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "@/i18n/routing";
+import { formatToShortDate } from "@/utils/formatToShortDate";
 
-import { RecipeSteps } from "./RecipeSteps";
-import { RecipeIngredients } from "./RecipeIngredients";
 import { RecipeActions } from "./RecipeActions";
 import { RecipeBreadcrumbs } from "./RecipeBreadcrumbs";
+import { RecipeIngredients } from "./RecipeIngredients";
+import { RecipeSteps } from "./RecipeSteps";
 
 type RecipePageProps = {
   recipe: Recipe & {

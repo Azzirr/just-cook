@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { unitTuple } from "@/utils/ingredientUnits";
 import { imageSchema } from "@/schemas/imageSchema";
+import { unitTuple } from "@/utils/ingredientUnits";
 
 export const recipeSchema = z.object({
   id: z.string().optional(),

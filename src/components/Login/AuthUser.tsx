@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+
+import { Link } from "@/i18n/routing";
+
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
-import { Link } from "@/i18n/routing";
 
 const AuthUser = () => {
   const [showLoginForm, setShowLoginForm] = useState<boolean>(true);

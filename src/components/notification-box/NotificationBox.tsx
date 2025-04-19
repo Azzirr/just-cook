@@ -1,10 +1,12 @@
 import { ReactNode } from "react";
+
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
+
 import { Notifications } from "./Notifications";
 import type { Notification } from "./types";
 

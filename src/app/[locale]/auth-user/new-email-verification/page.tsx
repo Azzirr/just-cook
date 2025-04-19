@@ -1,9 +1,10 @@
 "use client";
 
-import { newEmailVerification } from "@/actions/newEmailVerification";
-import { FormAlert } from "@/components/FormAlert";
 import { useSearchParams } from "next/navigation";
 import { startTransition, useActionState, useEffect } from "react";
+
+import { newEmailVerification } from "@/actions/newEmailVerification";
+import { FormAlert } from "@/components/FormAlert";
 
 const NewEmailVerificationPage = () => {
   const searchParams = useSearchParams();
@@ -36,7 +37,7 @@ const NewEmailVerificationPage = () => {
             <FormAlert
               message={state.message}
               errors={state.errors}
-            ></FormAlert>
+             />
           </div>
         ) : (
           <p className="mt-4 text-center text-gray-700">

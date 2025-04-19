@@ -9,13 +9,12 @@ import {
 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-import { NotificationBox } from "@/components/notification-box/NotificationBox";
-import { MoreMenu } from "@/components/MoreMenu/MoreMenu";
 import { LogoutButton } from "@/components/MoreMenu/LogoutButton";
-
+import { MoreMenu } from "@/components/MoreMenu/MoreMenu";
+import { NotificationBox } from "@/components/notification-box/NotificationBox";
+import type { Notification } from "@/components/notification-box/types";
 import { Link } from "@/i18n/routing";
 import { currentSession } from "@/lib/currentSession";
-import type { Notification } from "@/components/notification-box/types";
 
 const notifications: Notification[] = [
   {

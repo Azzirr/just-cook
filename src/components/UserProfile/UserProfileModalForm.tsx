@@ -1,12 +1,11 @@
 "use client";
-import { useForm } from "react-hook-form";
-import { DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { profileSchema } from "@/schemas/profileSchema";
+import { User } from "@prisma/client";
 import { useActionState, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
 import { editUserData } from "@/actions/editUserData";
-import { FormAlert } from "../FormAlert";
-import { onSubmitUtil } from "@/utils/onSubmitUtil";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Form,
@@ -17,10 +16,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { z } from "zod";
-import { Button } from "../ui/button";
-import { User } from "@prisma/client";
+import { profileSchema } from "@/schemas/profileSchema";
+
 import { getUsernameInitials } from "@/utils/getUsernameInitials";
+import { onSubmitUtil } from "@/utils/onSubmitUtil";
+import { FormAlert } from "../FormAlert";
+
+
+import { Button } from "../ui/button";
+import { DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 
 type UserProfileModalFormProps = {
   user: User;

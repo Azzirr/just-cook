@@ -1,8 +1,8 @@
+import { Ingredient } from "@prisma/client";
 import { Plus, Minus, Trash2 } from "lucide-react";
 
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Ingredient } from "@prisma/client";
+import { Input } from "@/components/ui/input";
 
 /*
 Read about the accessibility approach here

@@ -1,20 +1,23 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Separator } from "@/components/ui/separator";
+import { Recipe, RecipeList } from "@prisma/client";
 import { useTranslations } from "next-intl";
+
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "@/i18n/routing";
-import { MyMenu } from "./MyMenu";
-import { MyMenuElement } from "./MyMenuElement";
 
-//TODO - favourite recipes from database
-const favouriteRecipes = [
-  { id: 1, name: "Spaghetti Bolognese", slug: "spaghetti-bolognese" },
-  { id: 2, name: "Chicken Caesar Salad", slug: "chicken-caesar-salad" },
-  { id: 3, name: "Vegetarian Tacos", slug: "vegetarian-tacos" },
-  { id: 4, name: "Beef Stroganoff", slug: "beef-stroganoff" },
-  { id: 5, name: "Lemon Cheesecake", slug: "lemon-cheesecake" },
-];
+import { CreateNewList } from "./CreateNewList";
+import { UserList } from "./UserList";
 
-const FavouriteRecipes = () => {
+
+interface FavouriteRecipesProps {
+  favouriteRecipes: Recipe[] | null;
+  userLists: RecipeList[];
+}
+
+const FavouriteRecipes = ({
+  favouriteRecipes,
+  userLists,
+}: FavouriteRecipesProps) => {
   const t = useTranslations("Favourites");
 
   return (
@@ -31,19 +34,18 @@ const FavouriteRecipes = () => {
             {t("myMenu")}
           </TabsTrigger>
         </TabsList>
-
         <TabsContent
           value="favourites"
           className="mt-5 w-full max-w-md lg:max-w-lg"
         >
           <Separator />
-          {favouriteRecipes.map((recipe, index) => (
+          {favouriteRecipes?.map((recipe, index) => (
             <Link
               key={recipe.id}
               href={`/recipes/${recipe.id}/${recipe.slug}`}
               className="block w-full text-center"
             >
-              <MyMenuElement recipe={recipe} index={index} />
+              <UserList recipe={recipe} index={index} />
             </Link>
           ))}
           <Separator />
@@ -53,9 +55,13 @@ const FavouriteRecipes = () => {
           value="myMenu"
           className="mt-5 w-full max-w-md lg:max-w-lg"
         >
+          <CreateNewList />
           <Separator />
-          <MyMenu />
-          <Separator />
+          {userLists.map((recipe, index) => (
+            <Link href={`/favourite-recipes/${recipe.id}`} key={recipe.id}>
+              <UserList recipe={recipe} index={index} />
+            </Link>
+          ))}
         </TabsContent>
       </Tabs>
     </>

@@ -1,8 +1,10 @@
 "use server";
-import { FormState } from "@/types/formState";
+import { getLocale } from "next-intl/server";
+
 import { db } from "@/db";
 import { redirect } from "@/i18n/routing";
-import { getLocale } from "next-intl/server";
+import { FormState } from "@/types/formState";
+
 
 export async function newEmailVerification(
   prevState: FormState,

@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { imageSchema } from "@/schemas/imageSchema";
 
 export const profileSchema = z
