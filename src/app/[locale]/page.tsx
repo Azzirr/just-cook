@@ -6,16 +6,16 @@ import { CategoriesPreviewCard } from "@/components/Home/CategoriesPreviewCard";
 import { RecipeCarousel } from "@/components/Home/RecipeCarousel";
 import SearchBar from "@/components/ui-custom/SearchBar";
 import { type Locale } from "@/i18n/routing";
+import { SearchRecipesWithSuggestions } from "@/components/ui-custom/SearchRecipesWithSuggestions";
 
 interface Props {
   params: Promise<{ locale: Locale }>;
-  searchParams: Promise<Record<string, string | undefined>>;
 }
 
-const HomePage = async ({ params, searchParams }: Props) => {
+const HomePage = async ({ params }: Props) => {
   const { locale } = await params;
   const categories = await getCategories();
-  const recipes = (await getRecipes({ limit: 10 })) || [];
+  const recipes = await getRecipes({ limit: 10 });
 
   // Enable static rendering
   setRequestLocale(locale);
@@ -24,7 +24,7 @@ const HomePage = async ({ params, searchParams }: Props) => {
     <div className="flex flex-col gap-8 p-4">
       <h1 className="mt-3 text-2xl">What do you want to cook today?</h1>
       <div className="max-w-sm">
-        <SearchBar />
+        <SearchRecipesWithSuggestions />
       </div>
       <CategoriesPreviewCard categories={categories} />
       <div className="pt-[40px]">
