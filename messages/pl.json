@@ -4,7 +4,8 @@
     "sendRecipe": "Wyślij",
     "favourites": "Ulubione",
     "user": "Profil",
-    "more": "Więcej"
+    "more": "Więcej",
+    "adminPanel": "Panel administratora"
   },
   "Categories": {
     "title": "Kategorie"

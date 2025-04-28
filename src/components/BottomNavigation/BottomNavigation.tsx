@@ -71,6 +71,7 @@ export const BottomNavigation = async () => {
   const t = await getTranslations("TopNavigation");
   const session = await currentSession();
   const hasNotifications = notifications.length > 0;
+  const isAdmin = session?.role;
 
   return (
     <div className="sticky bottom-0 z-10 flex max-h-[68.55px] justify-between bg-slate-100 p-3">
@@ -98,7 +99,15 @@ export const BottomNavigation = async () => {
         )}
         <span className="text-[12px]">Notifications</span>
       </NotificationBox>
-      <MoreMenu>{session && <LogoutButton />}</MoreMenu>
+      <MoreMenu>
+        {isAdmin && (
+          <Link href="/admin-panel" className="text-l">
+            {t("adminPanel")}
+          </Link>
+        )}
+
+        {session && <LogoutButton />}
+      </MoreMenu>
     </div>
   );
 };

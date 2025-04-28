@@ -22,6 +22,7 @@ export function LogoutButton() {
 
   return (
     <Button
+      variant={"secondary"}
       className="flex items-center gap-2"
       onClick={handleClick}
       disabled={isPending}
