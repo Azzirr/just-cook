@@ -9,7 +9,7 @@ import { db } from "@/db";
 import authConfig from "./auth.config";
 import { getUserById } from "./data/user";
 
-//Module augmentation to extend auth types
+//module augmentation to extend auth types
 declare module "next-auth/jwt" {
   interface JWT {
     id: string;
