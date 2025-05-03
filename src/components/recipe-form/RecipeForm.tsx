@@ -36,16 +36,16 @@ import { recipeSchema, type Recipe } from "./schemas";
 
 type RecipeProps = {
   categories: RecipeCategory[];
-  isEdit?: boolean;
+  isEditing?: boolean;
   recipe?: RecipeType & { ingredients: Ingredient[] };
 };
 
 export const RecipeForm = ({
   categories,
-  isEdit = false,
+  isEditing = false,
   recipe,
 }: RecipeProps) => {
-  const submitAction = isEdit ? editRecipe : addNewRecipe;
+  const submitAction = isEditing ? editRecipe : addNewRecipe;
   const [state, action, isPending] = useActionState(submitAction, {
     isSuccess: false,
   });
@@ -63,8 +63,6 @@ export const RecipeForm = ({
       steps: recipe?.steps.map((step) => ({ step: step })) || [{ step: "" }],
     },
   });
-
-  form.getValues("ingredients");
 
   const {
     fields: steps,

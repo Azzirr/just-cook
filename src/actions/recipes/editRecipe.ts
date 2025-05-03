@@ -1,15 +1,16 @@
 "use server";
 
-import { z } from "zod";
 import { getLocale } from "next-intl/server";
 import { slugify } from "transliteration";
-import { db } from "@/db";
+import { z } from "zod";
+
 import { recipeSchema } from "@/components/recipe-form/schemas";
+import { db } from "@/db";
 import { redirect } from "@/i18n/routing";
 import { currentSession } from "@/lib/currentSession";
-import { formDataToNestedObject } from "@/utils/formDataToNestedObject";
-import type { FormState } from "@/types/formState";
 import { uploadImageToCloudinary } from "@/lib/uploadImageToCloudinary";
+import type { FormState } from "@/types/formState";
+import { formDataToNestedObject } from "@/utils/formDataToNestedObject";
 
 export async function editRecipe(
   prevState: FormState,
@@ -94,6 +95,9 @@ export async function editRecipe(
     (id) => !submittedIngredientIds.includes(id),
   );
 
+  const newIngredients = ingredients.filter((ingredient) => !ingredient?.id);
+  const existingIngredients = ingredients.filter((ingredient) => ingredient.id);
+
   await db.$transaction([
     db.recipe.update({
       where: { id },
@@ -108,27 +112,32 @@ export async function editRecipe(
         categoryId: parseInt(categoryId),
       },
     }),
-    ...ingredients.map((ingredient) => {
-      const isNew = !ingredient.id;
-      return isNew
-        ? db.ingredient.create({
-            data: {
+
+    ...(newIngredients.length > 0
+      ? [
+          db.ingredient.createMany({
+            data: newIngredients.map((ingredient) => ({
               name: ingredient.name,
               quantity: ingredient.quantity,
               unit: ingredient.unit,
               recipeId: id,
-            },
-          })
-        : db.ingredient.update({
-            where: { id: ingredient.id },
-            data: {
-              name: ingredient.name,
-              quantity: ingredient.quantity,
-              unit: ingredient.unit,
-              recipeId: id,
-            },
-          });
-    }),
+            })),
+          }),
+        ]
+      : []),
+
+    ...existingIngredients.map((ingredient) =>
+      db.ingredient.update({
+        where: { id: ingredient.id },
+        data: {
+          name: ingredient.name,
+          quantity: ingredient.quantity,
+          unit: ingredient.unit,
+          recipeId: id,
+        },
+      }),
+    ),
+
     db.ingredient.deleteMany({
       where: {
         recipeId: id,
