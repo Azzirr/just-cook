@@ -1,5 +1,10 @@
-
-import type { Recipe, User, Ingredient, RecipeCategory } from "@prisma/client";
+import type {
+  Recipe,
+  User,
+  Ingredient,
+  RecipeCategory,
+  RecipeComment,
+} from "@prisma/client";
 import Image from "next/image";
 
 import { getRecipeLists } from "@/actions/allFavouriteListActions";
@@ -9,14 +14,18 @@ import { formatToShortDate } from "@/utils/formatToShortDate";
 
 import { RecipeActions } from "./RecipeActions";
 import { RecipeBreadcrumbs } from "./RecipeBreadcrumbs";
+import { RecipeComments } from "./RecipeComments";
 import { RecipeIngredients } from "./RecipeIngredients";
 import { RecipeSteps } from "./RecipeSteps";
+
+type Comment = RecipeComment & { author: User };
 
 type RecipePageProps = {
   recipe: Recipe & {
     author: User;
     ingredients: Ingredient[];
     category: RecipeCategory;
+    comments: Comment[];
   };
 };
 
@@ -67,6 +76,9 @@ export const RecipeDetails = async ({ recipe }: RecipePageProps) => {
       </section>
       <section>
         <RecipeSteps steps={recipe.steps} />
+      </section>
+      <section>
+        <RecipeComments recipe={recipe} />
       </section>
     </article>
   );
