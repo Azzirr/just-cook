@@ -1,3 +1,4 @@
+import { Role } from "@prisma/client";
 import {
   House,
   Heart,
@@ -71,7 +72,7 @@ export const BottomNavigation = async () => {
   const t = await getTranslations("TopNavigation");
   const session = await currentSession();
   const hasNotifications = notifications.length > 0;
-  const isAdmin = session?.role;
+  const isAdmin = session?.role === Role.ADMIN;
 
   return (
     <div className="sticky bottom-0 z-10 flex max-h-[68.55px] justify-between bg-slate-100 p-3">
