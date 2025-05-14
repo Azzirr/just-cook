@@ -4,6 +4,8 @@ import {
   User,
 } from "@prisma/client";
 
+import { currentSession } from "@/lib/currentSession";
+
 import { RecipeComment } from "./RecipeComment";
 import { RecipeCommentForm } from "./RecipeCommentForm";
 
@@ -15,13 +17,14 @@ type Props = {
   };
 };
 
-export const RecipeComments = ({ recipe }: Props) => {
+export const RecipeComments = async ({ recipe }: Props) => {
   //TODO: handle pagination and edit comment
+  const session = await currentSession();
 
   return (
     <div>
       <p className="mb-3 text-xl font-medium">Comments</p>
-      <RecipeCommentForm recipeId={recipe.id} />
+      {session && <RecipeCommentForm recipeId={recipe.id} />}
       <div className="flex flex-col gap-3">
         {recipe.comments?.map((comment) => (
           <RecipeComment key={comment.id} comment={comment} />
