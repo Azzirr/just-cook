@@ -20,8 +20,7 @@ export const RecipeComment = async ({ comment }: RecipeCommentProps) => {
         <p className="font-bold">{author.username}</p>
         <p className="text-xs">{formatDate(createdAt)}</p>
       </div>
-      <div />
-      <p>{text}</p>
+      <p className="col-start-2">{text}</p>
     </div>
   );
 };
