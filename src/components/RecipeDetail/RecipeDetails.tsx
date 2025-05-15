@@ -9,6 +9,7 @@ import Image from "next/image";
 
 import { getRecipeLists } from "@/actions/allFavouriteListActions";
 import { Badge } from "@/components/ui/badge";
+import { isCurrentUser } from "@/data/isCurrentUser";
 import { Link } from "@/i18n/routing";
 import { formatToShortDate } from "@/utils/formatToShortDate";
 
@@ -32,6 +33,7 @@ type RecipePageProps = {
 export const RecipeDetails = async ({ recipe }: RecipePageProps) => {
   const formatDate = await formatToShortDate();
   const userLists = await getRecipeLists(true);
+  const isCreator = await isCurrentUser(recipe.authorId);
 
   return (
     <article className="mx-auto mb-4 w-full max-w-[80ch] space-y-8 p-5">
@@ -55,7 +57,11 @@ export const RecipeDetails = async ({ recipe }: RecipePageProps) => {
           <Link href={`/categories/${recipe.category.slug}`}>
             <Badge className="text-sm">{recipe.category.name}</Badge>
           </Link>
-          <RecipeActions userLists={userLists} />
+          <RecipeActions
+            userLists={userLists}
+            recipe={recipe}
+            isCreator={isCreator}
+          />
         </div>
       </section>
       {recipe.images[0] && (
