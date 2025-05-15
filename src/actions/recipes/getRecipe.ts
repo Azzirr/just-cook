@@ -12,6 +12,11 @@ export async function getRecipe(id: Recipe["id"]) {
         author: true,
         ingredients: true,
         category: true,
+        comments: {
+          include: {
+            author: true,
+          },
+        },
       },
     });
   } catch {

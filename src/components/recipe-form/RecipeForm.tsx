@@ -2,11 +2,13 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RecipeCategory, Unit } from "@prisma/client";
+import { type Recipe as RecipeType, Ingredient } from "@prisma/client";
 import { Plus, Trash2 } from "lucide-react";
 import { useActionState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 
 import { addNewRecipe } from "@/actions/recipes/addNewRecipe";
+import { editRecipe } from "@/actions/recipes/editRecipe";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -32,25 +34,33 @@ import { FormAlert } from "../FormAlert";
 
 import { recipeSchema, type Recipe } from "./schemas";
 
+type RecipeProps = {
+  categories: RecipeCategory[];
+  isEditing?: boolean;
+  recipe?: RecipeType & { ingredients: Ingredient[] };
+};
 
-
-
-type RecipeProps = { categories: RecipeCategory[] };
-
-export const RecipeForm = ({ categories }: RecipeProps) => {
-  const [state, action, isPending] = useActionState(addNewRecipe, {
+export const RecipeForm = ({
+  categories,
+  isEditing = false,
+  recipe,
+}: RecipeProps) => {
+  const submitAction = isEditing ? editRecipe : addNewRecipe;
+  const [state, action, isPending] = useActionState(submitAction, {
     isSuccess: false,
   });
+
   const defaultIngredient = { name: "", quantity: 0, unit: Unit.GRAM };
 
   const form = useForm<Recipe>({
     resolver: zodResolver(recipeSchema),
     defaultValues: {
-      name: "",
-      category: "",
-      description: "",
-      ingredients: [defaultIngredient],
-      steps: [{ step: "" }],
+      id: recipe?.id || "",
+      name: recipe?.name || "",
+      category: String(recipe?.categoryId) || "",
+      description: recipe?.description || "",
+      ingredients: recipe?.ingredients || [defaultIngredient],
+      steps: recipe?.steps.map((step) => ({ step: step })) || [{ step: "" }],
     },
   });
 

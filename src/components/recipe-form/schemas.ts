@@ -4,6 +4,7 @@ import { imageSchema } from "@/schemas/imageSchema";
 import { unitTuple } from "@/utils/ingredientUnits";
 
 export const recipeSchema = z.object({
+  id: z.string().optional(),
   name: z.string().min(2, { message: "Recipe name is required" }).max(100, {
     message: "Recipe name must be less than 100 characters long",
   }),
@@ -15,6 +16,7 @@ export const recipeSchema = z.object({
   ingredients: z
     .array(
       z.object({
+        id: z.number().optional(),
         name: z.string().min(1, {
           message: "Ingredient name is required",
         }),
