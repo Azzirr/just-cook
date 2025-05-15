@@ -55,11 +55,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     const Comp = asChild ? Slot : "button";
+
     const LoadingContent = (
-      <>
+      <div className="flex items-center justify-center gap-2">
         <Loader2 className="animate-spin" />
         Please wait
-      </>
+      </div>
     );
     return (
       <Comp

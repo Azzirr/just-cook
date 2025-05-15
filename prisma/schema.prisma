@@ -71,6 +71,7 @@ model User {
   recipeLists       RecipeList[]
   shoppingList      ShoppingListItem[]
   accounts          Account[]
+  recipeComments    RecipeComment[]
 }
 
 model VerificationToken {
@@ -112,8 +113,22 @@ model Recipe {
   authorId                String
   author                  User               @relation(fields: [authorId], references: [id])
   recipeShoppingListItems ShoppingListItem[]
+  comments                RecipeComment[]
 
   @@unique([slug, id])
+}
+
+model RecipeComment {
+  id        Int      @id @default(autoincrement())
+  text      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  authorId String
+  recipeId String
+
+  author User   @relation(fields: [authorId], references: [id])
+  recipe Recipe @relation(fields: [recipeId], references: [id])
 }
 
 model RecipeCategory {

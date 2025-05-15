@@ -2,7 +2,7 @@
 import { Recipe, RecipeList } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-import { auth } from "@/auth";
+import { getCurrentUserId } from "@/data/getCurrentUserId";
 import { db } from "@/db";
 
 type QueryFiltersCriteria = Partial<{
@@ -16,11 +16,6 @@ type ListWithRecipes = {
   id: RecipeList["id"];
   recipes: Recipe[];
 };
-
-export async function getCurrentUserId() {
-  const session = await auth();
-  return session?.user?.id;
-}
 
 const recipeListExist = async (criteria: QueryFiltersCriteria) => {
   return await db.recipeList.findFirst({
