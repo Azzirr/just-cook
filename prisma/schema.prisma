@@ -67,9 +67,9 @@ model User {
   role          Role     @default(USER)
 
   verificationToken VerificationToken?
-  shoppingList      Ingredient[]
   createdRecipes    Recipe[]
   recipeLists       RecipeList[]
+  shoppingList      ShoppingListItem[]
   accounts          Account[]
 }
 
@@ -90,7 +90,6 @@ model Ingredient {
 
   recipeId String
   Recipe   Recipe  @relation(fields: [recipeId], references: [id])
-  User     User?   @relation(fields: [userId], references: [id])
   userId   String?
 }
 
@@ -105,13 +104,14 @@ model Recipe {
   updatedAt   DateTime   @updatedAt
   visibility  Visibility @default(PRIVATE)
 
-  tag         Tag[]
-  ingredients Ingredient[]
-  recipeLists RecipeList[]
-  categoryId  Int
-  category    RecipeCategory @relation(fields: [categoryId], references: [id])
-  authorId    String
-  author      User           @relation(fields: [authorId], references: [id])
+  tag                     Tag[]
+  ingredients             Ingredient[]
+  recipeLists             RecipeList[]
+  categoryId              Int
+  category                RecipeCategory     @relation(fields: [categoryId], references: [id])
+  authorId                String
+  author                  User               @relation(fields: [authorId], references: [id])
+  recipeShoppingListItems ShoppingListItem[]
 
   @@unique([slug, id])
 }
@@ -125,13 +125,6 @@ model RecipeCategory {
   recipes Recipe[]
 }
 
-model Tag {
-  id   Int    @id @default(autoincrement())
-  name String @unique
-
-  recipes Recipe[]
-}
-
 model RecipeList {
   id       Int     @id @default(autoincrement())
   name     String
@@ -140,4 +133,23 @@ model RecipeList {
   recipes Recipe[]
   userId  String
   user    User     @relation(fields: [userId], references: [id])
+}
+
+model ShoppingListItem {
+  id       Int    @id @default(autoincrement())
+  name     String
+  quantity Float
+  unit     Unit
+
+  recipeId String
+  recipe   Recipe @relation(fields: [recipeId], references: [id])
+  userId   String
+  user     User   @relation(fields: [userId], references: [id])
+}
+
+model Tag {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  recipes Recipe[]
 }

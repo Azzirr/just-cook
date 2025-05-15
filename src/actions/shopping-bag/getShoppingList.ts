@@ -1,6 +1,7 @@
 "use server";
 
 import type { Ingredient } from "@prisma/client";
+
 import { db } from "@/db";
 
 type GetShoppingList = { userId: string };
@@ -18,7 +19,7 @@ export const getShoppingList = async ({
     }
 
     return userShoppingList;
-  } catch (error) {
+  } catch {
     return [];
   }
 };
