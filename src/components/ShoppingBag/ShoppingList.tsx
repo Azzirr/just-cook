@@ -1,18 +1,24 @@
-"use client";
+// "use client";
 
 import type { Ingredient } from "@prisma/client";
 import { ShoppingBagIcon } from "lucide-react";
 
+import { getShoppingList } from "@/actions/shopping-bag/getShoppingList";
 import { ShoppingListItem } from "@/components/ShoppingBag/ShoppingListItem";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { currentSession } from "@/lib/currentSession";
 
-// TODO: Fetch actual data from db and bring back ssr and translations
-export const ShoppingBag = () => {
+export const ShoppingBag = async () => {
   // const t = useTranslations("ShoppingBag");
 
-  const shoppingBagItems: Ingredient[] = JSON.parse(
-    localStorage.getItem("just-cook-shopping-bag") ?? "[]",
-  );
+  const session = await currentSession();
+  const userId = session?.id;
+  const shoppingBagItems = userId ? await getShoppingList({ userId }) : [];
+
+  // TODO: Implement local storage
+  // const shoppingBagItems: Ingredient[] = userId
+  //   ? shoppingBagDB
+  //   : JSON.parse(localStorage?.getItem("just-cook-shopping-bag") ?? "[]");
   const isShoppingBagEmpty = shoppingBagItems.length === 0;
 
   return (
