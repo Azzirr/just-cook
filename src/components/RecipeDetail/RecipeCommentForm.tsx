@@ -5,7 +5,7 @@ import { Recipe } from "@prisma/client";
 import { useActionState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import { sendRecipeComment } from "@/actions/recipes/sendRecipeComment";
+import { createRecipeComment } from "@/actions/recipes/createRecipeComment";
 import { commentSchema } from "@/schemas/commentSchema";
 import { onSubmitUtil } from "@/utils/onSubmitUtil";
 
@@ -23,7 +23,7 @@ import { Textarea } from "../ui/textarea";
 type RecipeCommentFormProps = { recipeId: Recipe["id"] };
 
 export const RecipeCommentForm = ({ recipeId }: RecipeCommentFormProps) => {
-  const boundAction = sendRecipeComment.bind(null, recipeId);
+  const boundAction = createRecipeComment.bind(null, recipeId);
 
   const [state, action, isPending] = useActionState(boundAction, {
     isSuccess: false,

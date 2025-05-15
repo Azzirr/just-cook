@@ -11,20 +11,17 @@ export const RecipeComment = async ({ comment }: RecipeCommentProps) => {
 
   const { author, text, createdAt } = comment;
   return (
-    <div>
-      <div className="flex items-center gap-2">
-        <Avatar className="h-8 w-8 bg-slate-50">
-          <AvatarImage src={author.avatar ?? undefined} />
-          <AvatarFallback>
-            {getUsernameInitials(author.username)}
-          </AvatarFallback>
-        </Avatar>
+    <div className="grid grid-cols-[auto_1fr] gap-2">
+      <Avatar className="h-8 w-8 bg-slate-50">
+        <AvatarImage src={author.avatar ?? undefined} />
+        <AvatarFallback>{getUsernameInitials(author.username)}</AvatarFallback>
+      </Avatar>
+      <div>
         <p className="font-bold">{author.username}</p>
         <p className="text-xs">{formatDate(createdAt)}</p>
       </div>
-      <div className="ml-[40px]">
-        <p>{text}</p>
-      </div>
+      <div />
+      <p>{text}</p>
     </div>
   );
 };

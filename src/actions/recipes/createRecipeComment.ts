@@ -10,7 +10,7 @@ import { commentSchema } from "@/schemas/commentSchema";
 import type { FormState } from "@/types/formState";
 import { formDataToNestedObject } from "@/utils/formDataToNestedObject";
 
-export const sendRecipeComment = async (
+export const createRecipeComment = async (
   recipeId: Recipe["id"],
   prevState: FormState,
   data: FormData | z.infer<typeof commentSchema>,
