@@ -4,7 +4,8 @@
     "sendRecipe": "Send",
     "favourites": "Favourites",
     "user": "User",
-    "more": "More"
+    "more": "More",
+    "adminPanel": "Admin panel"
   },
   "Categories": {
     "title": "Categories"
